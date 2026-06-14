@@ -412,6 +412,53 @@ function renderRAP(itens) {
     "</div>";
 }
 
+// ----- Navegacao por secoes (painel lateral) -----------------------------
+const VIEW_PADRAO = "geral";
+let viewAtiva = localStorage.getItem("comgap_view") || VIEW_PADRAO;
+
+function selecionarView(view) {
+  const existe = document.querySelector(`.view[data-view="${view}"]`);
+  viewAtiva = existe ? view : VIEW_PADRAO;
+  localStorage.setItem("comgap_view", viewAtiva);
+
+  document.querySelectorAll(".view").forEach((sec) => {
+    sec.classList.toggle("view--ativa", sec.dataset.view === viewAtiva);
+  });
+  document.querySelectorAll(".navitem").forEach((btn) => {
+    const ativo = btn.dataset.view === viewAtiva;
+    btn.classList.toggle("navitem--ativo", ativo);
+    btn.setAttribute("aria-selected", ativo ? "true" : "false");
+  });
+  // Rola o conteudo para o topo ao trocar de secao.
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// ----- Drawer (menu lateral no mobile) -----------------------------------
+function abrirMenu() {
+  el("sidebar").classList.add("aberta");
+  const ov = el("overlay");
+  ov.hidden = false;
+  requestAnimationFrame(() => ov.classList.add("show"));
+  el("menuBtn").setAttribute("aria-expanded", "true");
+}
+function fecharMenu() {
+  el("sidebar").classList.remove("aberta");
+  const ov = el("overlay");
+  ov.classList.remove("show");
+  setTimeout(() => (ov.hidden = true), 220);
+  el("menuBtn").setAttribute("aria-expanded", "false");
+}
+
+el("menuBtn").addEventListener("click", abrirMenu);
+el("sidebarClose").addEventListener("click", fecharMenu);
+el("overlay").addEventListener("click", fecharMenu);
+el("sidebarNav").addEventListener("click", (e) => {
+  const btn = e.target.closest(".navitem");
+  if (!btn) return;
+  selecionarView(btn.dataset.view);
+  fecharMenu();
+});
+
 // ----- Eventos -----------------------------------------------------------
 el("reloadBtn").addEventListener("click", (e) => {
   e.currentTarget.classList.add("spin");
@@ -420,4 +467,5 @@ el("reloadBtn").addEventListener("click", (e) => {
 });
 el("retryBtn").addEventListener("click", carregar);
 
+selecionarView(viewAtiva);
 carregar();
