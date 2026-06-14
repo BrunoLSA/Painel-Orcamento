@@ -822,6 +822,25 @@ el("sidebarNav").addEventListener("click", (e) => {
   fecharMenu();
 });
 
+// ----- Exportar PDF (impressao nativa) -----------------------------------
+// Monta um cabecalho com os filtros atuais e dispara a impressao. O CSS de
+// @media print mostra todas as secoes (com os acordeoes expandidos), gerando
+// um relatorio completo que o navegador salva como PDF.
+function exportarPDF() {
+  if (DATASET) {
+    const meta = DATASET.diretorias.find((x) => x.sigla === filtroAtivo);
+    const dir = filtroAtivo === TODAS ? "Todas as diretorias" : `${filtroAtivo} — ${meta ? meta.nome : ""}`;
+    const aoTxt = aoCreditoSel.size ? [...aoCreditoSel].sort().join(", ") : "Todas";
+    el("printInfo").innerHTML =
+      `<strong>${DATASET.orgaoNome || DATASET.orgao} — Painel Orçamentário</strong>` +
+      `<span>Exercício ${anoAtivo} · ${dir}</span>` +
+      `<span>Crédito Disponível — AO: ${aoTxt}</span>` +
+      `<span class="print-cabecalho__emit">Emitido em ${new Date().toLocaleString("pt-BR")}</span>`;
+  }
+  window.print();
+}
+el("pdfBtn").addEventListener("click", exportarPDF);
+
 // ----- Eventos -----------------------------------------------------------
 el("reloadBtn").addEventListener("click", (e) => {
   e.currentTarget.classList.add("spin");
