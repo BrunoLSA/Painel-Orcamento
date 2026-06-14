@@ -33,7 +33,9 @@ app.get("/api/orcamento", (_req, res) => {
 app.get("/api/health", (_req, res) => res.json({ status: "ok" }));
 
 // ----- Frontend estatico -----------------------------------------------------
-app.use(express.static(path.join(__dirname, "public")));
+// Servimos a mesma pasta `docs/` que o GitHub Pages publica, garantindo que o
+// site rode identico nos dois ambientes (inclui o data.json estatico).
+app.use(express.static(path.join(__dirname, "docs")));
 
 app.listen(PORT, () => {
   console.log(`Painel Orcamentario do COMGAP rodando em http://localhost:${PORT}`);
