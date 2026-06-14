@@ -35,6 +35,7 @@ const el = (id) => document.getElementById(id);
 const TODAS = "TODAS";
 let DATASET = null;
 let filtroAtivo = TODAS;
+let anoAtivo = null;
 
 // ----- Carregamento ------------------------------------------------------
 async function carregar() {
@@ -51,6 +52,7 @@ async function carregar() {
     DATASET = await resp.json();
 
     renderCabecalho(DATASET);
+    construirSeletorAno(DATASET);
     construirFiltros(DATASET.diretorias);
     aplicarFiltro(filtroAtivo);
 
@@ -67,13 +69,32 @@ async function carregar() {
 // ----- Cabecalho ---------------------------------------------------------
 function renderCabecalho(d) {
   el("subtitle").textContent = d.orgaoNome || d.orgao;
-  el("footerExercicio").textContent = d.exercicio;
   const dt = new Date(d.atualizadoEm);
   el("updated").textContent =
     "Atualizado em " +
     dt.toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric" }) +
     " às " +
     dt.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
+}
+
+// ----- Seletor de exercicio (ano) ---------------------------------------
+function construirSeletorAno(d) {
+  const anos =
+    d.exercicios && d.exercicios.length
+      ? [...d.exercicios]
+      : [...new Set(d.execucao.map((e) => e.exercicio))];
+  anos.sort((a, b) => b - a);
+
+  // Mantem o ano atual se ainda existir; senao usa o padrao (mais recente).
+  anoAtivo = anos.includes(anoAtivo) ? anoAtivo : d.exercicioPadrao || anos[0];
+
+  const sel = el("anoSelect");
+  sel.innerHTML = anos.map((a) => `<option value="${a}">${a}</option>`).join("");
+  sel.value = String(anoAtivo);
+  sel.onchange = () => {
+    anoAtivo = Number(sel.value);
+    atualizar();
+  };
 }
 
 // ----- Filtros por diretoria --------------------------------------------
@@ -105,17 +126,25 @@ function aplicarFiltro(dir) {
       btn.setAttribute("aria-selected", ativo ? "true" : "false");
     });
 
-  // Rotulo de contexto
-  const meta = DATASET.diretorias.find((x) => x.sigla === dir);
-  el("filtroContexto").textContent =
-    dir === TODAS ? "Visão consolidada — todas as diretorias" : `${dir} — ${meta ? meta.nome : ""}`;
-
-  renderTudo(filtrarDataset(dir));
+  atualizar();
 }
 
-// Devolve o dataset com cada lista filtrada pela diretoria (ou completa).
-function filtrarDataset(dir) {
-  const f = (arr) => (dir === TODAS ? arr : arr.filter((x) => x.diretoria === dir));
+// Recalcula contexto, rodape e todas as secoes para o ano e a diretoria ativos.
+function atualizar() {
+  el("footerExercicio").textContent = anoAtivo;
+
+  const meta = DATASET.diretorias.find((x) => x.sigla === filtroAtivo);
+  const ctxDir =
+    filtroAtivo === TODAS ? "Visão consolidada — todas as diretorias" : `${filtroAtivo} — ${meta ? meta.nome : ""}`;
+  el("filtroContexto").textContent = `${ctxDir} · Exercício ${anoAtivo}`;
+
+  renderTudo(filtrarDataset(anoAtivo, filtroAtivo));
+}
+
+// Devolve o dataset com cada lista filtrada pelo exercicio e pela diretoria.
+function filtrarDataset(an, dir) {
+  const f = (arr) =>
+    arr.filter((x) => x.exercicio === an && (dir === TODAS || x.diretoria === dir));
   return {
     execucao: f(DATASET.execucao),
     creditoDiref: f(DATASET.creditoDiref),
