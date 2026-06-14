@@ -105,3 +105,13 @@ export const dados = {
     { diretoria: "CELOG", tipo: "Nao Processados", sigla: "RPNP", inscrito: 15700000, cancelado: 1600000, liquidado: 9600000, pago: 8500000 },
   ],
 };
+
+// Metadados/configuracao do painel, reutilizados pelo conversor quando os dados
+// vem das planilhas oficiais (data/fonte/*.csv). Ajuste `exercicio` e a lista de
+// `diretorias` aqui caso mudem; os valores em si vem das planilhas.
+export const config = {
+  exercicio: dados.exercicio,
+  orgao: dados.orgao,
+  orgaoNome: dados.orgaoNome,
+  diretorias: dados.diretorias,
+};

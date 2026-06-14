@@ -50,9 +50,14 @@ Variável de ambiente opcional: `PORT` (padrão `3000`).
 .
 ├── server.js              # Servidor Express (API + estáticos) — uso local
 ├── data/
-│   └── orcamento.js       # Fonte ÚNICA de dados (substituível), com a dimensão diretoria
+│   ├── orcamento.js       # Config (exercício, diretorias) + dados de DEMONSTRAÇÃO (fallback)
+│   └── fonte/             # Planilhas OFICIAIS (Tesouro Gerencial) em CSV
+│       ├── execucao.csv
+│       ├── credito_diref.csv
+│       ├── credito_uge.csv
+│       └── restos_a_pagar.csv
 ├── scripts/
-│   └── build-data.mjs     # Gera docs/data.json a partir de data/orcamento.js
+│   └── build-data.mjs     # Converte data/fonte/*.csv → docs/data.json (ou usa o fallback)
 ├── docs/                  # Site estático (publicado pelo GitHub Pages)
 │   ├── index.html         # Estrutura da página
 │   ├── css/styles.css     # Estilos mobile-first
@@ -72,17 +77,40 @@ sem instalar nada. Para publicar:
 4. Salve. Em alguns minutos o painel ficará disponível em:
    `https://brunolsa.github.io/Painel-Orcamento/`
 
-Ao alterar os dados em `data/orcamento.js`, rode `npm run build` para regenerar
-`docs/data.json` e faça commit do arquivo atualizado.
+Ao atualizar as planilhas em `data/fonte/`, rode `npm run build` para regenerar
+`docs/data.json` e faça commit do arquivo atualizado (ver seção de dados oficiais abaixo).
 
-## Integração com dados reais
+## Dados oficiais (Tesouro Gerencial / SIAFI)
 
-Os dados em `data/orcamento.js` são de **demonstração**. Para usar dados oficiais,
-basta substituir o objeto `dados` por uma carga vinda do **Tesouro Gerencial / SIAFI**
-(planilha exportada, banco de dados ou API), mantendo o mesmo formato. Nenhuma outra
-parte do sistema precisa ser alterada.
+O painel é alimentado por **planilhas CSV** exportadas do **Tesouro Gerencial / SIAFI**,
+colocadas em `data/fonte/`. No `npm run build`, o conversor lê esses CSVs e gera o
+`docs/data.json`. **Se as quatro planilhas existirem, valem os dados oficiais;** caso
+contrário, usa-se o conjunto de demonstração de `data/orcamento.js`.
 
-### Formato dos dados
+> Os CSVs versionados hoje contêm **dados de exemplo** — substitua-os pelas suas
+> exportações reais (mantendo os cabeçalhos das colunas).
+
+### Como atualizar os dados
+
+1. No Tesouro Gerencial, gere/abra as quatro visões e **exporte cada uma como CSV**.
+2. Salve sobre os arquivos em `data/fonte/` (mantendo os nomes e os cabeçalhos).
+3. Rode `npm run build` e faça commit do `docs/data.json` atualizado (e dos CSVs).
+4. Em `data/orcamento.js`, ajuste `exercicio` e a lista de `diretorias` se necessário.
+
+O conversor aceita separador `;` ou `,` e números em formato brasileiro
+(`1.234.567,89`), simples (`1234567.89`) ou inteiros, com ou sem `R$`.
+
+### Planilhas e colunas (`data/fonte/`)
+
+Coluna `diretoria` aceita `DIRMAB | DIRINFRA | DTI | CELOG`.
+
+- **`execucao.csv`** — `diretoria;acao;acao_nome;dotacao;recebido;empenhado;liquidado;pago`
+- **`credito_diref.csv`** — `diretoria;acao;nd;nd_nome;fonte;ptres;disponivel`
+- **`credito_uge.csv`** — `diretoria;ug_codigo;ug_sigla;ug_nome;disponivel;empenhado;recebido`
+- **`restos_a_pagar.csv`** — `diretoria;tipo;sigla;inscrito;cancelado;liquidado;pago`
+  (deixe `liquidado` vazio para os Processados/RPP)
+
+### Formato do `data.json` gerado
 
 Cada registro inclui o campo `diretoria` (`"DIRMAB" | "DIRINFRA" | "DTI" | "CELOG"`):
 
