@@ -211,6 +211,41 @@ body {
 .bloco__title { font-size: 14px; font-weight: 700; color: var(--verde-fab); margin: 18px 0 4px; }
 .bloco__title:first-of-type { margin-top: 14px; }
 
+/* ---------- Graficos (SVG/CSS) ---------- */
+.grafico {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 16px;
+  flex-wrap: wrap;
+}
+.donut { flex-shrink: 0; }
+.donut__val { font-size: 22px; font-weight: 800; fill: var(--verde-fab); }
+.donut__lbl { font-size: 11px; font-weight: 600; fill: var(--texto-fraco); }
+
+.legenda { list-style: none; flex: 1 1 200px; min-width: 180px; display: grid; gap: 7px; }
+.legenda__item { display: flex; align-items: center; gap: 8px; font-size: 12.5px; }
+.legenda__cor { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+.legenda__txt { flex: 1; min-width: 0; color: var(--texto); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.legenda__val { font-weight: 700; white-space: nowrap; color: var(--texto-fraco); }
+
+/* Barras horizontais */
+.hbars { padding: 14px; display: grid; gap: 12px; }
+.hbar__head { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 5px; }
+.hbar__lbl { font-size: 12.5px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hbar__val { font-size: 12.5px; font-weight: 700; white-space: nowrap; }
+.hbar__track { position: relative; height: 14px; background: #edf2f0; border-radius: 8px; overflow: hidden; }
+.hbar__fill { position: absolute; top: 0; left: 0; height: 100%; border-radius: 8px; transition: width 0.7s ease; }
+.hbar__fill--sob { background: #1f8a64; }
+
+/* Barras empilhadas (RAP) */
+.stacks { padding: 14px; display: grid; gap: 14px; }
+.stack { display: flex; height: 16px; border-radius: 8px; overflow: hidden; background: #edf2f0; }
+.stack__seg { height: 100%; transition: width 0.7s ease; }
+
+.grafico__nota { padding: 0 16px 14px; font-size: 11.5px; color: var(--texto-fraco); }
+.pontinho { display: inline-block; width: 10px; height: 10px; border-radius: 3px; vertical-align: middle; margin-right: 3px; }
+
 /* ---------- Drawer no mobile ---------- */
 @media (max-width: 859px) {
   .app-header__menu { display: grid; }
