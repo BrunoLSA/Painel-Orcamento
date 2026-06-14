@@ -37,6 +37,12 @@ let DATASET = null;
 let filtroAtivo = TODAS;
 let anoAtivo = null;
 
+// Filtro de Acao Orcamentaria, local da secao Credito Disponivel.
+let aoCredito = TODAS;
+let creditoDirefCache = [];
+let creditoUGECache = [];
+let aoNomesCache = new Map();
+
 // ----- Carregamento ------------------------------------------------------
 async function carregar() {
   el("loading").hidden = false;
@@ -160,19 +166,59 @@ function renderTudo(d) {
   const rap = agregarRAP(d.restosAPagar);
 
   // Nomes das AOs (para rotular o credito DIREF, que so traz o codigo).
-  const aoNomes = new Map(d.execucao.map((e) => [e.ao, e.aoNome]));
+  aoNomesCache = new Map(d.execucao.map((e) => [e.ao, e.aoNome]));
 
   renderResumo(resumo);
   renderChartExecucao(resumo); // Visao Geral: duas roscas de execucao
   renderExecucao(resumo);
   renderChartAO(acoes); // Execucao: barras de dotacao por AO
   renderAcoes(acoes);
-  renderChartCreditoAO(d.creditoDiref, aoNomes); // Credito: rosca % por AO
-  renderDiref(d.creditoDiref, aoNomes); // Credito DIREF: linhas por AO (expandem ND)
-  renderChartUGE(d.creditoUGE); // Credito: barras por UGE
-  renderUGE(d.creditoUGE); // Credito UGE: linhas por UGE (expandem ND)
+
+  // Credito Disponivel: guarda o recorte atual (ano+diretoria) e aplica o
+  // filtro local de AO ao renderizar a secao.
+  creditoDirefCache = d.creditoDiref;
+  creditoUGECache = d.creditoUGE;
+  construirSeletorAOcredito();
+  renderCreditoSecao();
+
   renderChartRAP(rap); // RAP: barras empilhadas
   renderRAP(rap);
+}
+
+// Monta o seletor de Acao Orcamentaria da secao Credito (a partir das AOs
+// presentes no recorte atual de DIREF e UGE).
+function construirSeletorAOcredito() {
+  const aos = [...new Set([...creditoDirefCache, ...creditoUGECache].map((x) => x.ao).filter(Boolean))].sort();
+  if (!aos.includes(aoCredito)) aoCredito = TODAS;
+  const sel = el("aoCreditoSelect");
+  sel.innerHTML =
+    `<option value="${TODAS}">Todas as AO</option>` +
+    aos.map((a) => `<option value="${a}">${a} · ${aoNomesCache.get(a) || ""}</option>`).join("");
+  sel.value = aoCredito;
+  sel.onchange = () => {
+    aoCredito = sel.value;
+    renderCreditoSecao();
+  };
+}
+
+// Renderiza a secao Credito aplicando o filtro local de AO.
+function renderCreditoSecao() {
+  const filtra = (arr) => (aoCredito === TODAS ? arr : arr.filter((x) => x.ao === aoCredito));
+  const diref = filtra(creditoDirefCache);
+  const uge = filtra(creditoUGECache);
+
+  // Grafico do topo: por AO (visao geral) ou por ND (quando uma AO e escolhida).
+  if (aoCredito === TODAS) {
+    renderChartCreditoAO(diref, aoNomesCache);
+  } else {
+    const nome = aoNomesCache.get(aoCredito) || "";
+    el("chartCreditoAO").innerHTML = diref.length
+      ? `<div class="grafico-bloco"><p class="grafico-bloco__tit">${aoCredito} · ${nome} — por Natureza de Despesa</p>${ndDonutHTML(diref)}</div>`
+      : vazioGraf("Sem crédito DIREF para esta AO.");
+  }
+  renderDiref(diref, aoNomesCache);
+  renderChartUGE(uge);
+  renderUGE(uge);
 }
 
 // Liga o comportamento de acordeao (expandir/recolher) num container.
@@ -655,15 +701,13 @@ function renderChartAO(acoes) {
     `<p class="grafico__nota"><span class="pontinho" style="background:#cfe6dc"></span> Dotação &nbsp; <span class="pontinho" style="background:#1f8a64"></span> Empenhado</p>`;
 }
 
-// Credito: barras do credito disponivel por UGE.
+// Credito: barras do credito disponivel por UGE (agregando as linhas de cada UGE).
 function renderChartUGE(uges) {
   if (!uges.length) {
     el("chartUGE").innerHTML = vazioGraf("Sem UGE para este filtro.");
     return;
   }
-  const itens = [...uges]
-    .sort((a, b) => b.disponivel - a.disponivel)
-    .map((u) => ({ label: u.sigla, value: u.disponivel }));
+  const itens = agruparPor(uges, (x) => x.sigla).map((g) => ({ label: g.chave, value: g.total }));
   el("chartUGE").innerHTML = barrasHoriz(itens, { cor: "#2563eb" });
 }
 

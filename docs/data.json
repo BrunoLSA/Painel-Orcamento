@@ -1,7 +1,7 @@
 {
   "orgao": "COMGAP",
   "orgaoNome": "Comando-Geral de Apoio",
-  "atualizadoEm": "2026-06-14T21:25:21.361Z",
+  "atualizadoEm": "2026-06-14T21:41:04.565Z",
   "exercicios": [
     2026,
     2025
@@ -520,6 +520,7 @@
       "codigo": "120089",
       "sigla": "DIRMAB",
       "nome": "Diretoria de Material Aeronáutico e Bélico",
+      "ao": "20X8",
       "nd": "339030",
       "ndNome": "Material de Consumo",
       "disponivel": 6000000
@@ -530,6 +531,7 @@
       "codigo": "120089",
       "sigla": "DIRMAB",
       "nome": "Diretoria de Material Aeronáutico e Bélico",
+      "ao": "20X8",
       "nd": "449052",
       "ndNome": "Equip. e Material Permanente",
       "disponivel": 7870000
@@ -540,6 +542,7 @@
       "codigo": "120089",
       "sigla": "DIRMAB",
       "nome": "Diretoria de Material Aeronáutico e Bélico",
+      "ao": "2000",
       "nd": "339039",
       "ndNome": "Outros Serv. de Terceiros - PJ",
       "disponivel": 2000000
@@ -550,6 +553,7 @@
       "codigo": "120017",
       "sigla": "PAMA-SP",
       "nome": "Parque de Material Aeronáutico de São Paulo",
+      "ao": "20X8",
       "nd": "339030",
       "ndNome": "Material de Consumo",
       "disponivel": 10000000
@@ -560,6 +564,7 @@
       "codigo": "120017",
       "sigla": "PAMA-SP",
       "nome": "Parque de Material Aeronáutico de São Paulo",
+      "ao": "20X8",
       "nd": "449052",
       "ndNome": "Equip. e Material Permanente",
       "disponivel": 11150000
@@ -570,6 +575,7 @@
       "codigo": "120017",
       "sigla": "PAMA-SP",
       "nome": "Parque de Material Aeronáutico de São Paulo",
+      "ao": "2000",
       "nd": "339039",
       "ndNome": "Outros Serv. de Terceiros - PJ",
       "disponivel": 3000000
@@ -580,6 +586,7 @@
       "codigo": "120013",
       "sigla": "PAME-RJ",
       "nome": "Parque de Material de Eletrônica do RJ",
+      "ao": "20X8",
       "nd": "339030",
       "ndNome": "Material de Consumo",
       "disponivel": 3330000
@@ -590,6 +597,7 @@
       "codigo": "120013",
       "sigla": "PAME-RJ",
       "nome": "Parque de Material de Eletrônica do RJ",
+      "ao": "20X8",
       "nd": "449052",
       "ndNome": "Equip. e Material Permanente",
       "disponivel": 4000000
@@ -600,6 +608,7 @@
       "codigo": "120042",
       "sigla": "GAP-RJ",
       "nome": "Grupamento de Apoio do Rio de Janeiro",
+      "ao": "14T5",
       "nd": "339030",
       "ndNome": "Material de Consumo",
       "disponivel": 4280000
@@ -610,6 +619,7 @@
       "codigo": "120042",
       "sigla": "GAP-RJ",
       "nome": "Grupamento de Apoio do Rio de Janeiro",
+      "ao": "2000",
       "nd": "339039",
       "ndNome": "Outros Serv. de Terceiros - PJ",
       "disponivel": 5000000
@@ -620,6 +630,7 @@
       "codigo": "120042",
       "sigla": "GAP-RJ",
       "nome": "Grupamento de Apoio do Rio de Janeiro",
+      "ao": "2000",
       "nd": "339014",
       "ndNome": "Diárias - Pessoal Civil/Militar",
       "disponivel": 2000000
@@ -630,6 +641,7 @@
       "codigo": "120018",
       "sigla": "GAP-SP",
       "nome": "Grupamento de Apoio de São Paulo",
+      "ao": "14T5",
       "nd": "339030",
       "ndNome": "Material de Consumo",
       "disponivel": 3640000
@@ -640,6 +652,7 @@
       "codigo": "120018",
       "sigla": "GAP-SP",
       "nome": "Grupamento de Apoio de São Paulo",
+      "ao": "2000",
       "nd": "339039",
       "ndNome": "Outros Serv. de Terceiros - PJ",
       "disponivel": 4000000
@@ -650,6 +663,7 @@
       "codigo": "120018",
       "sigla": "GAP-SP",
       "nome": "Grupamento de Apoio de São Paulo",
+      "ao": "2000",
       "nd": "339014",
       "ndNome": "Diárias - Pessoal Civil/Militar",
       "disponivel": 2000000
@@ -660,6 +674,7 @@
       "codigo": "120094",
       "sigla": "DTI",
       "nome": "Diretoria de Tecnologia da Informação",
+      "ao": "20X3",
       "nd": "449052",
       "ndNome": "Equip. e Material Permanente",
       "disponivel": 12000000
@@ -670,6 +685,7 @@
       "codigo": "120094",
       "sigla": "DTI",
       "nome": "Diretoria de Tecnologia da Informação",
+      "ao": "20X3",
       "nd": "339040",
       "ndNome": "Serv. de TIC - PJ",
       "disponivel": 6300000
@@ -680,6 +696,7 @@
       "codigo": "120097",
       "sigla": "CCA-BR",
       "nome": "Centro de Computação da Aeronáutica de Brasília",
+      "ao": "20X3",
       "nd": "449052",
       "ndNome": "Equip. e Material Permanente",
       "disponivel": 4000000
@@ -690,6 +707,7 @@
       "codigo": "120097",
       "sigla": "CCA-BR",
       "nome": "Centro de Computação da Aeronáutica de Brasília",
+      "ao": "20X3",
       "nd": "339040",
       "ndNome": "Serv. de TIC - PJ",
       "disponivel": 2450000
@@ -700,6 +718,7 @@
       "codigo": "120085",
       "sigla": "CELOG",
       "nome": "Centro Logístico da Aeronáutica",
+      "ao": "20X8",
       "nd": "339030",
       "ndNome": "Material de Consumo",
       "disponivel": 18000000
@@ -710,6 +729,7 @@
       "codigo": "120085",
       "sigla": "CELOG",
       "nome": "Centro Logístico da Aeronáutica",
+      "ao": "21D4",
       "nd": "449052",
       "ndNome": "Equip. e Material Permanente",
       "disponivel": 14420000
@@ -720,6 +740,7 @@
       "codigo": "120085",
       "sigla": "CELOG",
       "nome": "Centro Logístico da Aeronáutica",
+      "ao": "2000",
       "nd": "339039",
       "ndNome": "Outros Serv. de Terceiros - PJ",
       "disponivel": 6000000
@@ -730,6 +751,7 @@
       "codigo": "120089",
       "sigla": "DIRMAB",
       "nome": "Diretoria de Material Aeronáutico e Bélico",
+      "ao": "20X8",
       "nd": "339030",
       "ndNome": "Material de Consumo",
       "disponivel": 700000
@@ -740,6 +762,7 @@
       "codigo": "120089",
       "sigla": "DIRMAB",
       "nome": "Diretoria de Material Aeronáutico e Bélico",
+      "ao": "20X8",
       "nd": "449052",
       "ndNome": "Equip. e Material Permanente",
       "disponivel": 500000
@@ -750,6 +773,7 @@
       "codigo": "120017",
       "sigla": "PAMA-SP",
       "nome": "Parque de Material Aeronáutico de São Paulo",
+      "ao": "20X8",
       "nd": "339030",
       "ndNome": "Material de Consumo",
       "disponivel": 1200000
@@ -760,6 +784,7 @@
       "codigo": "120017",
       "sigla": "PAMA-SP",
       "nome": "Parque de Material Aeronáutico de São Paulo",
+      "ao": "20X8",
       "nd": "449052",
       "ndNome": "Equip. e Material Permanente",
       "disponivel": 900000
@@ -770,6 +795,7 @@
       "codigo": "120013",
       "sigla": "PAME-RJ",
       "nome": "Parque de Material de Eletrônica do RJ",
+      "ao": "20X8",
       "nd": "339030",
       "ndNome": "Material de Consumo",
       "disponivel": 640000
@@ -780,6 +806,7 @@
       "codigo": "120042",
       "sigla": "GAP-RJ",
       "nome": "Grupamento de Apoio do Rio de Janeiro",
+      "ao": "14T5",
       "nd": "339030",
       "ndNome": "Material de Consumo",
       "disponivel": 580000
@@ -790,6 +817,7 @@
       "codigo": "120042",
       "sigla": "GAP-RJ",
       "nome": "Grupamento de Apoio do Rio de Janeiro",
+      "ao": "2000",
       "nd": "339039",
       "ndNome": "Outros Serv. de Terceiros - PJ",
       "disponivel": 400000
@@ -800,6 +828,7 @@
       "codigo": "120018",
       "sigla": "GAP-SP",
       "nome": "Grupamento de Apoio de São Paulo",
+      "ao": "14T5",
       "nd": "339030",
       "ndNome": "Material de Consumo",
       "disponivel": 460000
@@ -810,6 +839,7 @@
       "codigo": "120018",
       "sigla": "GAP-SP",
       "nome": "Grupamento de Apoio de São Paulo",
+      "ao": "2000",
       "nd": "339039",
       "ndNome": "Outros Serv. de Terceiros - PJ",
       "disponivel": 300000
@@ -820,6 +850,7 @@
       "codigo": "120094",
       "sigla": "DTI",
       "nome": "Diretoria de Tecnologia da Informação",
+      "ao": "20X3",
       "nd": "449052",
       "ndNome": "Equip. e Material Permanente",
       "disponivel": 1000000
@@ -830,6 +861,7 @@
       "codigo": "120094",
       "sigla": "DTI",
       "nome": "Diretoria de Tecnologia da Informação",
+      "ao": "20X3",
       "nd": "339040",
       "ndNome": "Serv. de TIC - PJ",
       "disponivel": 480000
@@ -840,6 +872,7 @@
       "codigo": "120097",
       "sigla": "CCA-BR",
       "nome": "Centro de Computação da Aeronáutica de Brasília",
+      "ao": "20X3",
       "nd": "449052",
       "ndNome": "Equip. e Material Permanente",
       "disponivel": 520000
@@ -850,6 +883,7 @@
       "codigo": "120085",
       "sigla": "CELOG",
       "nome": "Centro Logístico da Aeronáutica",
+      "ao": "20X8",
       "nd": "339030",
       "ndNome": "Material de Consumo",
       "disponivel": 1800000
@@ -860,6 +894,7 @@
       "codigo": "120085",
       "sigla": "CELOG",
       "nome": "Centro Logístico da Aeronáutica",
+      "ao": "21D4",
       "nd": "449052",
       "ndNome": "Equip. e Material Permanente",
       "disponivel": 1300000

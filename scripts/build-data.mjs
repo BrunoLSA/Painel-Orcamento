@@ -133,6 +133,7 @@ if (exec && diref && uge && rap) {
     codigo: r.ug_codigo,
     sigla: r.ug_sigla,
     nome: r.ug_nome,
+    ao: r.acao,
     nd: r.nd,
     ndNome: r.nd_nome,
     disponivel: num(r.disponivel),
