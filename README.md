@@ -6,6 +6,7 @@ Sistema web **mobile-first** que apresenta um painel orçamentário do **Comando
 
 O painel mostra:
 
+- **Filtro por diretoria do COMGAP** — barra de chips no topo (**Todas · DIRMAB · DIRINFRA · DTI · CELOG**) que recalcula **todas** as seções para a diretoria selecionada.
 - **Dotação do ano por Ação Orçamentária (AO)** — com detalhamento de recebido, empenhado, liquidado, pago e saldo a empenhar (acordeão expansível).
 - **Crédito disponível DIREF por detalhes** — por Ação Orçamentária, Natureza de Despesa e Fonte.
 - **Crédito disponível UGE** — por Unidade Gestora Executora, com recebido e empenhado.
@@ -13,10 +14,23 @@ O painel mostra:
 - **Restos a Pagar** — Processados (RPP) e Não Processados (RPNP), com inscrito, cancelado, liquidado, pago e saldo a pagar.
 - **Cards de resumo** consolidados no topo.
 
+## Filtro por diretoria
+
+Cada lançamento do dataset (execução, DIREF, UGE e Restos a Pagar) é associado a
+uma **diretoria do COMGAP**. Ao selecionar um chip:
+
+- na visão **Todas**, os dados são consolidados (somados) entre as diretorias, e a
+  origem aparece como etiqueta/coluna de diretoria nas tabelas;
+- ao escolher uma diretoria, todas as seções passam a exibir apenas os dados dela.
+
+A filtragem, a agregação por AO/tipo e o cálculo do resumo são feitos **no
+frontend**, de modo que o painel se comporta de forma idêntica como site estático
+(GitHub Pages) e via servidor local.
+
 ## Tecnologia
 
-- **Backend:** Node.js + Express (API JSON e arquivos estáticos).
-- **Frontend:** HTML + CSS + JavaScript puro, responsivo e **sem dependências externas** (funciona offline, sem CDN). Gráficos e barras feitos em CSS.
+- **Backend:** Node.js + Express (serve a API JSON e os arquivos estáticos) — uso local.
+- **Frontend:** HTML + CSS + JavaScript puro, responsivo e **sem dependências externas** (funciona offline, sem CDN). Gráficos e barras feitos em CSS; filtro e cálculos no cliente.
 - Formatação em Real (BRL) e Português do Brasil.
 
 ## Como executar
@@ -36,7 +50,7 @@ Variável de ambiente opcional: `PORT` (padrão `3000`).
 .
 ├── server.js              # Servidor Express (API + estáticos) — uso local
 ├── data/
-│   └── orcamento.js       # Fonte ÚNICA de dados (substituível) + cálculo do resumo
+│   └── orcamento.js       # Fonte ÚNICA de dados (substituível), com a dimensão diretoria
 ├── scripts/
 │   └── build-data.mjs     # Gera docs/data.json a partir de data/orcamento.js
 ├── docs/                  # Site estático (publicado pelo GitHub Pages)
@@ -70,17 +84,20 @@ parte do sistema precisa ser alterada.
 
 ### Formato dos dados
 
-- `acoesOrcamentarias[]`: `{ codigo, nome, dotacao, recebido, empenhado, liquidado, pago }`
-- `creditoDirefDetalhes[]`: `{ ao, nd, ndNome, fonte, ptres, disponivel }`
-- `creditoUGE[]`: `{ codigo, sigla, nome, disponivel, empenhado, recebido }`
-- `restosAPagar[]`: `{ tipo, sigla, inscrito, cancelado, liquidado?, pago }`
+Cada registro inclui o campo `diretoria` (`"DIRMAB" | "DIRINFRA" | "DTI" | "CELOG"`):
 
-O resumo consolidado (totais e percentuais) é calculado automaticamente em
-`calcularResumo()`.
+- `diretorias[]`: `{ sigla, nome }`
+- `execucao[]`: `{ diretoria, ao, aoNome, dotacao, recebido, empenhado, liquidado, pago }`
+- `creditoDiref[]`: `{ diretoria, ao, nd, ndNome, fonte, ptres, disponivel }`
+- `creditoUGE[]`: `{ diretoria, codigo, sigla, nome, disponivel, empenhado, recebido }`
+- `restosAPagar[]`: `{ diretoria, tipo, sigla, inscrito, cancelado, liquidado?, pago }`
+
+O resumo consolidado (totais e percentuais), a agregação por AO e a filtragem por
+diretoria são calculados no frontend (`docs/js/app.js`), conforme o filtro ativo.
 
 ## API
 
-- `GET /api/orcamento` — retorna todos os dados do painel já com o resumo consolidado.
+- `GET /api/orcamento` — retorna o dataset bruto (com a dimensão `diretoria`).
 - `GET /api/health` — verificação de saúde do serviço.
 
 ---

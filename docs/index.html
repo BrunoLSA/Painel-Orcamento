@@ -24,6 +24,11 @@
     <p class="app-header__updated" id="updated">Carregando…</p>
   </header>
 
+  <!-- Filtro por Diretoria do COMGAP -->
+  <nav class="filtros" id="filtros" aria-label="Filtrar por diretoria" hidden>
+    <div class="filtros__inner" id="filtrosInner"></div>
+  </nav>
+
   <main class="container" id="content" aria-live="polite">
     <div class="state" id="loading">Carregando dados orcamentarios…</div>
     <div class="state state--error" id="error" hidden>
@@ -31,6 +36,8 @@
     </div>
 
     <div id="dashboard" hidden>
+      <p class="filtro-contexto" id="filtroContexto"></p>
+
       <!-- Cards de resumo -->
       <section class="section" aria-label="Resumo">
         <div class="cards" id="resumoCards"></div>

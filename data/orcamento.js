@@ -1,10 +1,12 @@
 // =============================================================================
 // Fonte de dados do Painel Orcamentario do COMGAP
 // -----------------------------------------------------------------------------
-// Este modulo concentra TODOS os dados exibidos no painel. Em producao, basta
-// substituir o conteudo de `dados` por uma carga vinda do Tesouro Gerencial /
-// SIAFI (ex.: leitura de planilha, consulta a banco ou chamada de API),
-// mantendo o mesmo formato de objeto. O restante do sistema nao precisa mudar.
+// Este modulo concentra TODOS os dados exibidos no painel. Cada lancamento e
+// associado a uma DIRETORIA do COMGAP (DIRMAB, DIRINFRA, DTI, CELOG), o que
+// permite filtrar o painel por diretoria. Em producao, basta substituir o
+// conteudo de `dados` por uma carga vinda do Tesouro Gerencial / SIAFI,
+// mantendo o mesmo formato. Todo o calculo (resumo e agregacoes) e feito no
+// frontend, de acordo com o filtro ativo.
 //
 // Todos os valores monetarios estao em Reais (BRL).
 // =============================================================================
@@ -15,131 +17,91 @@ export const dados = {
   orgaoNome: "Comando-Geral de Apoio",
   atualizadoEm: "2026-06-13T18:00:00-03:00",
 
+  // Diretorias do COMGAP usadas como filtro.
+  diretorias: [
+    { sigla: "DIRMAB", nome: "Diretoria de Material Aeronautico e Belico" },
+    { sigla: "DIRINFRA", nome: "Diretoria de Infraestrutura da Aeronautica" },
+    { sigla: "DTI", nome: "Diretoria de Tecnologia da Informacao" },
+    { sigla: "CELOG", nome: "Centro Logistico da Aeronautica" },
+  ],
+
   // ---------------------------------------------------------------------------
-  // Dotacao do ano por Acao Orcamentaria (AO)
-  // recebido = credito descentralizado recebido na UG
+  // Execucao orcamentaria por (Diretoria, Acao Orcamentaria)
+  // recebido = credito descentralizado recebido; valores acumulados no ano.
   // ---------------------------------------------------------------------------
-  acoesOrcamentarias: [
-    {
-      codigo: "2000",
-      nome: "Administracao da Unidade",
-      dotacao: 184500000,
-      recebido: 121300000,
-      empenhado: 98750000,
-      liquidado: 71200000,
-      pago: 64800000,
-    },
-    {
-      codigo: "20XJ",
-      nome: "Adequacao de Organizacoes Militares da Aeronautica",
-      dotacao: 96200000,
-      recebido: 58400000,
-      empenhado: 47100000,
-      liquidado: 28900000,
-      pago: 24350000,
-    },
-    {
-      codigo: "20X8",
-      nome: "Manutencao e Suprimento de Material Aeronautico",
-      dotacao: 312800000,
-      recebido: 205600000,
-      empenhado: 178200000,
-      liquidado: 132400000,
-      pago: 118900000,
-    },
-    {
-      codigo: "14T5",
-      nome: "Adequacao de Infraestrutura Operacional e Logistica",
-      dotacao: 74300000,
-      recebido: 41200000,
-      empenhado: 33600000,
-      liquidado: 16800000,
-      pago: 14100000,
-    },
-    {
-      codigo: "21D4",
-      nome: "Fortalecimento das Capacidades Logisticas de Defesa",
-      dotacao: 58900000,
-      recebido: 30100000,
-      empenhado: 22450000,
-      liquidado: 11300000,
-      pago: 9750000,
-    },
+  execucao: [
+    // ---- DIRMAB ----
+    { diretoria: "DIRMAB", ao: "2000", aoNome: "Administracao da Unidade", dotacao: 38000000, recebido: 25000000, empenhado: 20000000, liquidado: 14000000, pago: 12000000 },
+    { diretoria: "DIRMAB", ao: "20X8", aoNome: "Manutencao e Suprimento de Material Aeronautico", dotacao: 180000000, recebido: 120000000, empenhado: 105000000, liquidado: 78000000, pago: 70000000 },
+    { diretoria: "DIRMAB", ao: "20XJ", aoNome: "Adequacao de Organizacoes Militares da Aeronautica", dotacao: 30000000, recebido: 18000000, empenhado: 14000000, liquidado: 9000000, pago: 7500000 },
+    { diretoria: "DIRMAB", ao: "21D4", aoNome: "Fortalecimento das Capacidades Logisticas de Defesa", dotacao: 25000000, recebido: 13000000, empenhado: 9000000, liquidado: 5000000, pago: 4000000 },
+
+    // ---- DIRINFRA ----
+    { diretoria: "DIRINFRA", ao: "2000", aoNome: "Administracao da Unidade", dotacao: 28000000, recebido: 18000000, empenhado: 14000000, liquidado: 10000000, pago: 9000000 },
+    { diretoria: "DIRINFRA", ao: "14T5", aoNome: "Adequacao de Infraestrutura Operacional e Logistica", dotacao: 74300000, recebido: 41200000, empenhado: 33600000, liquidado: 16800000, pago: 14100000 },
+    { diretoria: "DIRINFRA", ao: "20XJ", aoNome: "Adequacao de Organizacoes Militares da Aeronautica", dotacao: 50000000, recebido: 30000000, empenhado: 25000000, liquidado: 16000000, pago: 13000000 },
+
+    // ---- DTI ----
+    { diretoria: "DTI", ao: "2000", aoNome: "Administracao da Unidade", dotacao: 22000000, recebido: 14000000, empenhado: 11000000, liquidado: 8000000, pago: 7000000 },
+    { diretoria: "DTI", ao: "20X3", aoNome: "Tecnologia da Informacao e Comunicacoes", dotacao: 60000000, recebido: 38000000, empenhado: 30000000, liquidado: 18000000, pago: 15000000 },
+
+    // ---- CELOG ----
+    { diretoria: "CELOG", ao: "2000", aoNome: "Administracao da Unidade", dotacao: 30000000, recebido: 20000000, empenhado: 16000000, liquidado: 12000000, pago: 10500000 },
+    { diretoria: "CELOG", ao: "20X8", aoNome: "Manutencao e Suprimento de Material Aeronautico", dotacao: 132800000, recebido: 85600000, empenhado: 73200000, liquidado: 54400000, pago: 48900000 },
+    { diretoria: "CELOG", ao: "21D4", aoNome: "Fortalecimento das Capacidades Logisticas de Defesa", dotacao: 33900000, recebido: 17100000, empenhado: 13450000, liquidado: 6300000, pago: 5750000 },
   ],
 
   // ---------------------------------------------------------------------------
   // Credito disponivel DIREF por detalhes
-  // (Acao Orcamentaria, Natureza de Despesa, Fonte, PTRES)
-  // disponivel = dotacao - destacado/descentralizado - bloqueado
+  // (Diretoria, Acao Orcamentaria, Natureza de Despesa, Fonte, PTRES)
   // ---------------------------------------------------------------------------
-  creditoDirefDetalhes: [
-    { ao: "2000", nd: "339030", ndNome: "Material de Consumo", fonte: "1000000000", ptres: "228628", disponivel: 18420000 },
-    { ao: "2000", nd: "339039", ndNome: "Outros Serv. de Terceiros - PJ", fonte: "1000000000", ptres: "228628", disponivel: 27650000 },
-    { ao: "2000", nd: "339014", ndNome: "Diarias - Pessoal Civil/Militar", fonte: "1000000000", ptres: "228628", disponivel: 4310000 },
-    { ao: "20X8", nd: "339030", ndNome: "Material de Consumo", fonte: "1000000000", ptres: "228701", disponivel: 41280000 },
-    { ao: "20X8", nd: "449052", ndNome: "Equip. e Material Permanente", fonte: "1000000000", ptres: "228701", disponivel: 53900000 },
-    { ao: "20X8", nd: "339039", ndNome: "Outros Serv. de Terceiros - PJ", fonte: "1022000000", ptres: "228701", disponivel: 22150000 },
-    { ao: "20XJ", nd: "449051", ndNome: "Obras e Instalacoes", fonte: "1000000000", ptres: "228655", disponivel: 19870000 },
-    { ao: "14T5", nd: "449051", ndNome: "Obras e Instalacoes", fonte: "1000000000", ptres: "226004", disponivel: 12640000 },
-    { ao: "21D4", nd: "449052", ndNome: "Equip. e Material Permanente", fonte: "1022000000", ptres: "228712", disponivel: 9430000 },
+  creditoDiref: [
+    { diretoria: "DIRMAB", ao: "20X8", nd: "339030", ndNome: "Material de Consumo", fonte: "1000000000", ptres: "228701", disponivel: 24180000 },
+    { diretoria: "DIRMAB", ao: "20X8", nd: "449052", ndNome: "Equip. e Material Permanente", fonte: "1000000000", ptres: "228701", disponivel: 31900000 },
+    { diretoria: "DIRMAB", ao: "2000", nd: "339039", ndNome: "Outros Serv. de Terceiros - PJ", fonte: "1000000000", ptres: "228628", disponivel: 9650000 },
+
+    { diretoria: "DIRINFRA", ao: "14T5", nd: "449051", ndNome: "Obras e Instalacoes", fonte: "1000000000", ptres: "226004", disponivel: 12640000 },
+    { diretoria: "DIRINFRA", ao: "20XJ", nd: "449051", ndNome: "Obras e Instalacoes", fonte: "1000000000", ptres: "228655", disponivel: 19870000 },
+    { diretoria: "DIRINFRA", ao: "2000", nd: "339030", ndNome: "Material de Consumo", fonte: "1000000000", ptres: "228628", disponivel: 5420000 },
+
+    { diretoria: "DTI", ao: "20X3", nd: "449052", ndNome: "Equip. e Material Permanente", fonte: "1000000000", ptres: "228740", disponivel: 18300000 },
+    { diretoria: "DTI", ao: "20X3", nd: "339040", ndNome: "Serv. de TIC - PJ", fonte: "1022000000", ptres: "228740", disponivel: 13750000 },
+
+    { diretoria: "CELOG", ao: "20X8", nd: "339030", ndNome: "Material de Consumo", fonte: "1000000000", ptres: "228701", disponivel: 17100000 },
+    { diretoria: "CELOG", ao: "21D4", nd: "449052", ndNome: "Equip. e Material Permanente", fonte: "1022000000", ptres: "228712", disponivel: 9430000 },
+    { diretoria: "CELOG", ao: "2000", nd: "339014", ndNome: "Diarias - Pessoal Civil/Militar", fonte: "1000000000", ptres: "228628", disponivel: 3210000 },
   ],
 
   // ---------------------------------------------------------------------------
-  // Credito disponivel por UGE (Unidade Gestora Executora)
+  // Credito disponivel por UGE (Unidade Gestora Executora), por diretoria
   // ---------------------------------------------------------------------------
   creditoUGE: [
-    { codigo: "120085", sigla: "CELOG", nome: "Centro Logistico da Aeronautica", disponivel: 38420000, empenhado: 142800000, recebido: 181220000 },
-    { codigo: "120017", sigla: "PAMA-SP", nome: "Parque de Material Aeronautico de Sao Paulo", disponivel: 24150000, empenhado: 88600000, recebido: 112750000 },
-    { codigo: "120042", sigla: "GAP-RJ", nome: "Grupamento de Apoio do Rio de Janeiro", disponivel: 11280000, empenhado: 39400000, recebido: 50680000 },
-    { codigo: "120018", sigla: "GAP-SP", nome: "Grupamento de Apoio de Sao Paulo", disponivel: 9640000, empenhado: 31200000, recebido: 40840000 },
-    { codigo: "120089", sigla: "DIRMAB", nome: "Diretoria de Material Aeronautico e Belico", disponivel: 15870000, empenhado: 45100000, recebido: 60970000 },
-    { codigo: "120013", sigla: "PAME-RJ", nome: "Parque de Material de Eletronica do RJ", disponivel: 7330000, empenhado: 22950000, recebido: 30280000 },
+    { diretoria: "DIRMAB", codigo: "120089", sigla: "DIRMAB", nome: "Diretoria de Material Aeronautico e Belico", disponivel: 15870000, empenhado: 45100000, recebido: 60970000 },
+    { diretoria: "DIRMAB", codigo: "120017", sigla: "PAMA-SP", nome: "Parque de Material Aeronautico de Sao Paulo", disponivel: 24150000, empenhado: 88600000, recebido: 112750000 },
+    { diretoria: "DIRMAB", codigo: "120013", sigla: "PAME-RJ", nome: "Parque de Material de Eletronica do RJ", disponivel: 7330000, empenhado: 22950000, recebido: 30280000 },
+
+    { diretoria: "DIRINFRA", codigo: "120042", sigla: "GAP-RJ", nome: "Grupamento de Apoio do Rio de Janeiro", disponivel: 11280000, empenhado: 39400000, recebido: 50680000 },
+    { diretoria: "DIRINFRA", codigo: "120018", sigla: "GAP-SP", nome: "Grupamento de Apoio de Sao Paulo", disponivel: 9640000, empenhado: 31200000, recebido: 40840000 },
+
+    { diretoria: "DTI", codigo: "120094", sigla: "DTI", nome: "Diretoria de Tecnologia da Informacao", disponivel: 18300000, empenhado: 30000000, recebido: 48300000 },
+    { diretoria: "DTI", codigo: "120097", sigla: "CCA-BR", nome: "Centro de Computacao da Aeronautica de Brasilia", disponivel: 6450000, empenhado: 11200000, recebido: 17650000 },
+
+    { diretoria: "CELOG", codigo: "120085", sigla: "CELOG", nome: "Centro Logistico da Aeronautica", disponivel: 38420000, empenhado: 142800000, recebido: 181220000 },
   ],
 
   // ---------------------------------------------------------------------------
-  // Restos a Pagar (exercicios anteriores)
+  // Restos a Pagar (exercicios anteriores), por diretoria e tipo
   // RPP  = Restos a Pagar Processados (ja liquidados)
   // RPNP = Restos a Pagar Nao Processados (ainda nao liquidados)
   // ---------------------------------------------------------------------------
   restosAPagar: [
-    { tipo: "Processados", sigla: "RPP", inscrito: 28640000, cancelado: 1320000, pago: 19880000 },
-    { tipo: "Nao Processados", sigla: "RPNP", inscrito: 74250000, cancelado: 6840000, liquidado: 41300000, pago: 33700000 },
+    { diretoria: "DIRMAB", tipo: "Processados", sigla: "RPP", inscrito: 12640000, cancelado: 520000, pago: 9880000 },
+    { diretoria: "DIRMAB", tipo: "Nao Processados", sigla: "RPNP", inscrito: 31250000, cancelado: 2840000, liquidado: 18300000, pago: 14700000 },
+    { diretoria: "DIRINFRA", tipo: "Processados", sigla: "RPP", inscrito: 6420000, cancelado: 310000, pago: 4180000 },
+    { diretoria: "DIRINFRA", tipo: "Nao Processados", sigla: "RPNP", inscrito: 18900000, cancelado: 1640000, liquidado: 9300000, pago: 7200000 },
+    { diretoria: "DTI", tipo: "Processados", sigla: "RPP", inscrito: 3180000, cancelado: 190000, pago: 2120000 },
+    { diretoria: "DTI", tipo: "Nao Processados", sigla: "RPNP", inscrito: 8400000, cancelado: 760000, liquidado: 4100000, pago: 3300000 },
+    { diretoria: "CELOG", tipo: "Processados", sigla: "RPP", inscrito: 6400000, cancelado: 300000, pago: 3700000 },
+    { diretoria: "CELOG", tipo: "Nao Processados", sigla: "RPNP", inscrito: 15700000, cancelado: 1600000, liquidado: 9600000, pago: 8500000 },
   ],
 };
-
-// Calcula os totais consolidados a partir das Acoes Orcamentarias, garantindo
-// coerencia entre os cards de resumo e o detalhamento.
-export function calcularResumo(d = dados) {
-  const ao = d.acoesOrcamentarias;
-  const soma = (campo) => ao.reduce((acc, x) => acc + (x[campo] || 0), 0);
-
-  const dotacao = soma("dotacao");
-  const recebido = soma("recebido");
-  const empenhado = soma("empenhado");
-  const liquidado = soma("liquidado");
-  const pago = soma("pago");
-
-  // Credito disponivel total: soma do disponivel das UGEs.
-  const creditoDisponivelUGE = d.creditoUGE.reduce((a, x) => a + (x.disponivel || 0), 0);
-  const creditoDisponivelDiref = d.creditoDirefDetalhes.reduce((a, x) => a + (x.disponivel || 0), 0);
-
-  // Restos a Pagar: saldo a pagar = inscrito - cancelado - pago.
-  const rapAPagar = d.restosAPagar.reduce(
-    (a, r) => a + ((r.inscrito || 0) - (r.cancelado || 0) - (r.pago || 0)),
-    0
-  );
-
-  return {
-    dotacao,
-    recebido,
-    empenhado,
-    liquidado,
-    pago,
-    aEmpenhar: recebido - empenhado,
-    aLiquidar: empenhado - liquidado,
-    aPagar: liquidado - pago,
-    creditoDisponivelUGE,
-    creditoDisponivelDiref,
-    rapAPagar,
-  };
-}
