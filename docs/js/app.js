@@ -41,7 +41,7 @@ let anoAtivo = null;
 // Conjunto vazio = todas as AO.
 let aoCreditoSel = new Set();
 let creditoDirefCache = [];
-let creditoUGECache = [];
+let creditoUGRCache = [];
 let aoNomesCache = new Map();
 
 // ----- Carregamento ------------------------------------------------------
@@ -66,12 +66,21 @@ async function carregar() {
     el("loading").hidden = true;
     el("filtros").hidden = false;
     el("dashboard").hidden = false;
+    ajustarTopbar();
   } catch (e) {
     console.error(e);
     el("loading").hidden = true;
     el("error").hidden = false;
   }
 }
+
+// Mede a altura da barra superior fixa e expoe em --topbar-h, para que o
+// menu lateral (no desktop) fique fixo logo abaixo dela, sem rolar.
+function ajustarTopbar() {
+  const tb = document.querySelector(".topbar");
+  if (tb) document.documentElement.style.setProperty("--topbar-h", tb.offsetHeight + "px");
+}
+window.addEventListener("resize", ajustarTopbar);
 
 // ----- Cabecalho ---------------------------------------------------------
 function renderCabecalho(d) {
@@ -155,7 +164,7 @@ function filtrarDataset(an, dir) {
   return {
     execucao: f(DATASET.execucao),
     creditoDiref: f(DATASET.creditoDiref),
-    creditoUGE: f(DATASET.creditoUGE),
+    creditoUGR: f(DATASET.creditoUGR),
     restosAPagar: f(DATASET.restosAPagar),
   };
 }
@@ -178,7 +187,7 @@ function renderTudo(d) {
   // Credito Disponivel: guarda o recorte atual (ano+diretoria) e aplica o
   // filtro local de AO ao renderizar a secao.
   creditoDirefCache = d.creditoDiref;
-  creditoUGECache = d.creditoUGE;
+  creditoUGRCache = d.creditoUGR;
   construirChipsAO();
   renderCreditoSecao();
 
@@ -189,7 +198,7 @@ function renderTudo(d) {
 // Monta os chips de Acao Orcamentaria (multisselecao) da secao Credito, a
 // partir das AOs presentes no recorte atual de DIREF e UGE.
 function construirChipsAO() {
-  const aos = [...new Set([...creditoDirefCache, ...creditoUGECache].map((x) => x.ao).filter(Boolean))].sort();
+  const aos = [...new Set([...creditoDirefCache, ...creditoUGRCache].map((x) => x.ao).filter(Boolean))].sort();
   // Remove da selecao AOs que nao existem mais no recorte atual.
   for (const a of [...aoCreditoSel]) if (!aos.includes(a)) aoCreditoSel.delete(a);
 
@@ -229,7 +238,7 @@ function renderCreditoSecao() {
   atualizarChipsAO();
   const filtra = (arr) => (aoCreditoSel.size === 0 ? arr : arr.filter((x) => aoCreditoSel.has(x.ao)));
   const diref = filtra(creditoDirefCache);
-  const uge = filtra(creditoUGECache);
+  const ugr = filtra(creditoUGRCache);
 
   // Grafico do topo: rosca de ND quando ha exatamente uma AO; senao, por AO.
   if (aoCreditoSel.size === 1) {
@@ -242,8 +251,8 @@ function renderCreditoSecao() {
     renderChartCreditoAO(diref, aoNomesCache);
   }
   renderDiref(diref, aoNomesCache);
-  renderChartUGE(uge);
-  renderUGE(uge);
+  renderChartUGR(ugr);
+  renderUGR(ugr, aoNomesCache);
 }
 
 // Liga o comportamento de acordeao (expandir/recolher) num container.
@@ -275,7 +284,7 @@ function calcularResumo(d) {
     liquidado,
     pago,
     creditoDisponivelDiref: soma(d.creditoDiref, "disponivel"),
-    creditoDisponivelUGE: soma(d.creditoUGE, "disponivel"),
+    creditoDisponivelUGR: soma(d.creditoUGR, "disponivel"),
     rapAPagar,
   };
 }
@@ -328,7 +337,7 @@ function renderResumo(r) {
     { lbl: "Liquidado", val: r.liquidado, cls: "card--amarelo", sub: fmtPct(pct(r.liquidado, r.empenhado)) + " do empenhado" },
     { lbl: "Pago", val: r.pago, cls: "card--roxo", sub: fmtPct(pct(r.pago, r.liquidado)) + " do liquidado" },
     { lbl: "Créd. Disp. DIREF", val: r.creditoDisponivelDiref, cls: "card--azul", sub: "Por AO / ND" },
-    { lbl: "Créd. Disp. UGE", val: r.creditoDisponivelUGE, cls: "card--verde", sub: "Nas Unidades Gestoras" },
+    { lbl: "Créd. Disp. UGR", val: r.creditoDisponivelUGR, cls: "card--verde", sub: "Unidades Gestoras Resp." },
     { lbl: "Restos a Pagar", val: r.rapAPagar, cls: "card--vermelho", sub: "Saldo a pagar (RP)" },
   ];
 
@@ -479,14 +488,14 @@ function renderDiref(itens, aoNomes) {
   ativarAccordion(el("direfPanel"));
 }
 
-// ----- Credito disponivel UGE (linhas por UGE, expandem ND) --------------
-function renderUGE(uges) {
-  if (!uges.length) {
-    el("ugePanel").innerHTML = vazioGraf("Sem UGE para este filtro.");
+// ----- Credito disponivel UGR (linhas por UGR, expandem por AO) -----------
+function renderUGR(ugrs, aoNomes) {
+  if (!ugrs.length) {
+    el("ugrPanel").innerHTML = vazioGraf("Sem UGR para este filtro.");
     return;
   }
-  const grupos = agruparPor(uges, (x) => x.sigla);
-  el("ugePanel").innerHTML = grupos
+  const grupos = agruparPor(ugrs, (x) => x.sigla);
+  el("ugrPanel").innerHTML = grupos
     .map((g) => {
       const u = g.linhas[0];
       return `
@@ -501,11 +510,11 @@ function renderUGE(uges) {
           </span>
           <span class="ao-item__chevron">&#9656;</span>
         </button>
-        <div class="ao-item__body">${ndDonutHTML(g.linhas)}</div>
+        <div class="ao-item__body">${aoDonutHTML(g.linhas, aoNomes)}</div>
       </div>`;
     })
     .join("");
-  ativarAccordion(el("ugePanel"));
+  ativarAccordion(el("ugrPanel"));
 }
 
 // ----- Restos a Pagar ----------------------------------------------------
@@ -668,6 +677,22 @@ function ndDonutHTML(linhas) {
   return svg ? `<div class="grafico">${svg}${legenda(segs, total)}</div>` : vazioGraf("Sem detalhamento por ND.");
 }
 
+// Rosca da composicao do credito disponivel por Acao Orcamentaria (usada nas UGR).
+function aoDonutHTML(linhas, aoNomes) {
+  const mapa = new Map();
+  for (const x of linhas) mapa.set(x.ao, (mapa.get(x.ao) || 0) + (x.disponivel || 0));
+  const segs = [...mapa.entries()]
+    .map(([ao, value], i) => ({
+      label: `${ao || "—"} · ${(aoNomes && aoNomes.get(ao)) || ""}`.replace(/ · $/, ""),
+      value,
+      color: CORES_GRAF[i % CORES_GRAF.length],
+    }))
+    .sort((a, b) => b.value - a.value);
+  const total = segs.reduce((a, s) => a + s.value, 0);
+  const svg = svgDonut(segs, { size: 150, thickness: 22, centroValor: fmtCompacto(total), centroLabel: "por AO" });
+  return svg ? `<div class="grafico">${svg}${legenda(segs, total)}</div>` : vazioGraf("Sem detalhamento por AO.");
+}
+
 // Credito: rosca da composicao do credito DIREF por Acao Orcamentaria.
 function renderChartCreditoAO(itens, aoNomes) {
   if (!itens.length) {
@@ -726,14 +751,14 @@ function renderChartAO(acoes) {
     `<p class="grafico__nota"><span class="pontinho" style="background:#cfe6dc"></span> Dotação &nbsp; <span class="pontinho" style="background:#1f8a64"></span> Empenhado</p>`;
 }
 
-// Credito: barras do credito disponivel por UGE (agregando as linhas de cada UGE).
-function renderChartUGE(uges) {
-  if (!uges.length) {
-    el("chartUGE").innerHTML = vazioGraf("Sem UGE para este filtro.");
+// Credito: barras do credito disponivel por UGR (agregando as linhas de cada UGR).
+function renderChartUGR(ugrs) {
+  if (!ugrs.length) {
+    el("chartUGR").innerHTML = vazioGraf("Sem UGR para este filtro.");
     return;
   }
-  const itens = agruparPor(uges, (x) => x.sigla).map((g) => ({ label: g.chave, value: g.total }));
-  el("chartUGE").innerHTML = barrasHoriz(itens, { cor: "#2563eb" });
+  const itens = agruparPor(ugrs, (x) => x.sigla).map((g) => ({ label: g.chave, value: g.total }));
+  el("chartUGR").innerHTML = barrasHoriz(itens, { cor: "#2563eb" });
 }
 
 // RAP: barras empilhadas (pago / a pagar / cancelado) por tipo.
