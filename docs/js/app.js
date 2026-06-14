@@ -72,7 +72,7 @@ function renderCabecalho(d) {
   el("updated").textContent =
     "Atualizado em " +
     dt.toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric" }) +
-    " as " +
+    " às " +
     dt.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
 }
 
@@ -108,7 +108,7 @@ function aplicarFiltro(dir) {
   // Rotulo de contexto
   const meta = DATASET.diretorias.find((x) => x.sigla === dir);
   el("filtroContexto").textContent =
-    dir === TODAS ? "Visao consolidada — todas as diretorias" : `${dir} — ${meta ? meta.nome : ""}`;
+    dir === TODAS ? "Visão consolidada — todas as diretorias" : `${dir} — ${meta ? meta.nome : ""}`;
 
   renderTudo(filtrarDataset(dir));
 }
@@ -178,7 +178,7 @@ function agregarAcoes(execucao) {
 
 // Agrega Restos a Pagar por tipo (somando as diretorias presentes).
 function agregarRAP(rap) {
-  const ordem = ["Processados", "Nao Processados"];
+  const ordem = ["Processados", "Não Processados"];
   const mapa = new Map();
   for (const r of rap) {
     let t = mapa.get(r.tipo);
@@ -200,13 +200,13 @@ function agregarRAP(rap) {
 // ----- Cards de resumo ---------------------------------------------------
 function renderResumo(r) {
   const cards = [
-    { lbl: "Dotacao do exercicio", val: r.dotacao, cls: "card--destaque card--verde", sub: "Limite orcamentario total" },
-    { lbl: "Recebido", val: r.recebido, cls: "card--azul", sub: "Credito descentralizado" },
+    { lbl: "Dotação do exercício", val: r.dotacao, cls: "card--destaque card--verde", sub: "Limite orçamentário total" },
+    { lbl: "Recebido", val: r.recebido, cls: "card--azul", sub: "Crédito descentralizado" },
     { lbl: "Empenhado", val: r.empenhado, cls: "card--verde", sub: fmtPct(pct(r.empenhado, r.recebido)) + " do recebido" },
     { lbl: "Liquidado", val: r.liquidado, cls: "card--amarelo", sub: fmtPct(pct(r.liquidado, r.empenhado)) + " do empenhado" },
     { lbl: "Pago", val: r.pago, cls: "card--roxo", sub: fmtPct(pct(r.pago, r.liquidado)) + " do liquidado" },
-    { lbl: "Cred. Disp. DIREF", val: r.creditoDisponivelDiref, cls: "card--azul", sub: "Por AO / ND" },
-    { lbl: "Cred. Disp. UGE", val: r.creditoDisponivelUGE, cls: "card--verde", sub: "Nas Unidades Gestoras" },
+    { lbl: "Créd. Disp. DIREF", val: r.creditoDisponivelDiref, cls: "card--azul", sub: "Por AO / ND" },
+    { lbl: "Créd. Disp. UGE", val: r.creditoDisponivelUGE, cls: "card--verde", sub: "Nas Unidades Gestoras" },
     { lbl: "Restos a Pagar", val: r.rapAPagar, cls: "card--vermelho", sub: "Saldo a pagar (RP)" },
   ];
 
@@ -240,7 +240,7 @@ function renderExecucao(r) {
         return `
         <div class="exec__row">
           <div class="exec__head">
-            <span class="exec__label">${l.lbl}<span class="exec__pct">${fmtPct(p)} da dotacao</span></span>
+            <span class="exec__label">${l.lbl}<span class="exec__pct">${fmtPct(p)} da dotação</span></span>
             <span class="exec__val">${fmtCompacto(l.val)}</span>
           </div>
           <div class="bar"><div class="bar__fill bar__fill--${l.cls}" style="width:${Math.min(p, 100)}%"></div></div>
@@ -264,7 +264,7 @@ function renderAcoes(acoes) {
         { l: "Liquidado", v: a.liquidado },
         { l: "Pago", v: a.pago },
         { l: "A empenhar", v: a.recebido - a.empenhado },
-        { l: "Execucao", txt: fmtPct(pct(a.empenhado, a.dotacao)) + " empenhado" },
+        { l: "Execução", txt: fmtPct(pct(a.empenhado, a.dotacao)) + " empenhado" },
       ];
       return `
       <div class="ao-item">
@@ -272,7 +272,7 @@ function renderAcoes(acoes) {
           <span class="ao-item__code">${a.codigo}</span>
           <span class="ao-item__info">
             <span class="ao-item__name">${a.nome}</span>
-            <span class="ao-item__dotacao">Dotacao: <b>${fmtBRL.format(a.dotacao)}</b></span>
+            <span class="ao-item__dotacao">Dotação: <b>${fmtBRL.format(a.dotacao)}</b></span>
           </span>
           <span class="ao-item__chevron">&#9656;</span>
         </button>
@@ -330,11 +330,11 @@ function renderDiref(itens) {
     <div class="tbl-wrap">
       <table class="tbl">
         <thead>
-          <tr>${mostrarDir ? "<th>Diretoria</th>" : ""}<th>AO</th><th>Natureza de Despesa</th><th>Fonte</th><th class="num">Disponivel</th></tr>
+          <tr>${mostrarDir ? "<th>Diretoria</th>" : ""}<th>AO</th><th>Natureza de Despesa</th><th>Fonte</th><th class="num">Disponível</th></tr>
         </thead>
         <tbody>${linhas}</tbody>
         <tfoot>
-          <tr class="tfoot-total"><td colspan="${mostrarDir ? 4 : 3}">Total disponivel DIREF</td><td class="num">${fmtBRL.format(total)}</td></tr>
+          <tr class="tfoot-total"><td colspan="${mostrarDir ? 4 : 3}">Total disponível DIREF</td><td class="num">${fmtBRL.format(total)}</td></tr>
         </tfoot>
       </table>
     </div>`;
@@ -358,7 +358,7 @@ function renderUGE(uges) {
           <span class="uge-card__cod">UG ${u.codigo}</span>
         </div>
         <div class="uge-card__nome">${u.nome}</div>
-        <div class="uge-card__disp-lbl">Credito disponivel${filtroAtivo === TODAS ? " · " + u.diretoria : ""}</div>
+        <div class="uge-card__disp-lbl">Crédito disponível${filtroAtivo === TODAS ? " · " + u.diretoria : ""}</div>
         <div class="uge-card__disp">${fmtBRL.format(u.disponivel)}</div>
         <div class="uge-card__meta">
           <span>Recebido: <b>${fmtCompacto(u.recebido)}</b></span>
