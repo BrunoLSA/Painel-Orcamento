@@ -76,6 +76,11 @@ body {
 }
 .app-header__reload:active { background: rgba(255, 255, 255, 0.3); }
 .app-header__reload.spin { transform: rotate(360deg); }
+.app-header__acoes { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.app-header__reload svg { display: block; }
+
+/* Cabecalho que aparece apenas no PDF/impressao */
+.print-cabecalho { display: none; }
 
 /* ---------- Filtro por diretoria ---------- */
 .filtros {
@@ -438,4 +443,48 @@ table.tbl tbody tr:nth-child(even) { background: #fbfdfc; }
 @media (min-width: 900px) {
   .cards { grid-template-columns: repeat(4, 1fr); }
   .uge-list { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ========================================================================
+   Impressao / Exportar PDF — relatorio completo (todas as secoes)
+   ======================================================================== */
+@media print {
+  /* Garante que cores de fundo e graficos saiam no PDF. */
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+  /* Esconde a navegacao e os controles interativos. */
+  .topbar, .sidebar, .overlay, .app-footer, .app-header__acoes,
+  .ao-filtro, .filtro-contexto { display: none !important; }
+
+  body { background: #fff; }
+  .layout { display: block; max-width: none; margin: 0; }
+  .content { width: 100%; }
+  .container { max-width: none; padding: 0; }
+
+  /* Mostra TODAS as secoes (uma por vez na tela, todas no PDF). */
+  .view { display: block !important; animation: none !important; margin-bottom: 18px; }
+  .view__title { border-top: 2px solid var(--verde-fab); padding-top: 10px; }
+
+  /* Expande os acordeoes (AO, DIREF, UGE) para o relatorio. */
+  .ao-item__body { display: block !important; }
+  .ao-item__chevron { display: none; }
+
+  /* Cabecalho do relatorio. */
+  .print-cabecalho {
+    display: block;
+    border-bottom: 2px solid var(--verde-fab);
+    padding-bottom: 10px;
+    margin-bottom: 14px;
+    color: var(--verde-fab);
+  }
+  .print-cabecalho strong { display: block; font-size: 17px; }
+  .print-cabecalho span { display: block; font-size: 12px; color: var(--texto); }
+  .print-cabecalho__emit { color: var(--texto-fraco) !important; margin-top: 2px; }
+
+  /* Evita cortar elementos no meio entre paginas. */
+  .card, .panel, .grafico, .grafico-bloco, .hbar, .stackrow, .ao-item,
+  .rap-card, .exec__row, table.tbl { break-inside: avoid; page-break-inside: avoid; }
+  .view__title, .bloco__title { break-after: avoid; page-break-after: avoid; }
+
+  @page { margin: 14mm; }
 }

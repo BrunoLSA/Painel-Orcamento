@@ -6,6 +6,7 @@ Sistema web **mobile-first** que apresenta um painel orçamentário do **Comando
 
 O painel mostra:
 
+- **Exportar PDF** — botão no cabeçalho que gera um relatório completo (todas as seções, com os gráficos e acordeões expandidos) via impressão do navegador (“Salvar como PDF”), respeitando os filtros ativos.
 - **Seletor de exercício (ano)** — alterna o ano exibido; todas as seções são recalculadas.
 - **Filtro por diretoria do COMGAP** — barra de chips no topo (**Todas · DIRMAB · DIRINFRA · DTI · CELOG**) que recalcula **todas** as seções para a diretoria selecionada.
 - **Dotação do ano por Ação Orçamentária (AO)** — com detalhamento de recebido, empenhado, liquidado, pago e saldo a empenhar (acordeão expansível).
