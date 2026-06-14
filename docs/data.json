@@ -2,7 +2,7 @@
   "exercicio": 2026,
   "orgao": "COMGAP",
   "orgaoNome": "Comando-Geral de Apoio",
-  "atualizadoEm": "2026-06-13T18:00:00-03:00",
+  "atualizadoEm": "2026-06-14T02:32:29.941Z",
   "diretorias": [
     {
       "sigla": "DIRMAB",
@@ -333,8 +333,8 @@
       "sigla": "RPNP",
       "inscrito": 31250000,
       "cancelado": 2840000,
-      "liquidado": 18300000,
-      "pago": 14700000
+      "pago": 14700000,
+      "liquidado": 18300000
     },
     {
       "diretoria": "DIRINFRA",
@@ -350,8 +350,8 @@
       "sigla": "RPNP",
       "inscrito": 18900000,
       "cancelado": 1640000,
-      "liquidado": 9300000,
-      "pago": 7200000
+      "pago": 7200000,
+      "liquidado": 9300000
     },
     {
       "diretoria": "DTI",
@@ -367,8 +367,8 @@
       "sigla": "RPNP",
       "inscrito": 8400000,
       "cancelado": 760000,
-      "liquidado": 4100000,
-      "pago": 3300000
+      "pago": 3300000,
+      "liquidado": 4100000
     },
     {
       "diretoria": "CELOG",
@@ -384,8 +384,8 @@
       "sigla": "RPNP",
       "inscrito": 15700000,
       "cancelado": 1600000,
-      "liquidado": 9600000,
-      "pago": 8500000
+      "pago": 8500000,
+      "liquidado": 9600000
     }
   ]
 }
