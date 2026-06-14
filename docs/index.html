@@ -41,10 +41,47 @@
         <button id="sidebarClose" class="sidebar__close" aria-label="Fechar menu">&times;</button>
       </div>
       <nav class="sidebar__nav" id="sidebarNav" role="tablist">
-        <button class="navitem" data-view="geral" role="tab"><span class="navitem__ico">&#9638;</span> Visao Geral</button>
-        <button class="navitem" data-view="execucao" role="tab"><span class="navitem__ico">&#9650;</span> Execucao</button>
-        <button class="navitem" data-view="credito" role="tab"><span class="navitem__ico">&#9655;</span> Credito Disponivel</button>
-        <button class="navitem" data-view="rap" role="tab"><span class="navitem__ico">&#9744;</span> Restos a Pagar</button>
+        <button class="navitem" data-view="geral" role="tab">
+          <span class="navitem__ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+              <rect x="14" y="3" width="7" height="7" rx="1.5"/>
+              <rect x="3" y="14" width="7" height="7" rx="1.5"/>
+              <rect x="14" y="14" width="7" height="7" rx="1.5"/>
+            </svg>
+          </span> Visao Geral
+        </button>
+        <button class="navitem" data-view="credito" role="tab">
+          <span class="navitem__ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 8a2 2 0 0 1 2-2h12.5A1.5 1.5 0 0 1 19 7.5V9"/>
+              <path d="M3 8v10a2 2 0 0 0 2 2h14a1 1 0 0 0 1-1v-3"/>
+              <path d="M22 10v4a1 1 0 0 1-1 1h-4.5a3 3 0 0 1 0-6H21a1 1 0 0 1 1 1Z"/>
+              <circle cx="16.5" cy="12" r="1" fill="currentColor" stroke="none"/>
+            </svg>
+          </span> Credito Disponivel
+        </button>
+        <button class="navitem" data-view="execucao" role="tab">
+          <span class="navitem__ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 20V4"/>
+              <path d="M4 20h16"/>
+              <rect x="7" y="12" width="3" height="5" rx="0.8"/>
+              <rect x="12" y="8" width="3" height="9" rx="0.8"/>
+              <rect x="17" y="5" width="3" height="12" rx="0.8"/>
+            </svg>
+          </span> Execucao
+        </button>
+        <button class="navitem" data-view="rap" role="tab">
+          <span class="navitem__ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M14 3H6.5A1.5 1.5 0 0 0 5 4.5v15A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5V8z"/>
+              <path d="M14 3v4a1 1 0 0 0 1 1h4"/>
+              <path d="M9 13h6"/>
+              <path d="M9 17h4"/>
+            </svg>
+          </span> Restos a Pagar
+        </button>
       </nav>
     </aside>
     <div class="overlay" id="overlay" hidden></div>
@@ -65,15 +102,6 @@
             <div class="cards" id="resumoCards"></div>
           </section>
 
-          <!-- EXECUCAO -->
-          <section class="view" data-view="execucao">
-            <h2 class="view__title">Execucao da Despesa</h2>
-            <div class="panel" id="execucaoPanel"></div>
-
-            <h3 class="bloco__title">Dotacao por Acao Orcamentaria (AO)</h3>
-            <div class="panel" id="aoPanel"></div>
-          </section>
-
           <!-- CREDITO DISPONIVEL -->
           <section class="view" data-view="credito">
             <h2 class="view__title">Credito Disponivel</h2>
@@ -85,6 +113,15 @@
             <h3 class="bloco__title" style="margin-top:20px">UGE</h3>
             <p class="section__hint">Por Unidade Gestora Executora</p>
             <div class="panel" id="ugePanel"></div>
+          </section>
+
+          <!-- EXECUCAO -->
+          <section class="view" data-view="execucao">
+            <h2 class="view__title">Execucao da Despesa</h2>
+            <div class="panel" id="execucaoPanel"></div>
+
+            <h3 class="bloco__title">Dotacao por Acao Orcamentaria (AO)</h3>
+            <div class="panel" id="aoPanel"></div>
           </section>
 
           <!-- RESTOS A PAGAR -->
