@@ -37,7 +37,9 @@ async function carregar() {
   el("dashboard").hidden = true;
 
   try {
-    const resp = await fetch("/api/orcamento", { cache: "no-store" });
+    // Caminho relativo: funciona tanto no GitHub Pages (data.json estatico)
+    // quanto no servidor local (Express serve a pasta docs/).
+    const resp = await fetch("./data.json", { cache: "no-store" });
     if (!resp.ok) throw new Error("HTTP " + resp.status);
     const dados = await resp.json();
     renderizar(dados);

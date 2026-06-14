@@ -5,6 +5,8 @@
   "type": "module",
   "main": "server.js",
   "scripts": {
+    "build": "node scripts/build-data.mjs",
+    "prestart": "node scripts/build-data.mjs",
     "start": "node server.js",
     "dev": "node --watch server.js"
   },

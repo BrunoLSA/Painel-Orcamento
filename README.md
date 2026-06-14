@@ -34,15 +34,32 @@ Variável de ambiente opcional: `PORT` (padrão `3000`).
 
 ```
 .
-├── server.js              # Servidor Express (API + estáticos)
+├── server.js              # Servidor Express (API + estáticos) — uso local
 ├── data/
-│   └── orcamento.js       # Fonte de dados (substituível) + cálculo do resumo
-├── public/
+│   └── orcamento.js       # Fonte ÚNICA de dados (substituível) + cálculo do resumo
+├── scripts/
+│   └── build-data.mjs     # Gera docs/data.json a partir de data/orcamento.js
+├── docs/                  # Site estático (publicado pelo GitHub Pages)
 │   ├── index.html         # Estrutura da página
 │   ├── css/styles.css     # Estilos mobile-first
-│   └── js/app.js          # Busca a API e renderiza o painel
+│   ├── js/app.js          # Busca data.json e renderiza o painel
+│   └── data.json          # Dados estáticos (gerado por `npm run build`)
 └── package.json
 ```
+
+## Hospedagem no GitHub Pages
+
+O painel funciona como **site 100% estático** — ideal para acessar pelo celular
+sem instalar nada. Para publicar:
+
+1. No GitHub, vá em **Settings → Pages**.
+2. Em **Build and deployment → Source**, escolha **Deploy from a branch**.
+3. Selecione a branch (`main` ou a branch deste trabalho) e a pasta **`/docs`**.
+4. Salve. Em alguns minutos o painel ficará disponível em:
+   `https://brunolsa.github.io/Painel-Orcamento/`
+
+Ao alterar os dados em `data/orcamento.js`, rode `npm run build` para regenerar
+`docs/data.json` e faça commit do arquivo atualizado.
 
 ## Integração com dados reais
 
