@@ -1,8 +1,12 @@
 {
-  "exercicio": 2026,
   "orgao": "COMGAP",
   "orgaoNome": "Comando-Geral de Apoio",
-  "atualizadoEm": "2026-06-14T03:07:36.783Z",
+  "atualizadoEm": "2026-06-14T20:20:51.082Z",
+  "exercicios": [
+    2026,
+    2025
+  ],
+  "exercicioPadrao": 2026,
   "diretorias": [
     {
       "sigla": "DIRMAB",
@@ -23,6 +27,7 @@
   ],
   "execucao": [
     {
+      "exercicio": 2026,
       "diretoria": "DIRMAB",
       "ao": "2000",
       "aoNome": "Administração da Unidade",
@@ -33,6 +38,7 @@
       "pago": 12000000
     },
     {
+      "exercicio": 2026,
       "diretoria": "DIRMAB",
       "ao": "20X8",
       "aoNome": "Manutenção e Suprimento de Material Aeronáutico",
@@ -43,6 +49,7 @@
       "pago": 70000000
     },
     {
+      "exercicio": 2026,
       "diretoria": "DIRMAB",
       "ao": "20XJ",
       "aoNome": "Adequação de Organizações Militares da Aeronáutica",
@@ -53,6 +60,7 @@
       "pago": 7500000
     },
     {
+      "exercicio": 2026,
       "diretoria": "DIRMAB",
       "ao": "21D4",
       "aoNome": "Fortalecimento das Capacidades Logísticas de Defesa",
@@ -63,6 +71,7 @@
       "pago": 4000000
     },
     {
+      "exercicio": 2026,
       "diretoria": "DIRINFRA",
       "ao": "2000",
       "aoNome": "Administração da Unidade",
@@ -73,6 +82,7 @@
       "pago": 9000000
     },
     {
+      "exercicio": 2026,
       "diretoria": "DIRINFRA",
       "ao": "14T5",
       "aoNome": "Adequação de Infraestrutura Operacional e Logística",
@@ -83,6 +93,7 @@
       "pago": 14100000
     },
     {
+      "exercicio": 2026,
       "diretoria": "DIRINFRA",
       "ao": "20XJ",
       "aoNome": "Adequação de Organizações Militares da Aeronáutica",
@@ -93,6 +104,7 @@
       "pago": 13000000
     },
     {
+      "exercicio": 2026,
       "diretoria": "DTI",
       "ao": "2000",
       "aoNome": "Administração da Unidade",
@@ -103,6 +115,7 @@
       "pago": 7000000
     },
     {
+      "exercicio": 2026,
       "diretoria": "DTI",
       "ao": "20X3",
       "aoNome": "Tecnologia da Informação e Comunicações",
@@ -113,6 +126,7 @@
       "pago": 15000000
     },
     {
+      "exercicio": 2026,
       "diretoria": "CELOG",
       "ao": "2000",
       "aoNome": "Administração da Unidade",
@@ -123,6 +137,7 @@
       "pago": 10500000
     },
     {
+      "exercicio": 2026,
       "diretoria": "CELOG",
       "ao": "20X8",
       "aoNome": "Manutenção e Suprimento de Material Aeronáutico",
@@ -133,6 +148,7 @@
       "pago": 48900000
     },
     {
+      "exercicio": 2026,
       "diretoria": "CELOG",
       "ao": "21D4",
       "aoNome": "Fortalecimento das Capacidades Logísticas de Defesa",
@@ -141,10 +157,143 @@
       "empenhado": 13450000,
       "liquidado": 6300000,
       "pago": 5750000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "DIRMAB",
+      "ao": "2000",
+      "aoNome": "Administração da Unidade",
+      "dotacao": 36000000,
+      "recebido": 35500000,
+      "empenhado": 34000000,
+      "liquidado": 33000000,
+      "pago": 32500000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "DIRMAB",
+      "ao": "20X8",
+      "aoNome": "Manutenção e Suprimento de Material Aeronáutico",
+      "dotacao": 170000000,
+      "recebido": 168000000,
+      "empenhado": 162000000,
+      "liquidado": 158000000,
+      "pago": 155000000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "DIRMAB",
+      "ao": "20XJ",
+      "aoNome": "Adequação de Organizações Militares da Aeronáutica",
+      "dotacao": 28000000,
+      "recebido": 27500000,
+      "empenhado": 26000000,
+      "liquidado": 25000000,
+      "pago": 24500000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "DIRMAB",
+      "ao": "21D4",
+      "aoNome": "Fortalecimento das Capacidades Logísticas de Defesa",
+      "dotacao": 22000000,
+      "recebido": 21500000,
+      "empenhado": 20000000,
+      "liquidado": 19000000,
+      "pago": 18500000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "DIRINFRA",
+      "ao": "2000",
+      "aoNome": "Administração da Unidade",
+      "dotacao": 26000000,
+      "recebido": 25500000,
+      "empenhado": 24000000,
+      "liquidado": 23000000,
+      "pago": 22500000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "DIRINFRA",
+      "ao": "14T5",
+      "aoNome": "Adequação de Infraestrutura Operacional e Logística",
+      "dotacao": 70000000,
+      "recebido": 68000000,
+      "empenhado": 64000000,
+      "liquidado": 60000000,
+      "pago": 58000000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "DIRINFRA",
+      "ao": "20XJ",
+      "aoNome": "Adequação de Organizações Militares da Aeronáutica",
+      "dotacao": 46000000,
+      "recebido": 45000000,
+      "empenhado": 43000000,
+      "liquidado": 41000000,
+      "pago": 40000000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "DTI",
+      "ao": "2000",
+      "aoNome": "Administração da Unidade",
+      "dotacao": 20000000,
+      "recebido": 19500000,
+      "empenhado": 19000000,
+      "liquidado": 18000000,
+      "pago": 17500000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "DTI",
+      "ao": "20X3",
+      "aoNome": "Tecnologia da Informação e Comunicações",
+      "dotacao": 55000000,
+      "recebido": 54000000,
+      "empenhado": 51000000,
+      "liquidado": 48000000,
+      "pago": 47000000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "CELOG",
+      "ao": "2000",
+      "aoNome": "Administração da Unidade",
+      "dotacao": 28000000,
+      "recebido": 27500000,
+      "empenhado": 26000000,
+      "liquidado": 25000000,
+      "pago": 24500000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "CELOG",
+      "ao": "20X8",
+      "aoNome": "Manutenção e Suprimento de Material Aeronáutico",
+      "dotacao": 125000000,
+      "recebido": 123000000,
+      "empenhado": 119000000,
+      "liquidado": 115000000,
+      "pago": 113000000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "CELOG",
+      "ao": "21D4",
+      "aoNome": "Fortalecimento das Capacidades Logísticas de Defesa",
+      "dotacao": 31000000,
+      "recebido": 30000000,
+      "empenhado": 28000000,
+      "liquidado": 27000000,
+      "pago": 26500000
     }
   ],
   "creditoDiref": [
     {
+      "exercicio": 2026,
       "diretoria": "DIRMAB",
       "ao": "20X8",
       "nd": "339030",
@@ -154,6 +303,7 @@
       "disponivel": 24180000
     },
     {
+      "exercicio": 2026,
       "diretoria": "DIRMAB",
       "ao": "20X8",
       "nd": "449052",
@@ -163,6 +313,7 @@
       "disponivel": 31900000
     },
     {
+      "exercicio": 2026,
       "diretoria": "DIRMAB",
       "ao": "2000",
       "nd": "339039",
@@ -172,6 +323,7 @@
       "disponivel": 9650000
     },
     {
+      "exercicio": 2026,
       "diretoria": "DIRINFRA",
       "ao": "14T5",
       "nd": "449051",
@@ -181,6 +333,7 @@
       "disponivel": 12640000
     },
     {
+      "exercicio": 2026,
       "diretoria": "DIRINFRA",
       "ao": "20XJ",
       "nd": "449051",
@@ -190,6 +343,7 @@
       "disponivel": 19870000
     },
     {
+      "exercicio": 2026,
       "diretoria": "DIRINFRA",
       "ao": "2000",
       "nd": "339030",
@@ -199,6 +353,7 @@
       "disponivel": 5420000
     },
     {
+      "exercicio": 2026,
       "diretoria": "DTI",
       "ao": "20X3",
       "nd": "449052",
@@ -208,6 +363,7 @@
       "disponivel": 18300000
     },
     {
+      "exercicio": 2026,
       "diretoria": "DTI",
       "ao": "20X3",
       "nd": "339040",
@@ -217,6 +373,7 @@
       "disponivel": 13750000
     },
     {
+      "exercicio": 2026,
       "diretoria": "CELOG",
       "ao": "20X8",
       "nd": "339030",
@@ -226,6 +383,7 @@
       "disponivel": 17100000
     },
     {
+      "exercicio": 2026,
       "diretoria": "CELOG",
       "ao": "21D4",
       "nd": "449052",
@@ -235,6 +393,7 @@
       "disponivel": 9430000
     },
     {
+      "exercicio": 2026,
       "diretoria": "CELOG",
       "ao": "2000",
       "nd": "339014",
@@ -242,10 +401,121 @@
       "fonte": "1000000000",
       "ptres": "228628",
       "disponivel": 3210000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "DIRMAB",
+      "ao": "20X8",
+      "nd": "339030",
+      "ndNome": "Material de Consumo",
+      "fonte": "1000000000",
+      "ptres": "228701",
+      "disponivel": 1240000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "DIRMAB",
+      "ao": "20X8",
+      "nd": "449052",
+      "ndNome": "Equip. e Material Permanente",
+      "fonte": "1000000000",
+      "ptres": "228701",
+      "disponivel": 2150000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "DIRMAB",
+      "ao": "2000",
+      "nd": "339039",
+      "ndNome": "Outros Serv. de Terceiros - PJ",
+      "fonte": "1000000000",
+      "ptres": "228628",
+      "disponivel": 480000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "DIRINFRA",
+      "ao": "14T5",
+      "nd": "449051",
+      "ndNome": "Obras e Instalações",
+      "fonte": "1000000000",
+      "ptres": "226004",
+      "disponivel": 920000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "DIRINFRA",
+      "ao": "20XJ",
+      "nd": "449051",
+      "ndNome": "Obras e Instalações",
+      "fonte": "1000000000",
+      "ptres": "228655",
+      "disponivel": 1130000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "DIRINFRA",
+      "ao": "2000",
+      "nd": "339030",
+      "ndNome": "Material de Consumo",
+      "fonte": "1000000000",
+      "ptres": "228628",
+      "disponivel": 260000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "DTI",
+      "ao": "20X3",
+      "nd": "449052",
+      "ndNome": "Equip. e Material Permanente",
+      "fonte": "1000000000",
+      "ptres": "228740",
+      "disponivel": 1480000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "DTI",
+      "ao": "20X3",
+      "nd": "339040",
+      "ndNome": "Serv. de TIC - PJ",
+      "fonte": "1022000000",
+      "ptres": "228740",
+      "disponivel": 760000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "CELOG",
+      "ao": "20X8",
+      "nd": "339030",
+      "ndNome": "Material de Consumo",
+      "fonte": "1000000000",
+      "ptres": "228701",
+      "disponivel": 980000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "CELOG",
+      "ao": "21D4",
+      "nd": "449052",
+      "ndNome": "Equip. e Material Permanente",
+      "fonte": "1022000000",
+      "ptres": "228712",
+      "disponivel": 540000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "CELOG",
+      "ao": "2000",
+      "nd": "339014",
+      "ndNome": "Diárias - Pessoal Civil/Militar",
+      "fonte": "1000000000",
+      "ptres": "228628",
+      "disponivel": 150000
     }
   ],
   "creditoUGE": [
     {
+      "exercicio": 2026,
       "diretoria": "DIRMAB",
       "codigo": "120089",
       "sigla": "DIRMAB",
@@ -255,6 +525,7 @@
       "recebido": 60970000
     },
     {
+      "exercicio": 2026,
       "diretoria": "DIRMAB",
       "codigo": "120017",
       "sigla": "PAMA-SP",
@@ -264,6 +535,7 @@
       "recebido": 112750000
     },
     {
+      "exercicio": 2026,
       "diretoria": "DIRMAB",
       "codigo": "120013",
       "sigla": "PAME-RJ",
@@ -273,6 +545,7 @@
       "recebido": 30280000
     },
     {
+      "exercicio": 2026,
       "diretoria": "DIRINFRA",
       "codigo": "120042",
       "sigla": "GAP-RJ",
@@ -282,6 +555,7 @@
       "recebido": 50680000
     },
     {
+      "exercicio": 2026,
       "diretoria": "DIRINFRA",
       "codigo": "120018",
       "sigla": "GAP-SP",
@@ -291,6 +565,7 @@
       "recebido": 40840000
     },
     {
+      "exercicio": 2026,
       "diretoria": "DTI",
       "codigo": "120094",
       "sigla": "DTI",
@@ -300,6 +575,7 @@
       "recebido": 48300000
     },
     {
+      "exercicio": 2026,
       "diretoria": "DTI",
       "codigo": "120097",
       "sigla": "CCA-BR",
@@ -309,6 +585,7 @@
       "recebido": 17650000
     },
     {
+      "exercicio": 2026,
       "diretoria": "CELOG",
       "codigo": "120085",
       "sigla": "CELOG",
@@ -316,10 +593,91 @@
       "disponivel": 38420000,
       "empenhado": 142800000,
       "recebido": 181220000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "DIRMAB",
+      "codigo": "120089",
+      "sigla": "DIRMAB",
+      "nome": "Diretoria de Material Aeronáutico e Bélico",
+      "disponivel": 1200000,
+      "empenhado": 58000000,
+      "recebido": 59500000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "DIRMAB",
+      "codigo": "120017",
+      "sigla": "PAMA-SP",
+      "nome": "Parque de Material Aeronáutico de São Paulo",
+      "disponivel": 2100000,
+      "empenhado": 104000000,
+      "recebido": 106500000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "DIRMAB",
+      "codigo": "120013",
+      "sigla": "PAME-RJ",
+      "nome": "Parque de Material de Eletrônica do RJ",
+      "disponivel": 640000,
+      "empenhado": 28000000,
+      "recebido": 29000000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "DIRINFRA",
+      "codigo": "120042",
+      "sigla": "GAP-RJ",
+      "nome": "Grupamento de Apoio do Rio de Janeiro",
+      "disponivel": 980000,
+      "empenhado": 47000000,
+      "recebido": 48200000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "DIRINFRA",
+      "codigo": "120018",
+      "sigla": "GAP-SP",
+      "nome": "Grupamento de Apoio de São Paulo",
+      "disponivel": 760000,
+      "empenhado": 38000000,
+      "recebido": 39000000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "DTI",
+      "codigo": "120094",
+      "sigla": "DTI",
+      "nome": "Diretoria de Tecnologia da Informação",
+      "disponivel": 1480000,
+      "empenhado": 46000000,
+      "recebido": 48000000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "DTI",
+      "codigo": "120097",
+      "sigla": "CCA-BR",
+      "nome": "Centro de Computação da Aeronáutica de Brasília",
+      "disponivel": 520000,
+      "empenhado": 16000000,
+      "recebido": 16800000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "CELOG",
+      "codigo": "120085",
+      "sigla": "CELOG",
+      "nome": "Centro Logístico da Aeronáutica",
+      "disponivel": 3100000,
+      "empenhado": 168000000,
+      "recebido": 172000000
     }
   ],
   "restosAPagar": [
     {
+      "exercicio": 2026,
       "diretoria": "DIRMAB",
       "tipo": "Processados",
       "sigla": "RPP",
@@ -328,6 +686,7 @@
       "pago": 9880000
     },
     {
+      "exercicio": 2026,
       "diretoria": "DIRMAB",
       "tipo": "Não Processados",
       "sigla": "RPNP",
@@ -337,6 +696,7 @@
       "liquidado": 18300000
     },
     {
+      "exercicio": 2026,
       "diretoria": "DIRINFRA",
       "tipo": "Processados",
       "sigla": "RPP",
@@ -345,6 +705,7 @@
       "pago": 4180000
     },
     {
+      "exercicio": 2026,
       "diretoria": "DIRINFRA",
       "tipo": "Não Processados",
       "sigla": "RPNP",
@@ -354,6 +715,7 @@
       "liquidado": 9300000
     },
     {
+      "exercicio": 2026,
       "diretoria": "DTI",
       "tipo": "Processados",
       "sigla": "RPP",
@@ -362,6 +724,7 @@
       "pago": 2120000
     },
     {
+      "exercicio": 2026,
       "diretoria": "DTI",
       "tipo": "Não Processados",
       "sigla": "RPNP",
@@ -371,6 +734,7 @@
       "liquidado": 4100000
     },
     {
+      "exercicio": 2026,
       "diretoria": "CELOG",
       "tipo": "Processados",
       "sigla": "RPP",
@@ -379,6 +743,7 @@
       "pago": 3700000
     },
     {
+      "exercicio": 2026,
       "diretoria": "CELOG",
       "tipo": "Não Processados",
       "sigla": "RPNP",
@@ -386,6 +751,82 @@
       "cancelado": 1600000,
       "pago": 8500000,
       "liquidado": 9600000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "DIRMAB",
+      "tipo": "Processados",
+      "sigla": "RPP",
+      "inscrito": 10200000,
+      "cancelado": 640000,
+      "pago": 9560000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "DIRMAB",
+      "tipo": "Não Processados",
+      "sigla": "RPNP",
+      "inscrito": 26800000,
+      "cancelado": 3100000,
+      "pago": 21500000,
+      "liquidado": 22000000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "DIRINFRA",
+      "tipo": "Processados",
+      "sigla": "RPP",
+      "inscrito": 5400000,
+      "cancelado": 380000,
+      "pago": 5020000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "DIRINFRA",
+      "tipo": "Não Processados",
+      "sigla": "RPNP",
+      "inscrito": 15600000,
+      "cancelado": 1900000,
+      "pago": 12500000,
+      "liquidado": 12800000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "DTI",
+      "tipo": "Processados",
+      "sigla": "RPP",
+      "inscrito": 2700000,
+      "cancelado": 220000,
+      "pago": 2480000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "DTI",
+      "tipo": "Não Processados",
+      "sigla": "RPNP",
+      "inscrito": 7100000,
+      "cancelado": 820000,
+      "pago": 5700000,
+      "liquidado": 5900000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "CELOG",
+      "tipo": "Processados",
+      "sigla": "RPP",
+      "inscrito": 5300000,
+      "cancelado": 360000,
+      "pago": 4900000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "CELOG",
+      "tipo": "Não Processados",
+      "sigla": "RPNP",
+      "inscrito": 13200000,
+      "cancelado": 1700000,
+      "pago": 10600000,
+      "liquidado": 11000000
     }
   ]
 }

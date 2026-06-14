@@ -88,6 +88,12 @@ function lerCSV(nome) {
   return existsSync(p) ? parseCSV(readFileSync(p, "utf8")) : null;
 }
 
+// Converte o ano (exercicio) para inteiro.
+function ano(v) {
+  const n = parseInt(String(v ?? "").trim(), 10);
+  return Number.isFinite(n) ? n : null;
+}
+
 // ----- Montagem do dataset --------------------------------------------------
 const exec = lerCSV("execucao.csv");
 const diref = lerCSV("credito_diref.csv");
@@ -100,61 +106,87 @@ if (exec && diref && uge && rap) {
   const arquivos = ["execucao.csv", "credito_diref.csv", "credito_uge.csv", "restos_a_pagar.csv"];
   const maisRecente = Math.max(...arquivos.map((f) => statSync(path.join(raizFonte, f)).mtimeMs));
 
+  const execucao = exec.map((r) => ({
+    exercicio: ano(r.ano) ?? config.exercicio,
+    diretoria: r.diretoria,
+    ao: r.acao,
+    aoNome: r.acao_nome,
+    dotacao: num(r.dotacao),
+    recebido: num(r.recebido),
+    empenhado: num(r.empenhado),
+    liquidado: num(r.liquidado),
+    pago: num(r.pago),
+  }));
+  const creditoDiref = diref.map((r) => ({
+    exercicio: ano(r.ano) ?? config.exercicio,
+    diretoria: r.diretoria,
+    ao: r.acao,
+    nd: r.nd,
+    ndNome: r.nd_nome,
+    fonte: r.fonte,
+    ptres: r.ptres,
+    disponivel: num(r.disponivel),
+  }));
+  const creditoUGE = uge.map((r) => ({
+    exercicio: ano(r.ano) ?? config.exercicio,
+    diretoria: r.diretoria,
+    codigo: r.ug_codigo,
+    sigla: r.ug_sigla,
+    nome: r.ug_nome,
+    disponivel: num(r.disponivel),
+    empenhado: num(r.empenhado),
+    recebido: num(r.recebido),
+  }));
+  const restosAPagar = rap.map((r) => {
+    const o = {
+      exercicio: ano(r.ano) ?? config.exercicio,
+      diretoria: r.diretoria,
+      tipo: r.tipo,
+      sigla: r.sigla,
+      inscrito: num(r.inscrito),
+      cancelado: num(r.cancelado),
+      pago: num(r.pago),
+    };
+    // liquidado so existe para Restos a Pagar Nao Processados (RPNP).
+    if (String(r.liquidado ?? "").trim() !== "") o.liquidado = num(r.liquidado);
+    return o;
+  });
+
+  // Exercicios disponiveis (mais recente primeiro); padrao = mais recente.
+  const exercicios = [...new Set(execucao.map((e) => e.exercicio))].sort((a, b) => b - a);
+
   dataset = {
-    exercicio: config.exercicio,
     orgao: config.orgao,
     orgaoNome: config.orgaoNome,
     atualizadoEm: new Date(maisRecente).toISOString(),
+    exercicios,
+    exercicioPadrao: exercicios[0],
     diretorias: config.diretorias,
-    execucao: exec.map((r) => ({
-      diretoria: r.diretoria,
-      ao: r.acao,
-      aoNome: r.acao_nome,
-      dotacao: num(r.dotacao),
-      recebido: num(r.recebido),
-      empenhado: num(r.empenhado),
-      liquidado: num(r.liquidado),
-      pago: num(r.pago),
-    })),
-    creditoDiref: diref.map((r) => ({
-      diretoria: r.diretoria,
-      ao: r.acao,
-      nd: r.nd,
-      ndNome: r.nd_nome,
-      fonte: r.fonte,
-      ptres: r.ptres,
-      disponivel: num(r.disponivel),
-    })),
-    creditoUGE: uge.map((r) => ({
-      diretoria: r.diretoria,
-      codigo: r.ug_codigo,
-      sigla: r.ug_sigla,
-      nome: r.ug_nome,
-      disponivel: num(r.disponivel),
-      empenhado: num(r.empenhado),
-      recebido: num(r.recebido),
-    })),
-    restosAPagar: rap.map((r) => {
-      const o = {
-        diretoria: r.diretoria,
-        tipo: r.tipo,
-        sigla: r.sigla,
-        inscrito: num(r.inscrito),
-        cancelado: num(r.cancelado),
-        pago: num(r.pago),
-      };
-      // liquidado so existe para Restos a Pagar Nao Processados (RPNP).
-      if (String(r.liquidado ?? "").trim() !== "") o.liquidado = num(r.liquidado);
-      return o;
-    }),
+    execucao,
+    creditoDiref,
+    creditoUGE,
+    restosAPagar,
   };
   console.log(
     `Fonte: planilhas oficiais em data/fonte/ ` +
-      `(${dataset.execucao.length} execucao, ${dataset.creditoDiref.length} DIREF, ` +
-      `${dataset.creditoUGE.length} UGE, ${dataset.restosAPagar.length} RAP).`
+      `(exercicios: ${exercicios.join(", ")}; ${execucao.length} execucao, ` +
+      `${creditoDiref.length} DIREF, ${creditoUGE.length} UGE, ${restosAPagar.length} RAP).`
   );
 } else {
-  dataset = dados;
+  // Fallback de demonstracao: normaliza para o mesmo formato (um unico exercicio).
+  const comAno = (arr) => arr.map((x) => ({ exercicio: dados.exercicio, ...x }));
+  dataset = {
+    orgao: dados.orgao,
+    orgaoNome: dados.orgaoNome,
+    atualizadoEm: dados.atualizadoEm,
+    exercicios: [dados.exercicio],
+    exercicioPadrao: dados.exercicio,
+    diretorias: dados.diretorias,
+    execucao: comAno(dados.execucao),
+    creditoDiref: comAno(dados.creditoDiref),
+    creditoUGE: comAno(dados.creditoUGE),
+    restosAPagar: comAno(dados.restosAPagar),
+  };
   console.log(
     "Fonte: dados de DEMONSTRACAO (data/orcamento.js). " +
       "Adicione as planilhas em data/fonte/ para usar os dados oficiais."

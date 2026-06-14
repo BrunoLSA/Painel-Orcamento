@@ -6,6 +6,7 @@ Sistema web **mobile-first** que apresenta um painel orçamentário do **Comando
 
 O painel mostra:
 
+- **Seletor de exercício (ano)** — alterna o ano exibido; todas as seções são recalculadas.
 - **Filtro por diretoria do COMGAP** — barra de chips no topo (**Todas · DIRMAB · DIRINFRA · DTI · CELOG**) que recalcula **todas** as seções para a diretoria selecionada.
 - **Dotação do ano por Ação Orçamentária (AO)** — com detalhamento de recebido, empenhado, liquidado, pago e saldo a empenhar (acordeão expansível).
 - **Crédito disponível DIREF por detalhes** — por Ação Orçamentária, Natureza de Despesa e Fonte.
@@ -93,35 +94,38 @@ contrário, usa-se o conjunto de demonstração de `data/orcamento.js`.
 ### Como atualizar os dados
 
 1. No Tesouro Gerencial, gere/abra as quatro visões e **exporte cada uma como CSV**.
-2. Salve sobre os arquivos em `data/fonte/` (mantendo os nomes e os cabeçalhos).
+2. Salve sobre os arquivos em `data/fonte/` (mantendo os nomes e os cabeçalhos, incluindo a coluna `ano`).
 3. Rode `npm run build` e faça commit do `docs/data.json` atualizado (e dos CSVs).
-4. Em `data/orcamento.js`, ajuste `exercicio` e a lista de `diretorias` se necessário.
+4. Os exercícios do seletor vêm da coluna `ano`; em `data/orcamento.js` ajuste a lista de `diretorias` se necessário.
 
 O conversor aceita separador `;` ou `,` e números em formato brasileiro
 (`1.234.567,89`), simples (`1234567.89`) ou inteiros, com ou sem `R$`.
 
 ### Planilhas e colunas (`data/fonte/`)
 
-Coluna `diretoria` aceita `DIRMAB | DIRINFRA | DTI | CELOG`.
+Coluna `ano` é o exercício (ex.: `2026`); `diretoria` aceita `DIRMAB | DIRINFRA | DTI | CELOG`.
+Para incluir mais de um exercício, basta acrescentar linhas com o `ano` correspondente
+(em todas as planilhas) — o **seletor de ano** do painel é montado a partir dos anos presentes.
 
-- **`execucao.csv`** — `diretoria;acao;acao_nome;dotacao;recebido;empenhado;liquidado;pago`
-- **`credito_diref.csv`** — `diretoria;acao;nd;nd_nome;fonte;ptres;disponivel`
-- **`credito_uge.csv`** — `diretoria;ug_codigo;ug_sigla;ug_nome;disponivel;empenhado;recebido`
-- **`restos_a_pagar.csv`** — `diretoria;tipo;sigla;inscrito;cancelado;liquidado;pago`
+- **`execucao.csv`** — `ano;diretoria;acao;acao_nome;dotacao;recebido;empenhado;liquidado;pago`
+- **`credito_diref.csv`** — `ano;diretoria;acao;nd;nd_nome;fonte;ptres;disponivel`
+- **`credito_uge.csv`** — `ano;diretoria;ug_codigo;ug_sigla;ug_nome;disponivel;empenhado;recebido`
+- **`restos_a_pagar.csv`** — `ano;diretoria;tipo;sigla;inscrito;cancelado;liquidado;pago`
   (deixe `liquidado` vazio para os Processados/RPP)
 
 ### Formato do `data.json` gerado
 
-Cada registro inclui o campo `diretoria` (`"DIRMAB" | "DIRINFRA" | "DTI" | "CELOG"`):
+Há a lista de `exercicios` disponíveis e cada registro inclui `exercicio` e `diretoria`:
 
+- `exercicios[]`: anos disponíveis (mais recente primeiro) · `exercicioPadrao`: ano inicial
 - `diretorias[]`: `{ sigla, nome }`
-- `execucao[]`: `{ diretoria, ao, aoNome, dotacao, recebido, empenhado, liquidado, pago }`
-- `creditoDiref[]`: `{ diretoria, ao, nd, ndNome, fonte, ptres, disponivel }`
-- `creditoUGE[]`: `{ diretoria, codigo, sigla, nome, disponivel, empenhado, recebido }`
-- `restosAPagar[]`: `{ diretoria, tipo, sigla, inscrito, cancelado, liquidado?, pago }`
+- `execucao[]`: `{ exercicio, diretoria, ao, aoNome, dotacao, recebido, empenhado, liquidado, pago }`
+- `creditoDiref[]`: `{ exercicio, diretoria, ao, nd, ndNome, fonte, ptres, disponivel }`
+- `creditoUGE[]`: `{ exercicio, diretoria, codigo, sigla, nome, disponivel, empenhado, recebido }`
+- `restosAPagar[]`: `{ exercicio, diretoria, tipo, sigla, inscrito, cancelado, liquidado?, pago }`
 
 O resumo consolidado (totais e percentuais), a agregação por AO e a filtragem por
-diretoria são calculados no frontend (`docs/js/app.js`), conforme o filtro ativo.
+**exercício e diretoria** são calculados no frontend (`docs/js/app.js`), conforme os filtros ativos.
 
 ## API
 
