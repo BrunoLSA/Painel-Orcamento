@@ -7,7 +7,7 @@
   <meta name="description" content="Painel Orçamentário do COMGAP - dotação, crédito disponível, execução e restos a pagar" />
   <title>Painel Orçamentário — COMGAP</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b3d2e'/%3E%3Ctext x='16' y='22' font-size='16' text-anchor='middle' fill='%23fff' font-family='sans-serif' font-weight='bold'%3ER$%3C/text%3E%3C/svg%3E" />
-  <link rel="stylesheet" href="css/styles.css?v=20260614e" />
+  <link rel="stylesheet" href="css/styles.css?v=20260614f" />
 </head>
 <body>
   <!-- Barra superior fixa: cabecalho + filtro de diretoria -->
@@ -116,8 +116,8 @@
             <h2 class="view__title">Crédito Disponível</h2>
 
             <div class="ao-filtro">
-              <label class="ao-filtro__lbl" for="aoCreditoSelect">Ação Orçamentária</label>
-              <select id="aoCreditoSelect" class="ao-filtro__sel" aria-label="Filtrar crédito por Ação Orçamentária"></select>
+              <span class="ao-filtro__lbl">Ações Orçamentárias</span>
+              <div class="ao-chips" id="aoCreditoChips" role="group" aria-label="Filtrar crédito por uma ou várias Ações Orçamentárias"></div>
             </div>
 
             <h3 class="bloco__title">DIREF</h3>
@@ -160,6 +160,6 @@
   <!-- O parametro ?v= e o "cache-busting": ao alterar CSS/JS, incremente a
        versao para forcar os navegadores (inclusive no celular) a baixar os
        arquivos novos, evitando layout quebrado por cache antigo. -->
-  <script src="js/app.js?v=20260614e" defer></script>
+  <script src="js/app.js?v=20260614f" defer></script>
 </body>
 </html>

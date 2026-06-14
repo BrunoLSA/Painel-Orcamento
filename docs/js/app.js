@@ -37,8 +37,9 @@ let DATASET = null;
 let filtroAtivo = TODAS;
 let anoAtivo = null;
 
-// Filtro de Acao Orcamentaria, local da secao Credito Disponivel.
-let aoCredito = TODAS;
+// Filtro de Acao Orcamentaria (multisselecao), local da secao Credito.
+// Conjunto vazio = todas as AO.
+let aoCreditoSel = new Set();
 let creditoDirefCache = [];
 let creditoUGECache = [];
 let aoNomesCache = new Map();
@@ -178,43 +179,67 @@ function renderTudo(d) {
   // filtro local de AO ao renderizar a secao.
   creditoDirefCache = d.creditoDiref;
   creditoUGECache = d.creditoUGE;
-  construirSeletorAOcredito();
+  construirChipsAO();
   renderCreditoSecao();
 
   renderChartRAP(rap); // RAP: barras empilhadas
   renderRAP(rap);
 }
 
-// Monta o seletor de Acao Orcamentaria da secao Credito (a partir das AOs
-// presentes no recorte atual de DIREF e UGE).
-function construirSeletorAOcredito() {
+// Monta os chips de Acao Orcamentaria (multisselecao) da secao Credito, a
+// partir das AOs presentes no recorte atual de DIREF e UGE.
+function construirChipsAO() {
   const aos = [...new Set([...creditoDirefCache, ...creditoUGECache].map((x) => x.ao).filter(Boolean))].sort();
-  if (!aos.includes(aoCredito)) aoCredito = TODAS;
-  const sel = el("aoCreditoSelect");
-  sel.innerHTML =
-    `<option value="${TODAS}">Todas as AO</option>` +
-    aos.map((a) => `<option value="${a}">${a} · ${aoNomesCache.get(a) || ""}</option>`).join("");
-  sel.value = aoCredito;
-  sel.onchange = () => {
-    aoCredito = sel.value;
-    renderCreditoSecao();
-  };
+  // Remove da selecao AOs que nao existem mais no recorte atual.
+  for (const a of [...aoCreditoSel]) if (!aos.includes(a)) aoCreditoSel.delete(a);
+
+  el("aoCreditoChips").innerHTML =
+    `<button class="chip" data-ao="${TODAS}" title="Todas as Ações Orçamentárias">Todas</button>` +
+    aos
+      .map((a) => `<button class="chip" data-ao="${a}" title="${a} · ${aoNomesCache.get(a) || ""}">${a}</button>`)
+      .join("");
+
+  el("aoCreditoChips")
+    .querySelectorAll(".chip")
+    .forEach((btn) =>
+      btn.addEventListener("click", () => {
+        const ao = btn.dataset.ao;
+        if (ao === TODAS) aoCreditoSel.clear();
+        else if (aoCreditoSel.has(ao)) aoCreditoSel.delete(ao);
+        else aoCreditoSel.add(ao);
+        renderCreditoSecao();
+      })
+    );
 }
 
-// Renderiza a secao Credito aplicando o filtro local de AO.
+// Atualiza o estado visual dos chips de AO.
+function atualizarChipsAO() {
+  el("aoCreditoChips")
+    .querySelectorAll(".chip")
+    .forEach((btn) => {
+      const ao = btn.dataset.ao;
+      const ativo = ao === TODAS ? aoCreditoSel.size === 0 : aoCreditoSel.has(ao);
+      btn.classList.toggle("chip--ativo", ativo);
+      btn.setAttribute("aria-pressed", ativo ? "true" : "false");
+    });
+}
+
+// Renderiza a secao Credito aplicando o filtro local de AO (uma ou varias).
 function renderCreditoSecao() {
-  const filtra = (arr) => (aoCredito === TODAS ? arr : arr.filter((x) => x.ao === aoCredito));
+  atualizarChipsAO();
+  const filtra = (arr) => (aoCreditoSel.size === 0 ? arr : arr.filter((x) => aoCreditoSel.has(x.ao)));
   const diref = filtra(creditoDirefCache);
   const uge = filtra(creditoUGECache);
 
-  // Grafico do topo: por AO (visao geral) ou por ND (quando uma AO e escolhida).
-  if (aoCredito === TODAS) {
-    renderChartCreditoAO(diref, aoNomesCache);
-  } else {
-    const nome = aoNomesCache.get(aoCredito) || "";
+  // Grafico do topo: rosca de ND quando ha exatamente uma AO; senao, por AO.
+  if (aoCreditoSel.size === 1) {
+    const ao = [...aoCreditoSel][0];
+    const nome = aoNomesCache.get(ao) || "";
     el("chartCreditoAO").innerHTML = diref.length
-      ? `<div class="grafico-bloco"><p class="grafico-bloco__tit">${aoCredito} · ${nome} — por Natureza de Despesa</p>${ndDonutHTML(diref)}</div>`
+      ? `<div class="grafico-bloco"><p class="grafico-bloco__tit">${ao} · ${nome} — por Natureza de Despesa</p>${ndDonutHTML(diref)}</div>`
       : vazioGraf("Sem crédito DIREF para esta AO.");
+  } else {
+    renderChartCreditoAO(diref, aoNomesCache);
   }
   renderDiref(diref, aoNomesCache);
   renderChartUGE(uge);
