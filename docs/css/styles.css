@@ -307,6 +307,15 @@ body {
 
 @media (min-width: 860px) {
   .overlay { display: none !important; }
+  /* Menu lateral fixo: nao rola com o conteudo, fica abaixo da barra superior. */
+  .sidebar {
+    position: sticky;
+    top: var(--topbar-h, 120px);
+    align-self: flex-start;
+    height: calc(100vh - var(--topbar-h, 120px));
+    overflow-y: auto;
+  }
+  .sidebar__nav { position: static; }
 }
 
 .vazio { padding: 26px 16px; text-align: center; color: var(--texto-fraco); font-size: 13px; }

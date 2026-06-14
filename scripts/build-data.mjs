@@ -97,13 +97,13 @@ function ano(v) {
 // ----- Montagem do dataset --------------------------------------------------
 const exec = lerCSV("execucao.csv");
 const diref = lerCSV("credito_diref.csv");
-const uge = lerCSV("credito_uge.csv");
+const ugr = lerCSV("credito_ugr.csv");
 const rap = lerCSV("restos_a_pagar.csv");
 
 let dataset;
-if (exec && diref && uge && rap) {
+if (exec && diref && ugr && rap) {
   // Data de atualizacao = mtime mais recente entre as planilhas.
-  const arquivos = ["execucao.csv", "credito_diref.csv", "credito_uge.csv", "restos_a_pagar.csv"];
+  const arquivos = ["execucao.csv", "credito_diref.csv", "credito_ugr.csv", "restos_a_pagar.csv"];
   const maisRecente = Math.max(...arquivos.map((f) => statSync(path.join(raizFonte, f)).mtimeMs));
 
   const execucao = exec.map((r) => ({
@@ -127,15 +127,13 @@ if (exec && diref && uge && rap) {
     ptres: r.ptres,
     disponivel: num(r.disponivel),
   }));
-  const creditoUGE = uge.map((r) => ({
+  const creditoUGR = ugr.map((r) => ({
     exercicio: ano(r.ano) ?? config.exercicio,
     diretoria: r.diretoria,
-    codigo: r.ug_codigo,
-    sigla: r.ug_sigla,
-    nome: r.ug_nome,
+    codigo: r.ugr_codigo,
+    sigla: r.ugr_sigla,
+    nome: r.ugr_nome,
     ao: r.acao,
-    nd: r.nd,
-    ndNome: r.nd_nome,
     disponivel: num(r.disponivel),
   }));
   const restosAPagar = rap.map((r) => {
@@ -165,13 +163,13 @@ if (exec && diref && uge && rap) {
     diretorias: config.diretorias,
     execucao,
     creditoDiref,
-    creditoUGE,
+    creditoUGR,
     restosAPagar,
   };
   console.log(
     `Fonte: planilhas oficiais em data/fonte/ ` +
       `(exercicios: ${exercicios.join(", ")}; ${execucao.length} execucao, ` +
-      `${creditoDiref.length} DIREF, ${creditoUGE.length} UGE, ${restosAPagar.length} RAP).`
+      `${creditoDiref.length} DIREF, ${creditoUGR.length} UGR, ${restosAPagar.length} RAP).`
   );
 } else {
   // Fallback de demonstracao: normaliza para o mesmo formato (um unico exercicio).
@@ -185,7 +183,7 @@ if (exec && diref && uge && rap) {
     diretorias: dados.diretorias,
     execucao: comAno(dados.execucao),
     creditoDiref: comAno(dados.creditoDiref),
-    creditoUGE: comAno(dados.creditoUGE),
+    creditoUGR: comAno(dados.creditoUGE || []),
     restosAPagar: comAno(dados.restosAPagar),
   };
   console.log(

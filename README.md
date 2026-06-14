@@ -11,14 +11,14 @@ O painel mostra:
 - **Filtro por diretoria do COMGAP** — barra de chips no topo (**Todas · DIRMAB · DIRINFRA · DTI · CELOG**) que recalcula **todas** as seções para a diretoria selecionada.
 - **Dotação do ano por Ação Orçamentária (AO)** — com detalhamento de recebido, empenhado, liquidado, pago e saldo a empenhar (acordeão expansível).
 - **Crédito disponível DIREF por detalhes** — por Ação Orçamentária, Natureza de Despesa e Fonte.
-- **Crédito disponível UGE** — por Unidade Gestora Executora, com recebido e empenhado.
+- **Crédito disponível UGR** — por Unidade Gestora Responsável, com gráfico de rosca por Ação Orçamentária.
 - **Execução da despesa** — barras de progresso de Recebido → Empenhado → Liquidado → Pago.
 - **Restos a Pagar** — Processados (RPP) e Não Processados (RPNP), com inscrito, cancelado, liquidado, pago e saldo a pagar.
 - **Cards de resumo** consolidados no topo.
 
 ## Filtro por diretoria
 
-Cada lançamento do dataset (execução, DIREF, UGE e Restos a Pagar) é associado a
+Cada lançamento do dataset (execução, DIREF, UGR e Restos a Pagar) é associado a
 uma **diretoria do COMGAP**. Ao selecionar um chip:
 
 - na visão **Todas**, os dados são consolidados (somados) entre as diretorias, e a
@@ -56,7 +56,7 @@ Variável de ambiente opcional: `PORT` (padrão `3000`).
 │   └── fonte/             # Planilhas OFICIAIS (Tesouro Gerencial) em CSV
 │       ├── execucao.csv
 │       ├── credito_diref.csv
-│       ├── credito_uge.csv
+│       ├── credito_ugr.csv
 │       └── restos_a_pagar.csv
 ├── scripts/
 │   └── build-data.mjs     # Converte data/fonte/*.csv → docs/data.json (ou usa o fallback)
@@ -110,7 +110,7 @@ Para incluir mais de um exercício, basta acrescentar linhas com o `ano` corresp
 
 - **`execucao.csv`** — `ano;diretoria;acao;acao_nome;dotacao;recebido;empenhado;liquidado;pago`
 - **`credito_diref.csv`** — `ano;diretoria;acao;nd;nd_nome;fonte;ptres;disponivel`
-- **`credito_uge.csv`** — `ano;diretoria;ug_codigo;ug_sigla;ug_nome;acao;nd;nd_nome;disponivel` (uma linha por UGE × AO × ND)
+- **`credito_ugr.csv`** — `ano;diretoria;ugr_codigo;ugr_sigla;ugr_nome;acao;disponivel` (uma linha por UGR × AO)
 - **`restos_a_pagar.csv`** — `ano;diretoria;tipo;sigla;inscrito;cancelado;liquidado;pago`
   (deixe `liquidado` vazio para os Processados/RPP)
 
@@ -122,7 +122,7 @@ Há a lista de `exercicios` disponíveis e cada registro inclui `exercicio` e `d
 - `diretorias[]`: `{ sigla, nome }`
 - `execucao[]`: `{ exercicio, diretoria, ao, aoNome, dotacao, recebido, empenhado, liquidado, pago }`
 - `creditoDiref[]`: `{ exercicio, diretoria, ao, nd, ndNome, fonte, ptres, disponivel }`
-- `creditoUGE[]`: `{ exercicio, diretoria, codigo, sigla, nome, ao, nd, ndNome, disponivel }`
+- `creditoUGR[]`: `{ exercicio, diretoria, codigo, sigla, nome, ao, disponivel }`
 - `restosAPagar[]`: `{ exercicio, diretoria, tipo, sigla, inscrito, cancelado, liquidado?, pago }`
 
 O resumo consolidado (totais e percentuais), a agregação por AO e a filtragem por

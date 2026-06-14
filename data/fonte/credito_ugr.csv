@@ -1,0 +1,26 @@
+ano;diretoria;ugr_codigo;ugr_sigla;ugr_nome;acao;disponivel
+2026;DIRMAB;120089;DIRMAB;Diretoria de Material Aeronáutico e Bélico;20X8;13870000
+2026;DIRMAB;120089;DIRMAB;Diretoria de Material Aeronáutico e Bélico;2000;2000000
+2026;DIRMAB;120017;PAMA-SP;Parque de Material Aeronáutico de São Paulo;20X8;21150000
+2026;DIRMAB;120017;PAMA-SP;Parque de Material Aeronáutico de São Paulo;2000;3000000
+2026;DIRMAB;120013;PAME-RJ;Parque de Material de Eletrônica do RJ;20X8;7330000
+2026;DIRINFRA;120042;GAP-RJ;Grupamento de Apoio do Rio de Janeiro;14T5;4280000
+2026;DIRINFRA;120042;GAP-RJ;Grupamento de Apoio do Rio de Janeiro;2000;7000000
+2026;DIRINFRA;120018;GAP-SP;Grupamento de Apoio de São Paulo;14T5;3640000
+2026;DIRINFRA;120018;GAP-SP;Grupamento de Apoio de São Paulo;2000;6000000
+2026;DTI;120094;DTI;Diretoria de Tecnologia da Informação;20X3;18300000
+2026;DTI;120097;CCA-BR;Centro de Computação da Aeronáutica de Brasília;20X3;6450000
+2026;CELOG;120085;CELOG;Centro Logístico da Aeronáutica;20X8;18000000
+2026;CELOG;120085;CELOG;Centro Logístico da Aeronáutica;21D4;14420000
+2026;CELOG;120085;CELOG;Centro Logístico da Aeronáutica;2000;6000000
+2025;DIRMAB;120089;DIRMAB;Diretoria de Material Aeronáutico e Bélico;20X8;1200000
+2025;DIRMAB;120017;PAMA-SP;Parque de Material Aeronáutico de São Paulo;20X8;2100000
+2025;DIRMAB;120013;PAME-RJ;Parque de Material de Eletrônica do RJ;20X8;640000
+2025;DIRINFRA;120042;GAP-RJ;Grupamento de Apoio do Rio de Janeiro;14T5;580000
+2025;DIRINFRA;120042;GAP-RJ;Grupamento de Apoio do Rio de Janeiro;2000;400000
+2025;DIRINFRA;120018;GAP-SP;Grupamento de Apoio de São Paulo;14T5;460000
+2025;DIRINFRA;120018;GAP-SP;Grupamento de Apoio de São Paulo;2000;300000
+2025;DTI;120094;DTI;Diretoria de Tecnologia da Informação;20X3;1480000
+2025;DTI;120097;CCA-BR;Centro de Computação da Aeronáutica de Brasília;20X3;520000
+2025;CELOG;120085;CELOG;Centro Logístico da Aeronáutica;20X8;1800000
+2025;CELOG;120085;CELOG;Centro Logístico da Aeronáutica;21D4;1300000
