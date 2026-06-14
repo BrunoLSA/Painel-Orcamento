@@ -159,17 +159,31 @@ function renderTudo(d) {
   const acoes = agregarAcoes(d.execucao);
   const rap = agregarRAP(d.restosAPagar);
 
+  // Nomes das AOs (para rotular o credito DIREF, que so traz o codigo).
+  const aoNomes = new Map(d.execucao.map((e) => [e.ao, e.aoNome]));
+
   renderResumo(resumo);
-  renderChartExecucao(resumo); // Visao Geral: rosca de execucao
+  renderChartExecucao(resumo); // Visao Geral: duas roscas de execucao
   renderExecucao(resumo);
   renderChartAO(acoes); // Execucao: barras de dotacao por AO
   renderAcoes(acoes);
-  renderChartND(d.creditoDiref); // Credito: rosca por Natureza de Despesa
-  renderDiref(d.creditoDiref);
+  renderChartCreditoAO(d.creditoDiref, aoNomes); // Credito: rosca % por AO
+  renderDiref(d.creditoDiref, aoNomes); // Credito DIREF: linhas por AO (expandem ND)
   renderChartUGE(d.creditoUGE); // Credito: barras por UGE
-  renderUGE(d.creditoUGE);
+  renderUGE(d.creditoUGE); // Credito UGE: linhas por UGE (expandem ND)
   renderChartRAP(rap); // RAP: barras empilhadas
   renderRAP(rap);
+}
+
+// Liga o comportamento de acordeao (expandir/recolher) num container.
+function ativarAccordion(container) {
+  container.querySelectorAll(".ao-item__head").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const item = btn.closest(".ao-item");
+      const open = item.classList.toggle("open");
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+  });
 }
 
 // Consolida os totais a partir das listas ja filtradas.
@@ -274,10 +288,15 @@ function renderExecucao(r) {
     linhas
       .map((l) => {
         const p = pct(l.val, base);
+        // Recebido: so % da dotacao. Demais etapas: % da dotacao e % do recebido.
+        const detalhe =
+          l.cls === "recebido"
+            ? `${fmtPct(p)} da dotação`
+            : `${fmtPct(p)} da dotação · ${fmtPct(pct(l.val, r.recebido))} do recebido`;
         return `
         <div class="exec__row">
           <div class="exec__head">
-            <span class="exec__label">${l.lbl}<span class="exec__pct">${fmtPct(p)} da dotação</span></span>
+            <span class="exec__label">${l.lbl}<span class="exec__pct">${detalhe}</span></span>
             <span class="exec__val">${fmtCompacto(l.val)}</span>
           </div>
           <div class="bar"><div class="bar__fill bar__fill--${l.cls}" style="width:${Math.min(p, 100)}%"></div></div>
@@ -303,6 +322,18 @@ function renderAcoes(acoes) {
         { l: "A empenhar", v: a.recebido - a.empenhado },
         { l: "Execução", txt: fmtPct(pct(a.empenhado, a.dotacao)) + " empenhado" },
       ];
+      // Rosca de execucao da AO (Recebido/Empenhado/Liquidado/Pago da dotacao).
+      const donut = blocoAneis(
+        "Execução",
+        a.dotacao,
+        [
+          { lbl: "Recebido", val: a.recebido, cor: "#2563eb", raio: 70 },
+          { lbl: "Empenhado", val: a.empenhado, cor: "#1f8a64", raio: 56 },
+          { lbl: "Liquidado", val: a.liquidado, cor: "#d97706", raio: 42 },
+          { lbl: "Pago", val: a.pago, cor: "#7c3aed", raio: 28 },
+        ],
+        "recebido"
+      );
       return `
       <div class="ao-item">
         <button class="ao-item__head" aria-expanded="false">
@@ -325,86 +356,85 @@ function renderAcoes(acoes) {
               )
               .join("")}
           </div>
+          ${donut}
         </div>
       </div>`;
     })
     .join("");
 
-  el("aoPanel")
-    .querySelectorAll(".ao-item__head")
-    .forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const item = btn.closest(".ao-item");
-        const open = item.classList.toggle("open");
-        btn.setAttribute("aria-expanded", open ? "true" : "false");
-      });
-    });
+  ativarAccordion(el("aoPanel"));
 }
 
-// ----- Credito disponivel DIREF (tabela) --------------------------------
-function renderDiref(itens) {
+// Agrupa registros por uma chave e soma o "disponivel"; preserva as linhas
+// originais para o detalhamento por ND.
+function agruparPor(itens, chaveFn) {
+  const mapa = new Map();
+  for (const x of itens) {
+    const k = chaveFn(x);
+    let g = mapa.get(k);
+    if (!g) {
+      g = { chave: k, total: 0, linhas: [] };
+      mapa.set(k, g);
+    }
+    g.total += x.disponivel || 0;
+    g.linhas.push(x);
+  }
+  return [...mapa.values()].sort((a, b) => b.total - a.total);
+}
+
+// ----- Credito disponivel DIREF (linhas por AO, expandem ND) -------------
+function renderDiref(itens, aoNomes) {
   if (!itens.length) {
-    el("direfPanel").innerHTML = '<div class="vazio">Sem dados para esta diretoria.</div>';
+    el("direfPanel").innerHTML = vazioGraf("Sem crédito DIREF para este filtro.");
     return;
   }
-  // Quando consolidado (Todas), mostra a coluna de diretoria.
-  const mostrarDir = filtroAtivo === TODAS;
-  const total = soma(itens, "disponivel");
-  const linhas = itens
+  const grupos = agruparPor(itens, (x) => x.ao);
+  el("direfPanel").innerHTML = grupos
     .map(
-      (x) => `
-      <tr>
-        ${mostrarDir ? `<td><span class="tag tag--dir">${x.diretoria}</span></td>` : ""}
-        <td><span class="tag">${x.ao}</span></td>
-        <td>${x.nd}<br><small style="color:var(--texto-fraco)">${x.ndNome}</small></td>
-        <td>${x.fonte}</td>
-        <td class="num">${fmtBRL.format(x.disponivel)}</td>
-      </tr>`
+      (g) => `
+      <div class="ao-item">
+        <button class="ao-item__head" aria-expanded="false">
+          <span class="ao-item__code">${g.chave}</span>
+          <span class="ao-item__info">
+            <span class="ao-item__name">${(aoNomes && aoNomes.get(g.chave)) || "Ação Orçamentária"}</span>
+            <span class="ao-item__dotacao">Disponível: <b>${fmtBRL.format(g.total)}</b></span>
+          </span>
+          <span class="ao-item__chevron">&#9656;</span>
+        </button>
+        <div class="ao-item__body">${ndDonutHTML(g.linhas)}</div>
+      </div>`
     )
     .join("");
-
-  el("direfPanel").innerHTML = `
-    <div class="tbl-wrap">
-      <table class="tbl">
-        <thead>
-          <tr>${mostrarDir ? "<th>Diretoria</th>" : ""}<th>AO</th><th>Natureza de Despesa</th><th>Fonte</th><th class="num">Disponível</th></tr>
-        </thead>
-        <tbody>${linhas}</tbody>
-        <tfoot>
-          <tr class="tfoot-total"><td colspan="${mostrarDir ? 4 : 3}">Total disponível DIREF</td><td class="num">${fmtBRL.format(total)}</td></tr>
-        </tfoot>
-      </table>
-    </div>`;
+  ativarAccordion(el("direfPanel"));
 }
 
-// ----- Credito disponivel UGE (cards) -----------------------------------
+// ----- Credito disponivel UGE (linhas por UGE, expandem ND) --------------
 function renderUGE(uges) {
   if (!uges.length) {
-    el("ugePanel").innerHTML = '<div class="vazio">Sem dados para esta diretoria.</div>';
+    el("ugePanel").innerHTML = vazioGraf("Sem UGE para este filtro.");
     return;
   }
-  const ordenadas = [...uges].sort((a, b) => b.disponivel - a.disponivel);
-  el("ugePanel").innerHTML =
-    '<div class="uge-list">' +
-    ordenadas
-      .map(
-        (u) => `
-      <div class="uge-card">
-        <div class="uge-card__top">
-          <span class="uge-card__sigla">${u.sigla}</span>
-          <span class="uge-card__cod">UG ${u.codigo}</span>
-        </div>
-        <div class="uge-card__nome">${u.nome}</div>
-        <div class="uge-card__disp-lbl">Crédito disponível${filtroAtivo === TODAS ? " · " + u.diretoria : ""}</div>
-        <div class="uge-card__disp">${fmtBRL.format(u.disponivel)}</div>
-        <div class="uge-card__meta">
-          <span>Recebido: <b>${fmtCompacto(u.recebido)}</b></span>
-          <span>Empenhado: <b>${fmtCompacto(u.empenhado)}</b></span>
-        </div>
-      </div>`
-      )
-      .join("") +
-    "</div>";
+  const grupos = agruparPor(uges, (x) => x.sigla);
+  el("ugePanel").innerHTML = grupos
+    .map((g) => {
+      const u = g.linhas[0];
+      return `
+      <div class="ao-item">
+        <button class="ao-item__head" aria-expanded="false">
+          <span class="ao-item__code">${u.sigla}</span>
+          <span class="ao-item__info">
+            <span class="ao-item__name">${u.nome}</span>
+            <span class="ao-item__dotacao">Disponível: <b>${fmtBRL.format(g.total)}</b>${
+              filtroAtivo === TODAS ? ` · ${u.diretoria}` : ""
+            }</span>
+          </span>
+          <span class="ao-item__chevron">&#9656;</span>
+        </button>
+        <div class="ao-item__body">${ndDonutHTML(g.linhas)}</div>
+      </div>`;
+    })
+    .join("");
+  ativarAccordion(el("ugePanel"));
 }
 
 // ----- Restos a Pagar ----------------------------------------------------
@@ -498,52 +528,93 @@ function legenda(segmentos, total) {
   );
 }
 
-// Visao Geral: aneis concentricos de execucao (% da dotacao).
-function renderChartExecucao(r) {
-  if (!r.dotacao) {
-    el("chartExecucao").innerHTML = vazioGraf();
-    return;
-  }
-  const size = 170, c = 85, sw = 13;
-  const aneis = [
-    { lbl: "Empenhado", val: r.empenhado, cor: "#1f8a64", raio: 70 },
-    { lbl: "Liquidado", val: r.liquidado, cor: "#d97706", raio: 55 },
-    { lbl: "Pago", val: r.pago, cor: "#7c3aed", raio: 40 },
-  ];
+// Bloco de aneis concentricos (cada anel = % do seu valor sobre `base`).
+// `centroLbl` indica qual anel aparece no centro (o primeiro da lista).
+function blocoAneis(titulo, base, aneis, centroLbl) {
+  if (!base) return "";
+  const size = 160, c = 80, sw = 12;
   const arcos = aneis
     .map((a) => {
-      const p = Math.min(pct(a.val, r.dotacao), 100);
+      const p = Math.min(pct(a.val, base), 100);
       return `<circle cx="${c}" cy="${c}" r="${a.raio}" fill="none" stroke="#edf2f0" stroke-width="${sw}"/>
         <circle cx="${c}" cy="${c}" r="${a.raio}" fill="none" stroke="${a.cor}" stroke-width="${sw}" stroke-linecap="round" pathLength="100" stroke-dasharray="${p} 100" transform="rotate(-90 ${c} ${c})"/>`;
     })
     .join("");
   const svg = `<svg class="donut" viewBox="0 0 ${size} ${size}" width="${size}" height="${size}" role="img">
       ${arcos}
-      <text x="${c}" y="${c - 2}" text-anchor="middle" class="donut__val">${fmtPct(pct(r.empenhado, r.dotacao))}</text>
-      <text x="${c}" y="${c + 15}" text-anchor="middle" class="donut__lbl">empenhado</text>
+      <text x="${c}" y="${c - 2}" text-anchor="middle" class="donut__val">${fmtPct(pct(aneis[0].val, base))}</text>
+      <text x="${c}" y="${c + 15}" text-anchor="middle" class="donut__lbl">${centroLbl}</text>
     </svg>`;
   const segs = aneis.map((a) => ({ label: a.lbl, value: a.val, color: a.cor }));
-  el("chartExecucao").innerHTML =
-    `<div class="grafico">${svg}${legenda(segs, r.dotacao)}</div>`;
+  return `<div class="grafico-bloco">
+      <p class="grafico-bloco__tit">${titulo}</p>
+      <div class="grafico">${svg}${legenda(segs, base)}</div>
+    </div>`;
 }
 
-// Credito: rosca da composicao do credito DIREF por Natureza de Despesa.
-function renderChartND(itens) {
-  if (!itens.length) {
-    el("chartND").innerHTML = vazioGraf("Sem crédito DIREF para este filtro.");
+// Visao Geral: duas roscas — sobre a dotacao (inclui % recebido) e sobre o recebido.
+function renderChartExecucao(r) {
+  if (!r.dotacao) {
+    el("chartExecucao").innerHTML = vazioGraf();
     return;
   }
+  const sobreDotacao = blocoAneis(
+    "Sobre a dotação",
+    r.dotacao,
+    [
+      { lbl: "Recebido", val: r.recebido, cor: "#2563eb", raio: 70 },
+      { lbl: "Empenhado", val: r.empenhado, cor: "#1f8a64", raio: 56 },
+      { lbl: "Liquidado", val: r.liquidado, cor: "#d97706", raio: 42 },
+      { lbl: "Pago", val: r.pago, cor: "#7c3aed", raio: 28 },
+    ],
+    "recebido"
+  );
+  const sobreRecebido = blocoAneis(
+    "Sobre o recebido",
+    r.recebido,
+    [
+      { lbl: "Empenhado", val: r.empenhado, cor: "#1f8a64", raio: 66 },
+      { lbl: "Liquidado", val: r.liquidado, cor: "#d97706", raio: 50 },
+      { lbl: "Pago", val: r.pago, cor: "#7c3aed", raio: 34 },
+    ],
+    "empenhado"
+  );
+  el("chartExecucao").innerHTML = `<div class="graficos-2">${sobreDotacao}${sobreRecebido}</div>`;
+}
+
+// Rosca da composicao do credito disponivel por Natureza de Despesa.
+function ndDonutHTML(linhas) {
   const mapa = new Map();
-  for (const x of itens) {
-    const chave = `${x.nd} ${x.ndNome}`;
+  for (const x of linhas) {
+    const chave = `${x.nd || "—"} ${x.ndNome || ""}`.trim();
     mapa.set(chave, (mapa.get(chave) || 0) + (x.disponivel || 0));
   }
   const segs = [...mapa.entries()]
     .map(([label, value], i) => ({ label, value, color: CORES_GRAF[i % CORES_GRAF.length] }))
     .sort((a, b) => b.value - a.value);
   const total = segs.reduce((a, s) => a + s.value, 0);
-  const svg = svgDonut(segs, { centroValor: fmtCompacto(total), centroLabel: "disponível" });
-  el("chartND").innerHTML = svg
+  const svg = svgDonut(segs, { size: 150, thickness: 22, centroValor: fmtCompacto(total), centroLabel: "disponível" });
+  return svg ? `<div class="grafico">${svg}${legenda(segs, total)}</div>` : vazioGraf("Sem detalhamento por ND.");
+}
+
+// Credito: rosca da composicao do credito DIREF por Acao Orcamentaria.
+function renderChartCreditoAO(itens, aoNomes) {
+  if (!itens.length) {
+    el("chartCreditoAO").innerHTML = vazioGraf("Sem crédito DIREF para este filtro.");
+    return;
+  }
+  const mapa = new Map();
+  for (const x of itens) mapa.set(x.ao, (mapa.get(x.ao) || 0) + (x.disponivel || 0));
+  const segs = [...mapa.entries()]
+    .map(([ao, value], i) => ({
+      label: `${ao} · ${(aoNomes && aoNomes.get(ao)) || ""}`.trim().replace(/ ·\s*$/, ""),
+      value,
+      color: CORES_GRAF[i % CORES_GRAF.length],
+    }))
+    .sort((a, b) => b.value - a.value);
+  const total = segs.reduce((a, s) => a + s.value, 0);
+  const svg = svgDonut(segs, { centroValor: fmtCompacto(total), centroLabel: "por AO" });
+  el("chartCreditoAO").innerHTML = svg
     ? `<div class="grafico">${svg}${legenda(segs, total)}</div>`
     : vazioGraf("Sem crédito DIREF para este filtro.");
 }

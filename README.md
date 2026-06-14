@@ -109,7 +109,7 @@ Para incluir mais de um exercício, basta acrescentar linhas com o `ano` corresp
 
 - **`execucao.csv`** — `ano;diretoria;acao;acao_nome;dotacao;recebido;empenhado;liquidado;pago`
 - **`credito_diref.csv`** — `ano;diretoria;acao;nd;nd_nome;fonte;ptres;disponivel`
-- **`credito_uge.csv`** — `ano;diretoria;ug_codigo;ug_sigla;ug_nome;disponivel;empenhado;recebido`
+- **`credito_uge.csv`** — `ano;diretoria;ug_codigo;ug_sigla;ug_nome;nd;nd_nome;disponivel` (uma linha por UGE × ND)
 - **`restos_a_pagar.csv`** — `ano;diretoria;tipo;sigla;inscrito;cancelado;liquidado;pago`
   (deixe `liquidado` vazio para os Processados/RPP)
 
@@ -121,7 +121,7 @@ Há a lista de `exercicios` disponíveis e cada registro inclui `exercicio` e `d
 - `diretorias[]`: `{ sigla, nome }`
 - `execucao[]`: `{ exercicio, diretoria, ao, aoNome, dotacao, recebido, empenhado, liquidado, pago }`
 - `creditoDiref[]`: `{ exercicio, diretoria, ao, nd, ndNome, fonte, ptres, disponivel }`
-- `creditoUGE[]`: `{ exercicio, diretoria, codigo, sigla, nome, disponivel, empenhado, recebido }`
+- `creditoUGE[]`: `{ exercicio, diretoria, codigo, sigla, nome, nd, ndNome, disponivel }`
 - `restosAPagar[]`: `{ exercicio, diretoria, tipo, sigla, inscrito, cancelado, liquidado?, pago }`
 
 O resumo consolidado (totais e percentuais), a agregação por AO e a filtragem por

@@ -133,9 +133,9 @@ if (exec && diref && uge && rap) {
     codigo: r.ug_codigo,
     sigla: r.ug_sigla,
     nome: r.ug_nome,
+    nd: r.nd,
+    ndNome: r.nd_nome,
     disponivel: num(r.disponivel),
-    empenhado: num(r.empenhado),
-    recebido: num(r.recebido),
   }));
   const restosAPagar = rap.map((r) => {
     const o = {
