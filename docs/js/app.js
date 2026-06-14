@@ -156,12 +156,20 @@ function filtrarDataset(an, dir) {
 // ----- Renderizacao ------------------------------------------------------
 function renderTudo(d) {
   const resumo = calcularResumo(d);
+  const acoes = agregarAcoes(d.execucao);
+  const rap = agregarRAP(d.restosAPagar);
+
   renderResumo(resumo);
+  renderChartExecucao(resumo); // Visao Geral: rosca de execucao
   renderExecucao(resumo);
-  renderAcoes(agregarAcoes(d.execucao));
+  renderChartAO(acoes); // Execucao: barras de dotacao por AO
+  renderAcoes(acoes);
+  renderChartND(d.creditoDiref); // Credito: rosca por Natureza de Despesa
   renderDiref(d.creditoDiref);
+  renderChartUGE(d.creditoUGE); // Credito: barras por UGE
   renderUGE(d.creditoUGE);
-  renderRAP(agregarRAP(d.restosAPagar));
+  renderChartRAP(rap); // RAP: barras empilhadas
+  renderRAP(rap);
 }
 
 // Consolida os totais a partir das listas ja filtradas.
@@ -439,6 +447,192 @@ function renderRAP(itens) {
       })
       .join("") +
     "</div>";
+}
+
+// =========================================================================
+// Graficos (SVG/CSS puro, sem dependencias) — respeitam os filtros ativos
+// =========================================================================
+const CORES_GRAF = ["#1f8a64", "#2563eb", "#d97706", "#7c3aed", "#0ea5a4", "#b91c1c", "#0b3d2e", "#9333ea"];
+const vazioGraf = (msg) => `<div class="vazio">${msg || "Sem dados para este filtro."}</div>`;
+
+// Rosca (donut) generica a partir de segmentos [{label, value, color}].
+function svgDonut(segmentos, { size = 168, thickness = 24, centroValor = "", centroLabel = "" } = {}) {
+  const total = segmentos.reduce((a, s) => a + (s.value || 0), 0);
+  if (total <= 0) return null;
+  const r = size / 2 - thickness / 2 - 2;
+  const c = size / 2;
+  let acc = 0;
+  const arcos = segmentos
+    .filter((s) => s.value > 0)
+    .map((s) => {
+      const pct = (s.value / total) * 100;
+      const el = `<circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="${s.color}" stroke-width="${thickness}" pathLength="100" stroke-dasharray="${pct} ${100 - pct}" stroke-dashoffset="${-acc}" transform="rotate(-90 ${c} ${c})"/>`;
+      acc += pct;
+      return el;
+    })
+    .join("");
+  return `<svg class="donut" viewBox="0 0 ${size} ${size}" width="${size}" height="${size}" role="img">
+      <circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="#edf2f0" stroke-width="${thickness}"/>
+      ${arcos}
+      <text x="${c}" y="${c - 2}" text-anchor="middle" class="donut__val">${centroValor}</text>
+      <text x="${c}" y="${c + 15}" text-anchor="middle" class="donut__lbl">${centroLabel}</text>
+    </svg>`;
+}
+
+// Legenda generica para os segmentos.
+function legenda(segmentos, total) {
+  return (
+    '<ul class="legenda">' +
+    segmentos
+      .filter((s) => s.value > 0)
+      .map(
+        (s) =>
+          `<li class="legenda__item">
+            <span class="legenda__cor" style="background:${s.color}"></span>
+            <span class="legenda__txt">${s.label}</span>
+            <span class="legenda__val">${fmtCompacto(s.value)}${total ? ` · ${fmtPct(pct(s.value, total))}` : ""}</span>
+          </li>`
+      )
+      .join("") +
+    "</ul>"
+  );
+}
+
+// Visao Geral: aneis concentricos de execucao (% da dotacao).
+function renderChartExecucao(r) {
+  if (!r.dotacao) {
+    el("chartExecucao").innerHTML = vazioGraf();
+    return;
+  }
+  const size = 170, c = 85, sw = 13;
+  const aneis = [
+    { lbl: "Empenhado", val: r.empenhado, cor: "#1f8a64", raio: 70 },
+    { lbl: "Liquidado", val: r.liquidado, cor: "#d97706", raio: 55 },
+    { lbl: "Pago", val: r.pago, cor: "#7c3aed", raio: 40 },
+  ];
+  const arcos = aneis
+    .map((a) => {
+      const p = Math.min(pct(a.val, r.dotacao), 100);
+      return `<circle cx="${c}" cy="${c}" r="${a.raio}" fill="none" stroke="#edf2f0" stroke-width="${sw}"/>
+        <circle cx="${c}" cy="${c}" r="${a.raio}" fill="none" stroke="${a.cor}" stroke-width="${sw}" stroke-linecap="round" pathLength="100" stroke-dasharray="${p} 100" transform="rotate(-90 ${c} ${c})"/>`;
+    })
+    .join("");
+  const svg = `<svg class="donut" viewBox="0 0 ${size} ${size}" width="${size}" height="${size}" role="img">
+      ${arcos}
+      <text x="${c}" y="${c - 2}" text-anchor="middle" class="donut__val">${fmtPct(pct(r.empenhado, r.dotacao))}</text>
+      <text x="${c}" y="${c + 15}" text-anchor="middle" class="donut__lbl">empenhado</text>
+    </svg>`;
+  const segs = aneis.map((a) => ({ label: a.lbl, value: a.val, color: a.cor }));
+  el("chartExecucao").innerHTML =
+    `<div class="grafico">${svg}${legenda(segs, r.dotacao)}</div>`;
+}
+
+// Credito: rosca da composicao do credito DIREF por Natureza de Despesa.
+function renderChartND(itens) {
+  if (!itens.length) {
+    el("chartND").innerHTML = vazioGraf("Sem crédito DIREF para este filtro.");
+    return;
+  }
+  const mapa = new Map();
+  for (const x of itens) {
+    const chave = `${x.nd} ${x.ndNome}`;
+    mapa.set(chave, (mapa.get(chave) || 0) + (x.disponivel || 0));
+  }
+  const segs = [...mapa.entries()]
+    .map(([label, value], i) => ({ label, value, color: CORES_GRAF[i % CORES_GRAF.length] }))
+    .sort((a, b) => b.value - a.value);
+  const total = segs.reduce((a, s) => a + s.value, 0);
+  const svg = svgDonut(segs, { centroValor: fmtCompacto(total), centroLabel: "disponível" });
+  el("chartND").innerHTML = svg
+    ? `<div class="grafico">${svg}${legenda(segs, total)}</div>`
+    : vazioGraf("Sem crédito DIREF para este filtro.");
+}
+
+// Barras horizontais genericas [{label, value, sub?}], cor unica, com destaque opcional.
+function barrasHoriz(itens, { cor = "#1f8a64" } = {}) {
+  const max = Math.max(...itens.map((i) => i.value), 1);
+  return (
+    '<div class="hbars">' +
+    itens
+      .map(
+        (i) => `
+        <div class="hbar">
+          <div class="hbar__head">
+            <span class="hbar__lbl">${i.label}</span>
+            <span class="hbar__val">${fmtCompacto(i.value)}</span>
+          </div>
+          <div class="hbar__track">
+            <div class="hbar__fill" style="width:${(i.value / max) * 100}%;background:${cor}"></div>
+            ${i.sub != null ? `<div class="hbar__fill hbar__fill--sob" style="width:${(i.sub / max) * 100}%"></div>` : ""}
+          </div>
+        </div>`
+      )
+      .join("") +
+    "</div>"
+  );
+}
+
+// Execucao: barras de Dotacao por AO (com empenhado embutido).
+function renderChartAO(acoes) {
+  if (!acoes.length) {
+    el("chartAO").innerHTML = vazioGraf();
+    return;
+  }
+  const itens = acoes.map((a) => ({ label: `${a.codigo} · ${a.nome}`, value: a.dotacao, sub: a.empenhado }));
+  el("chartAO").innerHTML =
+    barrasHoriz(itens, { cor: "#cfe6dc" }) +
+    `<p class="grafico__nota"><span class="pontinho" style="background:#cfe6dc"></span> Dotação &nbsp; <span class="pontinho" style="background:#1f8a64"></span> Empenhado</p>`;
+}
+
+// Credito: barras do credito disponivel por UGE.
+function renderChartUGE(uges) {
+  if (!uges.length) {
+    el("chartUGE").innerHTML = vazioGraf("Sem UGE para este filtro.");
+    return;
+  }
+  const itens = [...uges]
+    .sort((a, b) => b.disponivel - a.disponivel)
+    .map((u) => ({ label: u.sigla, value: u.disponivel }));
+  el("chartUGE").innerHTML = barrasHoriz(itens, { cor: "#2563eb" });
+}
+
+// RAP: barras empilhadas (pago / a pagar / cancelado) por tipo.
+function renderChartRAP(itens) {
+  if (!itens.length) {
+    el("chartRAP").innerHTML = vazioGraf();
+    return;
+  }
+  const partes = [
+    { k: "pago", lbl: "Pago", cor: "#7c3aed" },
+    { k: "aPagar", lbl: "A pagar", cor: "#b91c1c" },
+    { k: "cancelado", lbl: "Cancelado", cor: "#9aa6a1" },
+  ];
+  const linhas = itens
+    .map((r) => {
+      const aPagar = r.inscrito - r.cancelado - r.pago;
+      const vals = { pago: r.pago, aPagar, cancelado: r.cancelado };
+      const total = r.inscrito || 1;
+      const segs = partes
+        .map(
+          (p) =>
+            `<div class="stack__seg" style="width:${(vals[p.k] / total) * 100}%;background:${p.cor}" title="${p.lbl}: ${fmtBRL.format(vals[p.k])}"></div>`
+        )
+        .join("");
+      return `
+        <div class="stackrow">
+          <div class="hbar__head">
+            <span class="hbar__lbl">${r.sigla} · ${r.tipo}</span>
+            <span class="hbar__val">Inscrito ${fmtCompacto(r.inscrito)}</span>
+          </div>
+          <div class="stack">${segs}</div>
+        </div>`;
+    })
+    .join("");
+  const leg =
+    '<p class="grafico__nota">' +
+    partes.map((p) => `<span class="pontinho" style="background:${p.cor}"></span> ${p.lbl}`).join(" &nbsp; ") +
+    "</p>";
+  el("chartRAP").innerHTML = `<div class="stacks">${linhas}</div>${leg}`;
 }
 
 // ----- Navegacao por secoes (painel lateral) -----------------------------
