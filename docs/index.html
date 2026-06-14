@@ -4,83 +4,140 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#0b3d2e" />
-  <meta name="description" content="Painel Orcamentario do COMGAP - dotacao, credito disponivel, execucao e restos a pagar" />
-  <title>Painel Orcamentario — COMGAP</title>
+  <meta name="description" content="Painel Orçamentário do COMGAP - dotação, crédito disponível, execução e restos a pagar" />
+  <title>Painel Orçamentário — COMGAP</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b3d2e'/%3E%3Ctext x='16' y='22' font-size='16' text-anchor='middle' fill='%23fff' font-family='sans-serif' font-weight='bold'%3ER$%3C/text%3E%3C/svg%3E" />
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
-  <header class="app-header">
-    <div class="app-header__inner">
-      <div class="app-header__brand">
-        <span class="app-header__badge">COMGAP</span>
-        <div>
-          <h1 class="app-header__title">Painel Orcamentario</h1>
-          <p class="app-header__subtitle" id="subtitle">Comando-Geral de Apoio</p>
+  <!-- Barra superior fixa: cabecalho + filtro de diretoria -->
+  <div class="topbar">
+    <header class="app-header">
+      <div class="app-header__inner">
+        <button id="menuBtn" class="app-header__menu" aria-label="Abrir menu" aria-expanded="false">&#9776;</button>
+        <div class="app-header__brand">
+          <span class="app-header__badge">COMGAP</span>
+          <div>
+            <h1 class="app-header__title">Painel Orçamentário</h1>
+            <p class="app-header__subtitle" id="subtitle">Comando-Geral de Apoio</p>
+          </div>
         </div>
+        <button id="reloadBtn" class="app-header__reload" title="Atualizar dados" aria-label="Atualizar dados">&#x21bb;</button>
       </div>
-      <button id="reloadBtn" class="app-header__reload" title="Atualizar dados" aria-label="Atualizar dados">&#x21bb;</button>
+      <p class="app-header__updated" id="updated">Carregando…</p>
+    </header>
+
+    <!-- Filtro por Diretoria do COMGAP -->
+    <nav class="filtros" id="filtros" aria-label="Filtrar por diretoria" hidden>
+      <div class="filtros__inner" id="filtrosInner"></div>
+    </nav>
+  </div>
+
+  <div class="layout">
+    <!-- Painel lateral de navegacao -->
+    <aside class="sidebar" id="sidebar" aria-label="Seções do painel">
+      <div class="sidebar__head">
+        <span>Seções</span>
+        <button id="sidebarClose" class="sidebar__close" aria-label="Fechar menu">&times;</button>
+      </div>
+      <nav class="sidebar__nav" id="sidebarNav" role="tablist">
+        <button class="navitem" data-view="geral" role="tab">
+          <span class="navitem__ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+              <rect x="14" y="3" width="7" height="7" rx="1.5"/>
+              <rect x="3" y="14" width="7" height="7" rx="1.5"/>
+              <rect x="14" y="14" width="7" height="7" rx="1.5"/>
+            </svg>
+          </span> Visão Geral
+        </button>
+        <button class="navitem" data-view="credito" role="tab">
+          <span class="navitem__ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 8a2 2 0 0 1 2-2h12.5A1.5 1.5 0 0 1 19 7.5V9"/>
+              <path d="M3 8v10a2 2 0 0 0 2 2h14a1 1 0 0 0 1-1v-3"/>
+              <path d="M22 10v4a1 1 0 0 1-1 1h-4.5a3 3 0 0 1 0-6H21a1 1 0 0 1 1 1Z"/>
+              <circle cx="16.5" cy="12" r="1" fill="currentColor" stroke="none"/>
+            </svg>
+          </span> Crédito Disponível
+        </button>
+        <button class="navitem" data-view="execucao" role="tab">
+          <span class="navitem__ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 20V4"/>
+              <path d="M4 20h16"/>
+              <rect x="7" y="12" width="3" height="5" rx="0.8"/>
+              <rect x="12" y="8" width="3" height="9" rx="0.8"/>
+              <rect x="17" y="5" width="3" height="12" rx="0.8"/>
+            </svg>
+          </span> Execução
+        </button>
+        <button class="navitem" data-view="rap" role="tab">
+          <span class="navitem__ico">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M14 3H6.5A1.5 1.5 0 0 0 5 4.5v15A1.5 1.5 0 0 0 6.5 21h11a1.5 1.5 0 0 0 1.5-1.5V8z"/>
+              <path d="M14 3v4a1 1 0 0 0 1 1h4"/>
+              <path d="M9 13h6"/>
+              <path d="M9 17h4"/>
+            </svg>
+          </span> Restos a Pagar
+        </button>
+      </nav>
+    </aside>
+    <div class="overlay" id="overlay" hidden></div>
+
+    <div class="content">
+      <main class="container" id="conteudo" aria-live="polite">
+        <div class="state" id="loading">Carregando dados orçamentários…</div>
+        <div class="state state--error" id="error" hidden>
+          Não foi possível carregar os dados. <button id="retryBtn" class="link-btn">Tentar novamente</button>
+        </div>
+
+        <div id="dashboard" hidden>
+          <p class="filtro-contexto" id="filtroContexto"></p>
+
+          <!-- VISAO GERAL -->
+          <section class="view" data-view="geral">
+            <h2 class="view__title">Visão Geral</h2>
+            <div class="cards" id="resumoCards"></div>
+          </section>
+
+          <!-- CREDITO DISPONIVEL -->
+          <section class="view" data-view="credito">
+            <h2 class="view__title">Crédito Disponível</h2>
+
+            <h3 class="bloco__title">DIREF</h3>
+            <p class="section__hint">Por Ação Orçamentária e Natureza de Despesa</p>
+            <div class="panel" id="direfPanel"></div>
+
+            <h3 class="bloco__title" style="margin-top:20px">UGE</h3>
+            <p class="section__hint">Por Unidade Gestora Executora</p>
+            <div class="panel" id="ugePanel"></div>
+          </section>
+
+          <!-- EXECUCAO -->
+          <section class="view" data-view="execucao">
+            <h2 class="view__title">Execução da Despesa</h2>
+            <div class="panel" id="execucaoPanel"></div>
+
+            <h3 class="bloco__title">Dotação por Ação Orçamentária (AO)</h3>
+            <div class="panel" id="aoPanel"></div>
+          </section>
+
+          <!-- RESTOS A PAGAR -->
+          <section class="view" data-view="rap">
+            <h2 class="view__title">Restos a Pagar</h2>
+            <div class="panel" id="rapPanel"></div>
+          </section>
+        </div>
+      </main>
+
+      <footer class="app-footer">
+        <p>Exercício Financeiro <span id="footerExercicio">—</span> · Valores em R$</p>
+        <p class="app-footer__note">Dados de demonstração — substituíveis pela fonte oficial (Tesouro Gerencial / SIAFI).</p>
+      </footer>
     </div>
-    <p class="app-header__updated" id="updated">Carregando…</p>
-  </header>
-
-  <!-- Filtro por Diretoria do COMGAP -->
-  <nav class="filtros" id="filtros" aria-label="Filtrar por diretoria" hidden>
-    <div class="filtros__inner" id="filtrosInner"></div>
-  </nav>
-
-  <main class="container" id="content" aria-live="polite">
-    <div class="state" id="loading">Carregando dados orcamentarios…</div>
-    <div class="state state--error" id="error" hidden>
-      Nao foi possivel carregar os dados. <button id="retryBtn" class="link-btn">Tentar novamente</button>
-    </div>
-
-    <div id="dashboard" hidden>
-      <p class="filtro-contexto" id="filtroContexto"></p>
-
-      <!-- Cards de resumo -->
-      <section class="section" aria-label="Resumo">
-        <div class="cards" id="resumoCards"></div>
-      </section>
-
-      <!-- Barra de execucao -->
-      <section class="section">
-        <h2 class="section__title">Execucao da Despesa</h2>
-        <div class="panel" id="execucaoPanel"></div>
-      </section>
-
-      <!-- Dotacao por Acao Orcamentaria -->
-      <section class="section">
-        <h2 class="section__title">Dotacao por Acao Orcamentaria (AO)</h2>
-        <div class="panel" id="aoPanel"></div>
-      </section>
-
-      <!-- Credito disponivel DIREF -->
-      <section class="section">
-        <h2 class="section__title">Credito Disponivel — DIREF</h2>
-        <p class="section__hint">Por Acao Orcamentaria e Natureza de Despesa</p>
-        <div class="panel" id="direfPanel"></div>
-      </section>
-
-      <!-- Credito disponivel UGE -->
-      <section class="section">
-        <h2 class="section__title">Credito Disponivel — UGE</h2>
-        <p class="section__hint">Por Unidade Gestora Executora</p>
-        <div class="panel" id="ugePanel"></div>
-      </section>
-
-      <!-- Restos a Pagar -->
-      <section class="section">
-        <h2 class="section__title">Restos a Pagar</h2>
-        <div class="panel" id="rapPanel"></div>
-      </section>
-    </div>
-  </main>
-
-  <footer class="app-footer">
-    <p>Exercicio Financeiro <span id="footerExercicio">—</span> · Valores em R$</p>
-    <p class="app-footer__note">Dados de demonstracao — substituiveis pela fonte oficial (Tesouro Gerencial / SIAFI).</p>
-  </footer>
+  </div>
 
   <script src="js/app.js" defer></script>
 </body>

@@ -1,9 +1,9 @@
 diretoria;ug_codigo;ug_sigla;ug_nome;disponivel;empenhado;recebido
-DIRMAB;120089;DIRMAB;Diretoria de Material Aeronautico e Belico;15870000;45100000;60970000
-DIRMAB;120017;PAMA-SP;Parque de Material Aeronautico de Sao Paulo;24150000;88600000;112750000
-DIRMAB;120013;PAME-RJ;Parque de Material de Eletronica do RJ;7330000;22950000;30280000
+DIRMAB;120089;DIRMAB;Diretoria de Material Aeronáutico e Bélico;15870000;45100000;60970000
+DIRMAB;120017;PAMA-SP;Parque de Material Aeronáutico de São Paulo;24150000;88600000;112750000
+DIRMAB;120013;PAME-RJ;Parque de Material de Eletrônica do RJ;7330000;22950000;30280000
 DIRINFRA;120042;GAP-RJ;Grupamento de Apoio do Rio de Janeiro;11280000;39400000;50680000
-DIRINFRA;120018;GAP-SP;Grupamento de Apoio de Sao Paulo;9640000;31200000;40840000
-DTI;120094;DTI;Diretoria de Tecnologia da Informacao;18300000;30000000;48300000
-DTI;120097;CCA-BR;Centro de Computacao da Aeronautica de Brasilia;6450000;11200000;17650000
-CELOG;120085;CELOG;Centro Logistico da Aeronautica;38420000;142800000;181220000
+DIRINFRA;120018;GAP-SP;Grupamento de Apoio de São Paulo;9640000;31200000;40840000
+DTI;120094;DTI;Diretoria de Tecnologia da Informação;18300000;30000000;48300000
+DTI;120097;CCA-BR;Centro de Computação da Aeronáutica de Brasília;6450000;11200000;17650000
+CELOG;120085;CELOG;Centro Logístico da Aeronáutica;38420000;142800000;181220000

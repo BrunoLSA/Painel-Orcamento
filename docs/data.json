@@ -2,30 +2,30 @@
   "exercicio": 2026,
   "orgao": "COMGAP",
   "orgaoNome": "Comando-Geral de Apoio",
-  "atualizadoEm": "2026-06-14T02:32:29.941Z",
+  "atualizadoEm": "2026-06-14T03:07:36.783Z",
   "diretorias": [
     {
       "sigla": "DIRMAB",
-      "nome": "Diretoria de Material Aeronautico e Belico"
+      "nome": "Diretoria de Material Aeronáutico e Bélico"
     },
     {
       "sigla": "DIRINFRA",
-      "nome": "Diretoria de Infraestrutura da Aeronautica"
+      "nome": "Diretoria de Infraestrutura da Aeronáutica"
     },
     {
       "sigla": "DTI",
-      "nome": "Diretoria de Tecnologia da Informacao"
+      "nome": "Diretoria de Tecnologia da Informação"
     },
     {
       "sigla": "CELOG",
-      "nome": "Centro Logistico da Aeronautica"
+      "nome": "Centro Logístico da Aeronáutica"
     }
   ],
   "execucao": [
     {
       "diretoria": "DIRMAB",
       "ao": "2000",
-      "aoNome": "Administracao da Unidade",
+      "aoNome": "Administração da Unidade",
       "dotacao": 38000000,
       "recebido": 25000000,
       "empenhado": 20000000,
@@ -35,7 +35,7 @@
     {
       "diretoria": "DIRMAB",
       "ao": "20X8",
-      "aoNome": "Manutencao e Suprimento de Material Aeronautico",
+      "aoNome": "Manutenção e Suprimento de Material Aeronáutico",
       "dotacao": 180000000,
       "recebido": 120000000,
       "empenhado": 105000000,
@@ -45,7 +45,7 @@
     {
       "diretoria": "DIRMAB",
       "ao": "20XJ",
-      "aoNome": "Adequacao de Organizacoes Militares da Aeronautica",
+      "aoNome": "Adequação de Organizações Militares da Aeronáutica",
       "dotacao": 30000000,
       "recebido": 18000000,
       "empenhado": 14000000,
@@ -55,7 +55,7 @@
     {
       "diretoria": "DIRMAB",
       "ao": "21D4",
-      "aoNome": "Fortalecimento das Capacidades Logisticas de Defesa",
+      "aoNome": "Fortalecimento das Capacidades Logísticas de Defesa",
       "dotacao": 25000000,
       "recebido": 13000000,
       "empenhado": 9000000,
@@ -65,7 +65,7 @@
     {
       "diretoria": "DIRINFRA",
       "ao": "2000",
-      "aoNome": "Administracao da Unidade",
+      "aoNome": "Administração da Unidade",
       "dotacao": 28000000,
       "recebido": 18000000,
       "empenhado": 14000000,
@@ -75,7 +75,7 @@
     {
       "diretoria": "DIRINFRA",
       "ao": "14T5",
-      "aoNome": "Adequacao de Infraestrutura Operacional e Logistica",
+      "aoNome": "Adequação de Infraestrutura Operacional e Logística",
       "dotacao": 74300000,
       "recebido": 41200000,
       "empenhado": 33600000,
@@ -85,7 +85,7 @@
     {
       "diretoria": "DIRINFRA",
       "ao": "20XJ",
-      "aoNome": "Adequacao de Organizacoes Militares da Aeronautica",
+      "aoNome": "Adequação de Organizações Militares da Aeronáutica",
       "dotacao": 50000000,
       "recebido": 30000000,
       "empenhado": 25000000,
@@ -95,7 +95,7 @@
     {
       "diretoria": "DTI",
       "ao": "2000",
-      "aoNome": "Administracao da Unidade",
+      "aoNome": "Administração da Unidade",
       "dotacao": 22000000,
       "recebido": 14000000,
       "empenhado": 11000000,
@@ -105,7 +105,7 @@
     {
       "diretoria": "DTI",
       "ao": "20X3",
-      "aoNome": "Tecnologia da Informacao e Comunicacoes",
+      "aoNome": "Tecnologia da Informação e Comunicações",
       "dotacao": 60000000,
       "recebido": 38000000,
       "empenhado": 30000000,
@@ -115,7 +115,7 @@
     {
       "diretoria": "CELOG",
       "ao": "2000",
-      "aoNome": "Administracao da Unidade",
+      "aoNome": "Administração da Unidade",
       "dotacao": 30000000,
       "recebido": 20000000,
       "empenhado": 16000000,
@@ -125,7 +125,7 @@
     {
       "diretoria": "CELOG",
       "ao": "20X8",
-      "aoNome": "Manutencao e Suprimento de Material Aeronautico",
+      "aoNome": "Manutenção e Suprimento de Material Aeronáutico",
       "dotacao": 132800000,
       "recebido": 85600000,
       "empenhado": 73200000,
@@ -135,7 +135,7 @@
     {
       "diretoria": "CELOG",
       "ao": "21D4",
-      "aoNome": "Fortalecimento das Capacidades Logisticas de Defesa",
+      "aoNome": "Fortalecimento das Capacidades Logísticas de Defesa",
       "dotacao": 33900000,
       "recebido": 17100000,
       "empenhado": 13450000,
@@ -175,7 +175,7 @@
       "diretoria": "DIRINFRA",
       "ao": "14T5",
       "nd": "449051",
-      "ndNome": "Obras e Instalacoes",
+      "ndNome": "Obras e Instalações",
       "fonte": "1000000000",
       "ptres": "226004",
       "disponivel": 12640000
@@ -184,7 +184,7 @@
       "diretoria": "DIRINFRA",
       "ao": "20XJ",
       "nd": "449051",
-      "ndNome": "Obras e Instalacoes",
+      "ndNome": "Obras e Instalações",
       "fonte": "1000000000",
       "ptres": "228655",
       "disponivel": 19870000
@@ -238,7 +238,7 @@
       "diretoria": "CELOG",
       "ao": "2000",
       "nd": "339014",
-      "ndNome": "Diarias - Pessoal Civil/Militar",
+      "ndNome": "Diárias - Pessoal Civil/Militar",
       "fonte": "1000000000",
       "ptres": "228628",
       "disponivel": 3210000
@@ -249,7 +249,7 @@
       "diretoria": "DIRMAB",
       "codigo": "120089",
       "sigla": "DIRMAB",
-      "nome": "Diretoria de Material Aeronautico e Belico",
+      "nome": "Diretoria de Material Aeronáutico e Bélico",
       "disponivel": 15870000,
       "empenhado": 45100000,
       "recebido": 60970000
@@ -258,7 +258,7 @@
       "diretoria": "DIRMAB",
       "codigo": "120017",
       "sigla": "PAMA-SP",
-      "nome": "Parque de Material Aeronautico de Sao Paulo",
+      "nome": "Parque de Material Aeronáutico de São Paulo",
       "disponivel": 24150000,
       "empenhado": 88600000,
       "recebido": 112750000
@@ -267,7 +267,7 @@
       "diretoria": "DIRMAB",
       "codigo": "120013",
       "sigla": "PAME-RJ",
-      "nome": "Parque de Material de Eletronica do RJ",
+      "nome": "Parque de Material de Eletrônica do RJ",
       "disponivel": 7330000,
       "empenhado": 22950000,
       "recebido": 30280000
@@ -285,7 +285,7 @@
       "diretoria": "DIRINFRA",
       "codigo": "120018",
       "sigla": "GAP-SP",
-      "nome": "Grupamento de Apoio de Sao Paulo",
+      "nome": "Grupamento de Apoio de São Paulo",
       "disponivel": 9640000,
       "empenhado": 31200000,
       "recebido": 40840000
@@ -294,7 +294,7 @@
       "diretoria": "DTI",
       "codigo": "120094",
       "sigla": "DTI",
-      "nome": "Diretoria de Tecnologia da Informacao",
+      "nome": "Diretoria de Tecnologia da Informação",
       "disponivel": 18300000,
       "empenhado": 30000000,
       "recebido": 48300000
@@ -303,7 +303,7 @@
       "diretoria": "DTI",
       "codigo": "120097",
       "sigla": "CCA-BR",
-      "nome": "Centro de Computacao da Aeronautica de Brasilia",
+      "nome": "Centro de Computação da Aeronáutica de Brasília",
       "disponivel": 6450000,
       "empenhado": 11200000,
       "recebido": 17650000
@@ -312,7 +312,7 @@
       "diretoria": "CELOG",
       "codigo": "120085",
       "sigla": "CELOG",
-      "nome": "Centro Logistico da Aeronautica",
+      "nome": "Centro Logístico da Aeronáutica",
       "disponivel": 38420000,
       "empenhado": 142800000,
       "recebido": 181220000
@@ -329,7 +329,7 @@
     },
     {
       "diretoria": "DIRMAB",
-      "tipo": "Nao Processados",
+      "tipo": "Não Processados",
       "sigla": "RPNP",
       "inscrito": 31250000,
       "cancelado": 2840000,
@@ -346,7 +346,7 @@
     },
     {
       "diretoria": "DIRINFRA",
-      "tipo": "Nao Processados",
+      "tipo": "Não Processados",
       "sigla": "RPNP",
       "inscrito": 18900000,
       "cancelado": 1640000,
@@ -363,7 +363,7 @@
     },
     {
       "diretoria": "DTI",
-      "tipo": "Nao Processados",
+      "tipo": "Não Processados",
       "sigla": "RPNP",
       "inscrito": 8400000,
       "cancelado": 760000,
@@ -380,7 +380,7 @@
     },
     {
       "diretoria": "CELOG",
-      "tipo": "Nao Processados",
+      "tipo": "Não Processados",
       "sigla": "RPNP",
       "inscrito": 15700000,
       "cancelado": 1600000,
