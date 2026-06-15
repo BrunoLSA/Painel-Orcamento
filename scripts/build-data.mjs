@@ -99,11 +99,14 @@ const exec = lerCSV("execucao.csv");
 const diref = lerCSV("credito_diref.csv");
 const ugr = lerCSV("credito_ugr.csv");
 const rap = lerCSV("restos_a_pagar.csv");
+const rapugr = lerCSV("rap_ugr.csv");
 
 let dataset;
 if (exec && diref && ugr && rap) {
-  // Data de atualizacao = mtime mais recente entre as planilhas.
-  const arquivos = ["execucao.csv", "credito_diref.csv", "credito_ugr.csv", "restos_a_pagar.csv"];
+  // Data de atualizacao = mtime mais recente entre as planilhas existentes.
+  const arquivos = ["execucao.csv", "credito_diref.csv", "credito_ugr.csv", "restos_a_pagar.csv", "rap_ugr.csv"].filter(
+    (f) => existsSync(path.join(raizFonte, f))
+  );
   const maisRecente = Math.max(...arquivos.map((f) => statSync(path.join(raizFonte, f)).mtimeMs));
 
   const execucao = exec.map((r) => ({
@@ -150,6 +153,16 @@ if (exec && diref && ugr && rap) {
     if (String(r.liquidado ?? "").trim() !== "") o.liquidado = num(r.liquidado);
     return o;
   });
+  // Restos a Pagar por UGR x AO (saldo a pagar) — alimenta a sub-secao "Por UGR".
+  const restosAPagarUGR = (rapugr || []).map((r) => ({
+    exercicio: ano(r.ano) ?? config.exercicio,
+    diretoria: r.diretoria,
+    codigo: r.ugr_codigo,
+    sigla: r.ugr_sigla,
+    nome: r.ugr_nome,
+    ao: r.acao,
+    aPagar: num(r.a_pagar),
+  }));
 
   // Exercicios disponiveis (mais recente primeiro); padrao = mais recente.
   const exercicios = [...new Set(execucao.map((e) => e.exercicio))].sort((a, b) => b - a);
@@ -165,6 +178,7 @@ if (exec && diref && ugr && rap) {
     creditoDiref,
     creditoUGR,
     restosAPagar,
+    restosAPagarUGR,
   };
   console.log(
     `Fonte: planilhas oficiais em data/fonte/ ` +
@@ -185,6 +199,7 @@ if (exec && diref && ugr && rap) {
     creditoDiref: comAno(dados.creditoDiref),
     creditoUGR: comAno(dados.creditoUGE || []),
     restosAPagar: comAno(dados.restosAPagar),
+    restosAPagarUGR: [],
   };
   console.log(
     "Fonte: dados de DEMONSTRACAO (data/orcamento.js). " +

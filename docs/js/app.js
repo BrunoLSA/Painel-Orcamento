@@ -166,6 +166,7 @@ function filtrarDataset(an, dir) {
     creditoDiref: f(DATASET.creditoDiref),
     creditoUGR: f(DATASET.creditoUGR),
     restosAPagar: f(DATASET.restosAPagar),
+    restosAPagarUGR: f(DATASET.restosAPagarUGR || []),
   };
 }
 
@@ -193,6 +194,7 @@ function renderTudo(d) {
 
   renderChartRAP(rap); // RAP: barras empilhadas
   renderRAP(rap);
+  renderRapPorUGR(d.restosAPagarUGR, aoNomesCache); // RAP por UGR + rosca de AO
 }
 
 // Monta os chips de Acao Orcamentaria (multisselecao) da secao Credito, a
@@ -447,7 +449,7 @@ function renderAcoes(acoes) {
 
 // Agrupa registros por uma chave e soma o "disponivel"; preserva as linhas
 // originais para o detalhamento por ND.
-function agruparPor(itens, chaveFn) {
+function agruparPor(itens, chaveFn, valorFn) {
   const mapa = new Map();
   for (const x of itens) {
     const k = chaveFn(x);
@@ -456,7 +458,7 @@ function agruparPor(itens, chaveFn) {
       g = { chave: k, total: 0, linhas: [] };
       mapa.set(k, g);
     }
-    g.total += x.disponivel || 0;
+    g.total += (valorFn ? valorFn(x) : x.disponivel) || 0;
     g.linhas.push(x);
   }
   return [...mapa.values()].sort((a, b) => b.total - a.total);
@@ -557,6 +559,41 @@ function renderRAP(itens) {
       })
       .join("") +
     "</div>";
+}
+
+// ----- Restos a Pagar por UGR (linhas por UGR, expandem por AO) -----------
+function renderRapPorUGR(itens, aoNomes) {
+  itens = itens || [];
+  if (!itens.length) {
+    el("chartRapUGR").innerHTML = "";
+    el("rapUgrPanel").innerHTML = vazioGraf("Sem Restos a Pagar por UGR para este filtro.");
+    return;
+  }
+  const grupos = agruparPor(itens, (x) => x.sigla, (x) => x.aPagar);
+  el("chartRapUGR").innerHTML = barrasHoriz(
+    grupos.map((g) => ({ label: g.chave, value: g.total })),
+    { cor: "#b91c1c" }
+  );
+  el("rapUgrPanel").innerHTML = grupos
+    .map((g) => {
+      const u = g.linhas[0];
+      return `
+      <div class="ao-item">
+        <button class="ao-item__head" aria-expanded="false">
+          <span class="ao-item__code">${u.sigla}</span>
+          <span class="ao-item__info">
+            <span class="ao-item__name">${u.nome}</span>
+            <span class="ao-item__dotacao">A pagar: <b>${fmtBRL.format(g.total)}</b>${
+              filtroAtivo === TODAS ? ` · ${u.diretoria}` : ""
+            }</span>
+          </span>
+          <span class="ao-item__chevron">&#9656;</span>
+        </button>
+        <div class="ao-item__body">${donutPorAO(g.linhas, aoNomes, (x) => x.aPagar, "a pagar")}</div>
+      </div>`;
+    })
+    .join("");
+  ativarAccordion(el("rapUgrPanel"));
 }
 
 // =========================================================================
@@ -677,10 +714,13 @@ function ndDonutHTML(linhas) {
   return svg ? `<div class="grafico">${svg}${legenda(segs, total)}</div>` : vazioGraf("Sem detalhamento por ND.");
 }
 
-// Rosca da composicao do credito disponivel por Acao Orcamentaria (usada nas UGR).
-function aoDonutHTML(linhas, aoNomes) {
+// Rosca da composicao por Acao Orcamentaria, somando um valor configuravel.
+function donutPorAO(linhas, aoNomes, valorFn, centroLabel) {
   const mapa = new Map();
-  for (const x of linhas) mapa.set(x.ao, (mapa.get(x.ao) || 0) + (x.disponivel || 0));
+  for (const x of linhas) {
+    const v = valorFn(x) || 0;
+    if (v) mapa.set(x.ao, (mapa.get(x.ao) || 0) + v);
+  }
   const segs = [...mapa.entries()]
     .map(([ao, value], i) => ({
       label: `${ao || "—"} · ${(aoNomes && aoNomes.get(ao)) || ""}`.replace(/ · $/, ""),
@@ -689,8 +729,13 @@ function aoDonutHTML(linhas, aoNomes) {
     }))
     .sort((a, b) => b.value - a.value);
   const total = segs.reduce((a, s) => a + s.value, 0);
-  const svg = svgDonut(segs, { size: 150, thickness: 22, centroValor: fmtCompacto(total), centroLabel: "por AO" });
+  const svg = svgDonut(segs, { size: 150, thickness: 22, centroValor: fmtCompacto(total), centroLabel });
   return svg ? `<div class="grafico">${svg}${legenda(segs, total)}</div>` : vazioGraf("Sem detalhamento por AO.");
+}
+
+// Composicao do credito disponivel por AO (usada nas UGR de Credito).
+function aoDonutHTML(linhas, aoNomes) {
+  return donutPorAO(linhas, aoNomes, (x) => x.disponivel, "por AO");
 }
 
 // Credito: rosca da composicao do credito DIREF por Acao Orcamentaria.

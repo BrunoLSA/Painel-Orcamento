@@ -1,7 +1,7 @@
 {
   "orgao": "COMGAP",
   "orgaoNome": "Comando-Geral de Apoio",
-  "atualizadoEm": "2026-06-14T22:05:00.870Z",
+  "atualizadoEm": "2026-06-15T11:11:07.635Z",
   "exercicios": [
     2026,
     2025
@@ -892,6 +892,206 @@
       "cancelado": 1700000,
       "pago": 10600000,
       "liquidado": 11000000
+    }
+  ],
+  "restosAPagarUGR": [
+    {
+      "exercicio": 2026,
+      "diretoria": "DIRMAB",
+      "codigo": "120089",
+      "sigla": "DIRMAB",
+      "nome": "Diretoria de Material Aeronáutico e Bélico",
+      "ao": "20X8",
+      "aPagar": 5000000
+    },
+    {
+      "exercicio": 2026,
+      "diretoria": "DIRMAB",
+      "codigo": "120089",
+      "sigla": "DIRMAB",
+      "nome": "Diretoria de Material Aeronáutico e Bélico",
+      "ao": "2000",
+      "aPagar": 1000000
+    },
+    {
+      "exercicio": 2026,
+      "diretoria": "DIRMAB",
+      "codigo": "120017",
+      "sigla": "PAMA-SP",
+      "nome": "Parque de Material Aeronáutico de São Paulo",
+      "ao": "20X8",
+      "aPagar": 6950000
+    },
+    {
+      "exercicio": 2026,
+      "diretoria": "DIRMAB",
+      "codigo": "120013",
+      "sigla": "PAME-RJ",
+      "nome": "Parque de Material de Eletrônica do RJ",
+      "ao": "20X8",
+      "aPagar": 3000000
+    },
+    {
+      "exercicio": 2026,
+      "diretoria": "DIRINFRA",
+      "codigo": "120042",
+      "sigla": "GAP-RJ",
+      "nome": "Grupamento de Apoio do Rio de Janeiro",
+      "ao": "14T5",
+      "aPagar": 4000000
+    },
+    {
+      "exercicio": 2026,
+      "diretoria": "DIRINFRA",
+      "codigo": "120042",
+      "sigla": "GAP-RJ",
+      "nome": "Grupamento de Apoio do Rio de Janeiro",
+      "ao": "2000",
+      "aPagar": 2990000
+    },
+    {
+      "exercicio": 2026,
+      "diretoria": "DIRINFRA",
+      "codigo": "120018",
+      "sigla": "GAP-SP",
+      "nome": "Grupamento de Apoio de São Paulo",
+      "ao": "14T5",
+      "aPagar": 3000000
+    },
+    {
+      "exercicio": 2026,
+      "diretoria": "DIRINFRA",
+      "codigo": "120018",
+      "sigla": "GAP-SP",
+      "nome": "Grupamento de Apoio de São Paulo",
+      "ao": "2000",
+      "aPagar": 2000000
+    },
+    {
+      "exercicio": 2026,
+      "diretoria": "DTI",
+      "codigo": "120094",
+      "sigla": "DTI",
+      "nome": "Diretoria de Tecnologia da Informação",
+      "ao": "20X3",
+      "aPagar": 4000000
+    },
+    {
+      "exercicio": 2026,
+      "diretoria": "DTI",
+      "codigo": "120097",
+      "sigla": "CCA-BR",
+      "nome": "Centro de Computação da Aeronáutica de Brasília",
+      "ao": "20X3",
+      "aPagar": 1210000
+    },
+    {
+      "exercicio": 2026,
+      "diretoria": "CELOG",
+      "codigo": "120085",
+      "sigla": "CELOG",
+      "nome": "Centro Logístico da Aeronáutica",
+      "ao": "20X8",
+      "aPagar": 4000000
+    },
+    {
+      "exercicio": 2026,
+      "diretoria": "CELOG",
+      "codigo": "120085",
+      "sigla": "CELOG",
+      "nome": "Centro Logístico da Aeronáutica",
+      "ao": "21D4",
+      "aPagar": 2500000
+    },
+    {
+      "exercicio": 2026,
+      "diretoria": "CELOG",
+      "codigo": "120085",
+      "sigla": "CELOG",
+      "nome": "Centro Logístico da Aeronáutica",
+      "ao": "2000",
+      "aPagar": 1500000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "DIRMAB",
+      "codigo": "120089",
+      "sigla": "DIRMAB",
+      "nome": "Diretoria de Material Aeronáutico e Bélico",
+      "ao": "20X8",
+      "aPagar": 1200000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "DIRMAB",
+      "codigo": "120017",
+      "sigla": "PAMA-SP",
+      "nome": "Parque de Material Aeronáutico de São Paulo",
+      "ao": "20X8",
+      "aPagar": 700000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "DIRMAB",
+      "codigo": "120013",
+      "sigla": "PAME-RJ",
+      "nome": "Parque de Material de Eletrônica do RJ",
+      "ao": "20X8",
+      "aPagar": 300000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "DIRINFRA",
+      "codigo": "120042",
+      "sigla": "GAP-RJ",
+      "nome": "Grupamento de Apoio do Rio de Janeiro",
+      "ao": "14T5",
+      "aPagar": 700000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "DIRINFRA",
+      "codigo": "120018",
+      "sigla": "GAP-SP",
+      "nome": "Grupamento de Apoio de São Paulo",
+      "ao": "14T5",
+      "aPagar": 500000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "DTI",
+      "codigo": "120094",
+      "sigla": "DTI",
+      "nome": "Diretoria de Tecnologia da Informação",
+      "ao": "20X3",
+      "aPagar": 400000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "DTI",
+      "codigo": "120097",
+      "sigla": "CCA-BR",
+      "nome": "Centro de Computação da Aeronáutica de Brasília",
+      "ao": "20X3",
+      "aPagar": 180000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "CELOG",
+      "codigo": "120085",
+      "sigla": "CELOG",
+      "nome": "Centro Logístico da Aeronáutica",
+      "ao": "20X8",
+      "aPagar": 600000
+    },
+    {
+      "exercicio": 2025,
+      "diretoria": "CELOG",
+      "codigo": "120085",
+      "sigla": "CELOG",
+      "nome": "Centro Logístico da Aeronáutica",
+      "ao": "21D4",
+      "aPagar": 340000
     }
   ]
 }
