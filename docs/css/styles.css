@@ -243,6 +243,16 @@ body {
 .hbar__fill { position: absolute; top: 0; left: 0; height: 100%; border-radius: 8px; transition: width 0.7s ease; }
 .hbar__fill--sob { background: #1f8a64; }
 
+/* Barra de Dotacao por AO: dotacao (extensao) + recebido + empenhado em camadas */
+.hbar__track--multi { background: transparent; }
+.hbar__camada { position: absolute; top: 0; left: 0; height: 100%; border-radius: 8px; transition: width 0.7s ease; }
+.hbar__camada--dot { background: #e6efeb; }
+.hbar__camada--rec { background: #8fd0b6; }
+.hbar__camada--emp { background: #157a55; }
+.pontinho--dot { background: #e6efeb; border: 1px solid #cfdbd6; }
+.pontinho--rec { background: #8fd0b6; }
+.pontinho--emp { background: #157a55; }
+
 /* Barras empilhadas (RAP) */
 .stacks { padding: 14px; display: grid; gap: 14px; }
 .stack { display: flex; height: 16px; border-radius: 8px; overflow: hidden; background: #edf2f0; }
