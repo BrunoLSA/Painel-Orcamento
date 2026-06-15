@@ -13,13 +13,13 @@ O painel mostra:
 - **Crédito disponível UGR** — por Unidade Gestora Responsável, com gráfico de rosca por Ação Orçamentária.
 - **Execução da despesa** — barras de progresso de Recebido → Empenhado → Liquidado → Pago.
 - **Restos a Pagar** — Processados (RPP) e Não Processados (RPNP); saldo a pagar **por AO** e **por UGR** (este com gráfico de rosca por Ação Orçamentária).
-- **Cards de resumo** consolidados no topo.
+- **Cards de resumo** consolidados no topo (inclui **Destaques** — crédito recebido por destaque).
 
 ## Filtros
 
 - **Exercício (ano):** seletor no topo; troca o ano e recalcula todas as seções.
-- **Ação Orçamentária (AO):** na seção Crédito Disponível, chips de multisseleção
-  (uma ou várias AOs).
+- **Ação Orçamentária (AO):** chips de multisseleção (uma ou várias AOs) nas seções
+  **Visão Geral** e **Crédito Disponível** (filtros independentes entre si).
 
 A filtragem, a agregação por AO/tipo e o cálculo do resumo são feitos **no
 frontend**, de modo que o painel se comporta de forma idêntica como site estático
@@ -105,7 +105,7 @@ Coluna `ano` é o exercício (ex.: `2026`).
 Para incluir mais de um exercício, basta acrescentar linhas com o `ano` correspondente
 (em todas as planilhas) — o **seletor de ano** do painel é montado a partir dos anos presentes.
 
-- **`execucao.csv`** — `ano;acao;acao_nome;dotacao;recebido;empenhado;liquidado;pago`
+- **`execucao.csv`** — `ano;acao;acao_nome;dotacao;recebido;empenhado;liquidado;pago;destaque`
 - **`credito_diref.csv`** — `ano;acao;nd;nd_nome;fonte;ptres;disponivel`
 - **`credito_ugr.csv`** — `ano;ugr_codigo;ugr_sigla;ugr_nome;acao;disponivel` (uma linha por UGR × AO)
 - **`restos_a_pagar.csv`** — `ano;tipo;sigla;inscrito;cancelado;liquidado;pago`
@@ -117,7 +117,7 @@ Para incluir mais de um exercício, basta acrescentar linhas com o `ano` corresp
 Há a lista de `exercicios` disponíveis e cada registro inclui o campo `exercicio`:
 
 - `exercicios[]`: anos disponíveis (mais recente primeiro) · `exercicioPadrao`: ano inicial
-- `execucao[]`: `{ exercicio, ao, aoNome, dotacao, recebido, empenhado, liquidado, pago }`
+- `execucao[]`: `{ exercicio, ao, aoNome, dotacao, recebido, empenhado, liquidado, pago, destaque }`
 - `creditoDiref[]`: `{ exercicio, ao, nd, ndNome, fonte, ptres, disponivel }`
 - `creditoUGR[]`: `{ exercicio, codigo, sigla, nome, ao, disponivel }`
 - `restosAPagar[]`: `{ exercicio, tipo, sigla, inscrito, cancelado, liquidado?, pago }`
