@@ -786,16 +786,15 @@ function barrasHoriz(itens, { cor = "#1f8a64" } = {}) {
   );
 }
 
-// Execucao: barras de Dotacao por AO. O comprimento da barra e a dotacao da AO
-// (proporcional a maior AO); dentro dela, verde claro = recebido e verde escuro
-// = empenhado. Tooltip (title) mostra dotacao, recebido e empenhado.
+// Execucao: barras de Dotacao por AO. Todas as barras tem a mesma largura
+// (100% = a dotacao da propria AO). Dentro: verde claro = recebido e verde
+// escuro = empenhado (% da dotacao). Tooltip mostra dotacao, recebido e empenhado.
 function renderChartAO(acoes) {
   if (!acoes.length) {
     el("chartAO").innerHTML = vazioGraf();
     return;
   }
-  const max = Math.max(...acoes.map((a) => a.dotacao), 1);
-  const larg = (v) => Math.max((v / max) * 100, 0);
+  const larg = (v, d) => (d > 0 ? Math.min((v / d) * 100, 100) : 0);
   const linhas = acoes
     .map((a) => {
       const tip =
@@ -809,9 +808,9 @@ function renderChartAO(acoes) {
           <span class="hbar__val">${fmtCompacto(a.dotacao)}</span>
         </div>
         <div class="hbar__track hbar__track--multi" title="${tip}">
-          <div class="hbar__camada hbar__camada--dot" style="width:${larg(a.dotacao)}%"></div>
-          <div class="hbar__camada hbar__camada--rec" style="width:${larg(a.recebido)}%"></div>
-          <div class="hbar__camada hbar__camada--emp" style="width:${larg(a.empenhado)}%"></div>
+          <div class="hbar__camada hbar__camada--dot" style="width:100%"></div>
+          <div class="hbar__camada hbar__camada--rec" style="width:${larg(a.recebido, a.dotacao)}%"></div>
+          <div class="hbar__camada hbar__camada--emp" style="width:${larg(a.empenhado, a.dotacao)}%"></div>
         </div>
       </div>`;
     })
