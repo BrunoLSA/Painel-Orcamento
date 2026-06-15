@@ -1,6 +1,6 @@
-# Painel Orçamentário — COMGAP
+# Painel Orçamentário — DIRMAB
 
-Sistema web **mobile-first** que apresenta um painel orçamentário do **Comando-Geral de Apoio (COMGAP)**. Pensado para ser consultado rapidamente pelo celular (e também pelo computador), exibindo a situação orçamentária do exercício de forma clara e consolidada.
+Sistema web **mobile-first** que apresenta um painel orçamentário da **Diretoria de Material Aeronáutico e Bélico (DIRMAB)**. Pensado para ser consultado rapidamente pelo celular (e também pelo computador), exibindo a situação orçamentária do exercício de forma clara e consolidada.
 
 ## Funcionalidades
 
@@ -8,7 +8,6 @@ O painel mostra:
 
 - **Exportar PDF** — botão no cabeçalho que gera um relatório completo (todas as seções, com os gráficos e acordeões expandidos) via impressão do navegador (“Salvar como PDF”), respeitando os filtros ativos.
 - **Seletor de exercício (ano)** — alterna o ano exibido; todas as seções são recalculadas.
-- **Filtro por diretoria do COMGAP** — barra de chips no topo (**Todas · DIRMAB · DIRINFRA · DTI · CELOG**) que recalcula **todas** as seções para a diretoria selecionada.
 - **Dotação do ano por Ação Orçamentária (AO)** — com detalhamento de recebido, empenhado, liquidado, pago e saldo a empenhar (acordeão expansível).
 - **Crédito disponível DIREF por detalhes** — por Ação Orçamentária, Natureza de Despesa e Fonte.
 - **Crédito disponível UGR** — por Unidade Gestora Responsável, com gráfico de rosca por Ação Orçamentária.
@@ -16,14 +15,11 @@ O painel mostra:
 - **Restos a Pagar** — Processados (RPP) e Não Processados (RPNP); saldo a pagar **por AO** e **por UGR** (este com gráfico de rosca por Ação Orçamentária).
 - **Cards de resumo** consolidados no topo.
 
-## Filtro por diretoria
+## Filtros
 
-Cada lançamento do dataset (execução, DIREF, UGR e Restos a Pagar) é associado a
-uma **diretoria do COMGAP**. Ao selecionar um chip:
-
-- na visão **Todas**, os dados são consolidados (somados) entre as diretorias, e a
-  origem aparece como etiqueta/coluna de diretoria nas tabelas;
-- ao escolher uma diretoria, todas as seções passam a exibir apenas os dados dela.
+- **Exercício (ano):** seletor no topo; troca o ano e recalcula todas as seções.
+- **Ação Orçamentária (AO):** na seção Crédito Disponível, chips de multisseleção
+  (uma ou várias AOs).
 
 A filtragem, a agregação por AO/tipo e o cálculo do resumo são feitos **no
 frontend**, de modo que o painel se comporta de forma idêntica como site estático
@@ -52,7 +48,7 @@ Variável de ambiente opcional: `PORT` (padrão `3000`).
 .
 ├── server.js              # Servidor Express (API + estáticos) — uso local
 ├── data/
-│   ├── orcamento.js       # Config (exercício, diretorias) + dados de DEMONSTRAÇÃO (fallback)
+│   ├── orcamento.js       # Config (exercício, órgão) + dados de DEMONSTRAÇÃO (fallback)
 │   └── fonte/             # Planilhas OFICIAIS (Tesouro Gerencial) em CSV
 │       ├── execucao.csv
 │       ├── credito_diref.csv
@@ -98,42 +94,41 @@ contrário, usa-se o conjunto de demonstração de `data/orcamento.js`.
 1. No Tesouro Gerencial, gere/abra as quatro visões e **exporte cada uma como CSV**.
 2. Salve sobre os arquivos em `data/fonte/` (mantendo os nomes e os cabeçalhos, incluindo a coluna `ano`).
 3. Rode `npm run build` e faça commit do `docs/data.json` atualizado (e dos CSVs).
-4. Os exercícios do seletor vêm da coluna `ano`; em `data/orcamento.js` ajuste a lista de `diretorias` se necessário.
+4. Os exercícios do seletor vêm da coluna `ano`; edite `data/orcamento.js` (config) se mudar o exercício padrão ou o nome do órgão.
 
 O conversor aceita separador `;` ou `,` e números em formato brasileiro
 (`1.234.567,89`), simples (`1234567.89`) ou inteiros, com ou sem `R$`.
 
 ### Planilhas e colunas (`data/fonte/`)
 
-Coluna `ano` é o exercício (ex.: `2026`); `diretoria` aceita `DIRMAB | DIRINFRA | DTI | CELOG`.
+Coluna `ano` é o exercício (ex.: `2026`).
 Para incluir mais de um exercício, basta acrescentar linhas com o `ano` correspondente
 (em todas as planilhas) — o **seletor de ano** do painel é montado a partir dos anos presentes.
 
-- **`execucao.csv`** — `ano;diretoria;acao;acao_nome;dotacao;recebido;empenhado;liquidado;pago`
-- **`credito_diref.csv`** — `ano;diretoria;acao;nd;nd_nome;fonte;ptres;disponivel`
-- **`credito_ugr.csv`** — `ano;diretoria;ugr_codigo;ugr_sigla;ugr_nome;acao;disponivel` (uma linha por UGR × AO)
-- **`restos_a_pagar.csv`** — `ano;diretoria;tipo;sigla;inscrito;cancelado;liquidado;pago`
+- **`execucao.csv`** — `ano;acao;acao_nome;dotacao;recebido;empenhado;liquidado;pago`
+- **`credito_diref.csv`** — `ano;acao;nd;nd_nome;fonte;ptres;disponivel`
+- **`credito_ugr.csv`** — `ano;ugr_codigo;ugr_sigla;ugr_nome;acao;disponivel` (uma linha por UGR × AO)
+- **`restos_a_pagar.csv`** — `ano;tipo;sigla;inscrito;cancelado;liquidado;pago`
   (deixe `liquidado` vazio para os Processados/RPP)
-- **`rap_ugr.csv`** — `ano;diretoria;ugr_codigo;ugr_sigla;ugr_nome;acao;a_pagar` (saldo a pagar por UGR × AO)
+- **`rap_ugr.csv`** — `ano;ugr_codigo;ugr_sigla;ugr_nome;acao;a_pagar` (saldo a pagar por UGR × AO)
 
 ### Formato do `data.json` gerado
 
-Há a lista de `exercicios` disponíveis e cada registro inclui `exercicio` e `diretoria`:
+Há a lista de `exercicios` disponíveis e cada registro inclui o campo `exercicio`:
 
 - `exercicios[]`: anos disponíveis (mais recente primeiro) · `exercicioPadrao`: ano inicial
-- `diretorias[]`: `{ sigla, nome }`
-- `execucao[]`: `{ exercicio, diretoria, ao, aoNome, dotacao, recebido, empenhado, liquidado, pago }`
-- `creditoDiref[]`: `{ exercicio, diretoria, ao, nd, ndNome, fonte, ptres, disponivel }`
-- `creditoUGR[]`: `{ exercicio, diretoria, codigo, sigla, nome, ao, disponivel }`
-- `restosAPagar[]`: `{ exercicio, diretoria, tipo, sigla, inscrito, cancelado, liquidado?, pago }`
-- `restosAPagarUGR[]`: `{ exercicio, diretoria, codigo, sigla, nome, ao, aPagar }`
+- `execucao[]`: `{ exercicio, ao, aoNome, dotacao, recebido, empenhado, liquidado, pago }`
+- `creditoDiref[]`: `{ exercicio, ao, nd, ndNome, fonte, ptres, disponivel }`
+- `creditoUGR[]`: `{ exercicio, codigo, sigla, nome, ao, disponivel }`
+- `restosAPagar[]`: `{ exercicio, tipo, sigla, inscrito, cancelado, liquidado?, pago }`
+- `restosAPagarUGR[]`: `{ exercicio, codigo, sigla, nome, ao, aPagar }`
 
 O resumo consolidado (totais e percentuais), a agregação por AO e a filtragem por
-**exercício e diretoria** são calculados no frontend (`docs/js/app.js`), conforme os filtros ativos.
+**exercício** (e **AO** no Crédito) são calculados no frontend (`docs/js/app.js`), conforme os filtros ativos.
 
 ## API
 
-- `GET /api/orcamento` — retorna o dataset bruto (com a dimensão `diretoria`).
+- `GET /api/orcamento` — retorna o dataset bruto.
 - `GET /api/health` — verificação de saúde do serviço.
 
 ---

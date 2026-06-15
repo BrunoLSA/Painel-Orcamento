@@ -1,7 +1,7 @@
 // =========================================================================
-// Painel Orcamentario COMGAP — logica do frontend
-// Busca o dataset, permite filtrar por diretoria (DIRMAB, DIRINFRA, DTI,
-// CELOG ou Todas) e recalcula/renderiza todas as secoes no cliente.
+// Painel Orcamentario DIRMAB — logica do frontend
+// Busca o dataset, permite filtrar por exercicio (ano) e por Acao Orcamentaria
+// (na secao Credito) e recalcula/renderiza todas as secoes no cliente.
 // =========================================================================
 
 // ----- Formatadores ------------------------------------------------------
@@ -32,9 +32,8 @@ const soma = (arr, campo) => arr.reduce((a, x) => a + (x[campo] || 0), 0);
 const el = (id) => document.getElementById(id);
 
 // ----- Estado ------------------------------------------------------------
-const TODAS = "TODAS";
+const TODAS = "TODAS"; // usado pelo filtro de AO (chip "Todas")
 let DATASET = null;
-let filtroAtivo = TODAS;
 let anoAtivo = null;
 
 // Filtro de Acao Orcamentaria (multisselecao), local da secao Credito.
@@ -60,8 +59,7 @@ async function carregar() {
 
     renderCabecalho(DATASET);
     construirSeletorAno(DATASET);
-    construirFiltros(DATASET.diretorias);
-    aplicarFiltro(filtroAtivo);
+    atualizar();
 
     el("loading").hidden = true;
     el("filtros").hidden = false;
@@ -113,54 +111,16 @@ function construirSeletorAno(d) {
   };
 }
 
-// ----- Filtros por diretoria --------------------------------------------
-function construirFiltros(diretorias) {
-  const chips = [{ sigla: TODAS, nome: "Todas as diretorias" }, ...diretorias];
-  el("filtrosInner").innerHTML = chips
-    .map(
-      (c) =>
-        `<button class="chip" role="tab" data-dir="${c.sigla}" title="${c.nome}">${
-          c.sigla === TODAS ? "Todas" : c.sigla
-        }</button>`
-    )
-    .join("");
-
-  el("filtrosInner")
-    .querySelectorAll(".chip")
-    .forEach((btn) => btn.addEventListener("click", () => aplicarFiltro(btn.dataset.dir)));
-}
-
-function aplicarFiltro(dir) {
-  filtroAtivo = dir;
-
-  // Estado visual dos chips
-  el("filtrosInner")
-    .querySelectorAll(".chip")
-    .forEach((btn) => {
-      const ativo = btn.dataset.dir === dir;
-      btn.classList.toggle("chip--ativo", ativo);
-      btn.setAttribute("aria-selected", ativo ? "true" : "false");
-    });
-
-  atualizar();
-}
-
-// Recalcula contexto, rodape e todas as secoes para o ano e a diretoria ativos.
+// Recalcula contexto, rodape e todas as secoes para o exercicio ativo.
 function atualizar() {
   el("footerExercicio").textContent = anoAtivo;
-
-  const meta = DATASET.diretorias.find((x) => x.sigla === filtroAtivo);
-  const ctxDir =
-    filtroAtivo === TODAS ? "Visão consolidada — todas as diretorias" : `${filtroAtivo} — ${meta ? meta.nome : ""}`;
-  el("filtroContexto").textContent = `${ctxDir} · Exercício ${anoAtivo}`;
-
-  renderTudo(filtrarDataset(anoAtivo, filtroAtivo));
+  el("filtroContexto").textContent = `${DATASET.orgaoNome || DATASET.orgao} · Exercício ${anoAtivo}`;
+  renderTudo(filtrarDataset(anoAtivo));
 }
 
-// Devolve o dataset com cada lista filtrada pelo exercicio e pela diretoria.
-function filtrarDataset(an, dir) {
-  const f = (arr) =>
-    arr.filter((x) => x.exercicio === an && (dir === TODAS || x.diretoria === dir));
+// Devolve o dataset com cada lista filtrada pelo exercicio.
+function filtrarDataset(an) {
+  const f = (arr) => arr.filter((x) => x.exercicio === an);
   return {
     execucao: f(DATASET.execucao),
     creditoDiref: f(DATASET.creditoDiref),
@@ -185,7 +145,7 @@ function renderTudo(d) {
   renderChartAO(acoes); // Execucao: barras de dotacao por AO
   renderAcoes(acoes);
 
-  // Credito Disponivel: guarda o recorte atual (ano+diretoria) e aplica o
+  // Credito Disponivel: guarda o recorte atual (do exercicio) e aplica o
   // filtro local de AO ao renderizar a secao.
   creditoDirefCache = d.creditoDiref;
   creditoUGRCache = d.creditoUGR;
@@ -292,7 +252,7 @@ function calcularResumo(d) {
   };
 }
 
-// Agrega a execucao por Acao Orcamentaria (somando as diretorias presentes).
+// Agrega a execucao por Acao Orcamentaria (somando as linhas do exercicio).
 function agregarAcoes(execucao) {
   const mapa = new Map();
   for (const e of execucao) {
@@ -310,7 +270,7 @@ function agregarAcoes(execucao) {
   return [...mapa.values()].sort((a, b) => b.dotacao - a.dotacao);
 }
 
-// Agrega Restos a Pagar por tipo (somando as diretorias presentes).
+// Agrega Restos a Pagar por tipo (somando as linhas do exercicio).
 function agregarRAP(rap) {
   const ordem = ["Processados", "Não Processados"];
   const mapa = new Map();
@@ -392,7 +352,7 @@ function renderExecucao(r) {
 // ----- Dotacao por Acao Orcamentaria (accordion) ------------------------
 function renderAcoes(acoes) {
   if (!acoes.length) {
-    el("aoPanel").innerHTML = '<div class="vazio">Sem dados para esta diretoria.</div>';
+    el("aoPanel").innerHTML = '<div class="vazio">Sem dados para este exercício.</div>';
     return;
   }
   el("aoPanel").innerHTML = acoes
@@ -507,9 +467,7 @@ function renderUGR(ugrs, aoNomes) {
           <span class="ao-item__code">${u.sigla}</span>
           <span class="ao-item__info">
             <span class="ao-item__name">${u.nome}</span>
-            <span class="ao-item__dotacao">Disponível: <b>${fmtBRL.format(g.total)}</b>${
-              filtroAtivo === TODAS ? ` · ${u.diretoria}` : ""
-            }</span>
+            <span class="ao-item__dotacao">Disponível: <b>${fmtBRL.format(g.total)}</b></span>
           </span>
           <span class="ao-item__chevron">&#9656;</span>
         </button>
@@ -523,7 +481,7 @@ function renderUGR(ugrs, aoNomes) {
 // ----- Restos a Pagar ----------------------------------------------------
 function renderRAP(itens) {
   if (!itens.length) {
-    el("rapPanel").innerHTML = '<div class="vazio">Sem dados para esta diretoria.</div>';
+    el("rapPanel").innerHTML = '<div class="vazio">Sem dados para este exercício.</div>';
     return;
   }
   el("rapPanel").innerHTML =
@@ -594,9 +552,7 @@ function renderRapPorUGR(itens, aoNomes) {
           <span class="ao-item__code">${u.sigla}</span>
           <span class="ao-item__info">
             <span class="ao-item__name">${u.nome}</span>
-            <span class="ao-item__dotacao">A pagar: <b>${fmtBRL.format(g.total)}</b>${
-              filtroAtivo === TODAS ? ` · ${u.diretoria}` : ""
-            }</span>
+            <span class="ao-item__dotacao">A pagar: <b>${fmtBRL.format(g.total)}</b></span>
           </span>
           <span class="ao-item__chevron">&#9656;</span>
         </button>
@@ -909,12 +865,10 @@ el("sidebarNav").addEventListener("click", (e) => {
 // um relatorio completo que o navegador salva como PDF.
 function exportarPDF() {
   if (DATASET) {
-    const meta = DATASET.diretorias.find((x) => x.sigla === filtroAtivo);
-    const dir = filtroAtivo === TODAS ? "Todas as diretorias" : `${filtroAtivo} — ${meta ? meta.nome : ""}`;
     const aoTxt = aoCreditoSel.size ? [...aoCreditoSel].sort().join(", ") : "Todas";
     el("printInfo").innerHTML =
       `<strong>${DATASET.orgaoNome || DATASET.orgao} — Painel Orçamentário</strong>` +
-      `<span>Exercício ${anoAtivo} · ${dir}</span>` +
+      `<span>Exercício ${anoAtivo}</span>` +
       `<span>Crédito Disponível — AO: ${aoTxt}</span>` +
       `<span class="print-cabecalho__emit">Emitido em ${new Date().toLocaleString("pt-BR")}</span>`;
   }

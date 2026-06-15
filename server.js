@@ -1,5 +1,5 @@
 // =============================================================================
-// Servidor do Painel Orcamentario do COMGAP
+// Servidor do Painel Orcamentario da DIRMAB
 // Serve a API JSON e os arquivos estaticos do frontend (mobile-first).
 // =============================================================================
 import express from "express";
@@ -27,5 +27,5 @@ app.get("/api/health", (_req, res) => res.json({ status: "ok" }));
 app.use(express.static(path.join(__dirname, "docs")));
 
 app.listen(PORT, () => {
-  console.log(`Painel Orcamentario do COMGAP rodando em http://localhost:${PORT}`);
+  console.log(`Painel Orcamentario da DIRMAB rodando em http://localhost:${PORT}`);
 });
