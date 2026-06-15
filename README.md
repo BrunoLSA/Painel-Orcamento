@@ -13,7 +13,7 @@ O painel mostra:
 - **Crédito disponível DIREF por detalhes** — por Ação Orçamentária, Natureza de Despesa e Fonte.
 - **Crédito disponível UGR** — por Unidade Gestora Responsável, com gráfico de rosca por Ação Orçamentária.
 - **Execução da despesa** — barras de progresso de Recebido → Empenhado → Liquidado → Pago.
-- **Restos a Pagar** — Processados (RPP) e Não Processados (RPNP), com inscrito, cancelado, liquidado, pago e saldo a pagar.
+- **Restos a Pagar** — Processados (RPP) e Não Processados (RPNP); e **RaP por UGR** com gráfico de rosca por Ação Orçamentária.
 - **Cards de resumo** consolidados no topo.
 
 ## Filtro por diretoria
@@ -57,7 +57,8 @@ Variável de ambiente opcional: `PORT` (padrão `3000`).
 │       ├── execucao.csv
 │       ├── credito_diref.csv
 │       ├── credito_ugr.csv
-│       └── restos_a_pagar.csv
+│       ├── restos_a_pagar.csv
+│       └── rap_ugr.csv
 ├── scripts/
 │   └── build-data.mjs     # Converte data/fonte/*.csv → docs/data.json (ou usa o fallback)
 ├── docs/                  # Site estático (publicado pelo GitHub Pages)
@@ -113,6 +114,7 @@ Para incluir mais de um exercício, basta acrescentar linhas com o `ano` corresp
 - **`credito_ugr.csv`** — `ano;diretoria;ugr_codigo;ugr_sigla;ugr_nome;acao;disponivel` (uma linha por UGR × AO)
 - **`restos_a_pagar.csv`** — `ano;diretoria;tipo;sigla;inscrito;cancelado;liquidado;pago`
   (deixe `liquidado` vazio para os Processados/RPP)
+- **`rap_ugr.csv`** — `ano;diretoria;ugr_codigo;ugr_sigla;ugr_nome;acao;a_pagar` (saldo a pagar por UGR × AO)
 
 ### Formato do `data.json` gerado
 
@@ -124,6 +126,7 @@ Há a lista de `exercicios` disponíveis e cada registro inclui `exercicio` e `d
 - `creditoDiref[]`: `{ exercicio, diretoria, ao, nd, ndNome, fonte, ptres, disponivel }`
 - `creditoUGR[]`: `{ exercicio, diretoria, codigo, sigla, nome, ao, disponivel }`
 - `restosAPagar[]`: `{ exercicio, diretoria, tipo, sigla, inscrito, cancelado, liquidado?, pago }`
+- `restosAPagarUGR[]`: `{ exercicio, diretoria, codigo, sigla, nome, ao, aPagar }`
 
 O resumo consolidado (totais e percentuais), a agregação por AO e a filtragem por
 **exercício e diretoria** são calculados no frontend (`docs/js/app.js`), conforme os filtros ativos.
