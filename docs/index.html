@@ -7,7 +7,7 @@
   <meta name="description" content="Painel Orçamentário do COMGAP - dotação, crédito disponível, execução e restos a pagar" />
   <title>Painel Orçamentário — COMGAP</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b3d2e'/%3E%3Ctext x='16' y='22' font-size='16' text-anchor='middle' fill='%23fff' font-family='sans-serif' font-weight='bold'%3ER$%3C/text%3E%3C/svg%3E" />
-  <link rel="stylesheet" href="css/styles.css?v=20260614i" />
+  <link rel="stylesheet" href="css/styles.css?v=20260614j" />
 </head>
 <body>
   <!-- Barra superior fixa: cabecalho + filtro de diretoria -->
@@ -157,10 +157,13 @@
             <div class="panel" id="chartRAP"></div>
             <div class="panel" id="rapPanel" style="margin-top:10px"></div>
 
+            <h3 class="bloco__title" style="margin-top:20px">Por Ação Orçamentária</h3>
+            <p class="section__hint">Saldo a pagar por AO</p>
+            <div class="panel" id="chartRapAO"></div>
+
             <h3 class="bloco__title" style="margin-top:20px">Por UGR</h3>
             <p class="section__hint">Saldo a pagar por Unidade Gestora Responsável — toque numa UGR para ver as Ações Orçamentárias</p>
-            <div class="panel" id="chartRapUGR"></div>
-            <div class="panel" id="rapUgrPanel" style="margin-top:10px"></div>
+            <div class="panel" id="rapUgrPanel"></div>
           </section>
         </div>
       </main>
@@ -175,6 +178,6 @@
   <!-- O parametro ?v= e o "cache-busting": ao alterar CSS/JS, incremente a
        versao para forcar os navegadores (inclusive no celular) a baixar os
        arquivos novos, evitando layout quebrado por cache antigo. -->
-  <script src="js/app.js?v=20260614i" defer></script>
+  <script src="js/app.js?v=20260614j" defer></script>
 </body>
 </html>
