@@ -128,6 +128,7 @@ function filtrarDataset(an) {
     creditoUGR: f(DATASET.creditoUGR),
     restosAPagar: f(DATASET.restosAPagar),
     restosAPagarUGR: f(DATASET.restosAPagarUGR || []),
+    execucaoUGR: f(DATASET.execucaoUGR || []),
   };
 }
 
@@ -148,6 +149,7 @@ function renderTudo(d) {
   renderExecucao(resumo);
   renderChartAO(acoes); // Execucao: barras de dotacao por AO
   renderAcoes(acoes);
+  renderExecPorUGR(d.execucaoUGR); // Execucao: tabela por UGR (rosca recebido->pago)
 
   // Credito Disponivel: guarda o recorte atual (do exercicio) e aplica o
   // filtro local de AO ao renderizar a secao.
@@ -441,6 +443,73 @@ function renderAcoes(acoes) {
     .join("");
 
   ativarAccordion(el("aoPanel"));
+}
+
+// Rosca (aneis) de execucao de uma UGR: recebido, empenhado, liquidado e pago
+// (percentuais sobre o recebido). Centro mostra o total recebido.
+function execDonutHTML(u) {
+  const base = u.recebido || 1;
+  const size = 150, c = 75, sw = 12;
+  const aneis = [
+    { lbl: "Recebido", val: u.recebido, cor: "#2563eb", raio: 64 },
+    { lbl: "Empenhado", val: u.empenhado, cor: "#1f8a64", raio: 51 },
+    { lbl: "Liquidado", val: u.liquidado, cor: "#d97706", raio: 38 },
+    { lbl: "Pago", val: u.pago, cor: "#7c3aed", raio: 25 },
+  ];
+  const arcos = aneis
+    .map((a) => {
+      const p = Math.min(pct(a.val, base), 100);
+      return `<circle cx="${c}" cy="${c}" r="${a.raio}" fill="none" stroke="#edf2f0" stroke-width="${sw}"/>
+        <circle cx="${c}" cy="${c}" r="${a.raio}" fill="none" stroke="${a.cor}" stroke-width="${sw}" stroke-linecap="round" pathLength="100" stroke-dasharray="${p} 100" transform="rotate(-90 ${c} ${c})"/>`;
+    })
+    .join("");
+  const svg = `<svg class="donut" viewBox="0 0 ${size} ${size}" width="${size}" height="${size}" role="img">
+      ${arcos}
+      <text x="${c}" y="${c - 2}" text-anchor="middle" class="donut__val">${fmtCompacto(u.recebido)}</text>
+      <text x="${c}" y="${c + 15}" text-anchor="middle" class="donut__lbl">recebido</text>
+    </svg>`;
+  const segs = aneis.map((a) => ({ label: a.lbl, value: a.val, color: a.cor }));
+  return `<div class="grafico">${svg}${legenda(segs, base)}</div>`;
+}
+
+// ----- Execucao por UGR (linhas por UGR, expandem rosca recebido->pago) ----
+function renderExecPorUGR(itens) {
+  itens = itens || [];
+  if (!itens.length) {
+    el("execUgrPanel").innerHTML = vazioGraf("Sem execução por UGR para este filtro.");
+    return;
+  }
+  // Agrega por UGR (robusto), somando recebido/empenhado/liquidado/pago.
+  const mapa = new Map();
+  for (const x of itens) {
+    let g = mapa.get(x.sigla);
+    if (!g) {
+      g = { sigla: x.sigla, nome: x.nome, recebido: 0, empenhado: 0, liquidado: 0, pago: 0 };
+      mapa.set(x.sigla, g);
+    }
+    g.recebido += x.recebido || 0;
+    g.empenhado += x.empenhado || 0;
+    g.liquidado += x.liquidado || 0;
+    g.pago += x.pago || 0;
+  }
+  const grupos = [...mapa.values()].sort((a, b) => b.recebido - a.recebido);
+  el("execUgrPanel").innerHTML = grupos
+    .map(
+      (g) => `
+      <div class="ao-item">
+        <button class="ao-item__head" aria-expanded="false">
+          <span class="ao-item__code">${g.sigla}</span>
+          <span class="ao-item__info">
+            <span class="ao-item__name">${g.nome}</span>
+            <span class="ao-item__dotacao">Recebido: <b>${fmtBRL.format(g.recebido)}</b></span>
+          </span>
+          <span class="ao-item__chevron">&#9656;</span>
+        </button>
+        <div class="ao-item__body">${execDonutHTML(g)}</div>
+      </div>`
+    )
+    .join("");
+  ativarAccordion(el("execUgrPanel"));
 }
 
 // Agrupa registros por uma chave e soma o "disponivel"; preserva as linhas
