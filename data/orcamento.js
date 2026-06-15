@@ -23,10 +23,10 @@ export const dados = {
 
   // Execucao orcamentaria por Acao Orcamentaria (AO).
   execucao: [
-    { ao: "2000", aoNome: "Administração da Unidade", dotacao: 38000000, recebido: 25000000, empenhado: 20000000, liquidado: 14000000, pago: 12000000, destaque: 8000000 },
-    { ao: "20X8", aoNome: "Manutenção e Suprimento de Material Aeronáutico", dotacao: 180000000, recebido: 120000000, empenhado: 105000000, liquidado: 78000000, pago: 70000000, destaque: 45000000 },
-    { ao: "20XJ", aoNome: "Adequação de Organizações Militares da Aeronáutica", dotacao: 30000000, recebido: 18000000, empenhado: 14000000, liquidado: 9000000, pago: 7500000, destaque: 6000000 },
-    { ao: "21D4", aoNome: "Fortalecimento das Capacidades Logísticas de Defesa", dotacao: 25000000, recebido: 13000000, empenhado: 9000000, liquidado: 5000000, pago: 4000000, destaque: 4000000 },
+    { ao: "2000", aoNome: "Administração da Unidade", dotacao: 38000000, recebido: 25000000, empenhado: 20000000, liquidado: 14000000, pago: 12000000, cambio: 8000000 },
+    { ao: "20X8", aoNome: "Manutenção e Suprimento de Material Aeronáutico", dotacao: 180000000, recebido: 120000000, empenhado: 105000000, liquidado: 78000000, pago: 70000000, cambio: 45000000 },
+    { ao: "20XJ", aoNome: "Adequação de Organizações Militares da Aeronáutica", dotacao: 30000000, recebido: 18000000, empenhado: 14000000, liquidado: 9000000, pago: 7500000, cambio: 6000000 },
+    { ao: "21D4", aoNome: "Fortalecimento das Capacidades Logísticas de Defesa", dotacao: 25000000, recebido: 13000000, empenhado: 9000000, liquidado: 5000000, pago: 4000000, cambio: 4000000 },
   ],
 
   // Credito disponivel DIREF por detalhes (AO, Natureza de Despesa, Fonte).

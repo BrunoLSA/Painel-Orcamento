@@ -279,7 +279,7 @@ function calcularResumo(d) {
     empenhado,
     liquidado,
     pago,
-    destaques: soma(d.execucao, "destaque"),
+    cambio: soma(d.execucao, "cambio"),
     creditoDisponivelDiref: soma(d.creditoDiref, "disponivel"),
     creditoDisponivelUGR: soma(d.creditoUGR, "disponivel"),
     rapAPagar,
@@ -334,7 +334,7 @@ function renderResumo(r) {
     { lbl: "Liquidado", val: r.liquidado, cls: "card--amarelo", sub: fmtPct(pct(r.liquidado, r.empenhado)) + " do empenhado" },
     { lbl: "Pago", val: r.pago, cls: "card--roxo", sub: fmtPct(pct(r.pago, r.liquidado)) + " do liquidado" },
     { lbl: "Créd. Disp. DIREF", val: r.creditoDisponivelDiref, cls: "card--azul", sub: "Por AO / ND" },
-    { lbl: "Destaques", val: r.destaques, cls: "card--amarelo", sub: "Crédito recebido por destaque" },
+    { lbl: "Câmbio", val: r.cambio, cls: "card--amarelo", sub: "Recursos em câmbio (moeda)" },
     { lbl: "Créd. Disp. UGR", val: r.creditoDisponivelUGR, cls: "card--verde", sub: "Unidades Gestoras Resp." },
     { lbl: "Restos a Pagar", val: r.rapAPagar, cls: "card--vermelho", sub: "Saldo a pagar (RP)" },
   ];

@@ -1,7 +1,7 @@
 {
   "orgao": "DIRMAB",
   "orgaoNome": "Diretoria de Material Aeronáutico e Bélico",
-  "atualizadoEm": "2026-06-15T15:14:54.256Z",
+  "atualizadoEm": "2026-06-15T15:22:01.704Z",
   "exercicios": [
     2026,
     2025
@@ -17,7 +17,7 @@
       "empenhado": 20000000,
       "liquidado": 14000000,
       "pago": 12000000,
-      "destaque": 8000000
+      "cambio": 8000000
     },
     {
       "exercicio": 2026,
@@ -28,7 +28,7 @@
       "empenhado": 105000000,
       "liquidado": 78000000,
       "pago": 70000000,
-      "destaque": 45000000
+      "cambio": 45000000
     },
     {
       "exercicio": 2026,
@@ -39,7 +39,7 @@
       "empenhado": 14000000,
       "liquidado": 9000000,
       "pago": 7500000,
-      "destaque": 6000000
+      "cambio": 6000000
     },
     {
       "exercicio": 2026,
@@ -50,7 +50,7 @@
       "empenhado": 9000000,
       "liquidado": 5000000,
       "pago": 4000000,
-      "destaque": 4000000
+      "cambio": 4000000
     },
     {
       "exercicio": 2025,
@@ -61,7 +61,7 @@
       "empenhado": 34000000,
       "liquidado": 33000000,
       "pago": 32500000,
-      "destaque": 10000000
+      "cambio": 10000000
     },
     {
       "exercicio": 2025,
@@ -72,7 +72,7 @@
       "empenhado": 162000000,
       "liquidado": 158000000,
       "pago": 155000000,
-      "destaque": 60000000
+      "cambio": 60000000
     },
     {
       "exercicio": 2025,
@@ -83,7 +83,7 @@
       "empenhado": 26000000,
       "liquidado": 25000000,
       "pago": 24500000,
-      "destaque": 9000000
+      "cambio": 9000000
     },
     {
       "exercicio": 2025,
@@ -94,7 +94,7 @@
       "empenhado": 20000000,
       "liquidado": 19000000,
       "pago": 18500000,
-      "destaque": 7000000
+      "cambio": 7000000
     }
   ],
   "creditoDiref": [
