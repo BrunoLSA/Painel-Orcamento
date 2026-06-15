@@ -11,7 +11,7 @@ O painel mostra:
 - **Dotação do ano por Ação Orçamentária (AO)** — com detalhamento de recebido, empenhado, liquidado, pago e saldo a empenhar (acordeão expansível).
 - **Crédito disponível DIREF por detalhes** — por Ação Orçamentária, Natureza de Despesa e Fonte.
 - **Crédito disponível UGR** — por Unidade Gestora Responsável, com gráfico de rosca por Ação Orçamentária.
-- **Execução da despesa** — barras de progresso de Recebido → Empenhado → Liquidado → Pago.
+- **Execução da despesa** — barras de progresso de Recebido → Empenhado → Liquidado → Pago; dotação por AO; e **execução por UGR** (rosca recebido/empenhado/liquidado/pago).
 - **Restos a Pagar** — Processados (RPP) e Não Processados (RPNP); saldo a pagar **por AO** e **por UGR** (este com gráfico de rosca por Ação Orçamentária).
 - **Cards de resumo** consolidados no topo (inclui **Câmbio** — recursos em câmbio/moeda).
 
@@ -111,6 +111,7 @@ Para incluir mais de um exercício, basta acrescentar linhas com o `ano` corresp
 - **`restos_a_pagar.csv`** — `ano;tipo;sigla;inscrito;cancelado;liquidado;pago`
   (deixe `liquidado` vazio para os Processados/RPP)
 - **`rap_ugr.csv`** — `ano;ugr_codigo;ugr_sigla;ugr_nome;acao;a_pagar` (saldo a pagar por UGR × AO)
+- **`execucao_ugr.csv`** — `ano;ugr_codigo;ugr_sigla;ugr_nome;recebido;empenhado;liquidado;pago` (execução por UGR)
 
 ### Formato do `data.json` gerado
 
@@ -122,6 +123,7 @@ Há a lista de `exercicios` disponíveis e cada registro inclui o campo `exercic
 - `creditoUGR[]`: `{ exercicio, codigo, sigla, nome, ao, disponivel }`
 - `restosAPagar[]`: `{ exercicio, tipo, sigla, inscrito, cancelado, liquidado?, pago }`
 - `restosAPagarUGR[]`: `{ exercicio, codigo, sigla, nome, ao, aPagar }`
+- `execucaoUGR[]`: `{ exercicio, codigo, sigla, nome, recebido, empenhado, liquidado, pago }`
 
 O resumo consolidado (totais e percentuais), a agregação por AO e a filtragem por
 **exercício** (e **AO** no Crédito) são calculados no frontend (`docs/js/app.js`), conforme os filtros ativos.

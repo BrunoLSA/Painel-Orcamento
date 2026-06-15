@@ -1,7 +1,7 @@
 {
   "orgao": "DIRMAB",
   "orgaoNome": "Diretoria de Material Aeronáutico e Bélico",
-  "atualizadoEm": "2026-06-15T15:22:01.704Z",
+  "atualizadoEm": "2026-06-15T18:07:30.470Z",
   "exercicios": [
     2026,
     2025
@@ -345,6 +345,68 @@
       "nome": "Parque de Material de Eletrônica do RJ",
       "ao": "20X8",
       "aPagar": 300000
+    }
+  ],
+  "execucaoUGR": [
+    {
+      "exercicio": 2026,
+      "codigo": "120017",
+      "sigla": "PAMA-SP",
+      "nome": "Parque de Material Aeronáutico de São Paulo",
+      "recebido": 90000000,
+      "empenhado": 78000000,
+      "liquidado": 56000000,
+      "pago": 50000000
+    },
+    {
+      "exercicio": 2026,
+      "codigo": "120089",
+      "sigla": "DIRMAB",
+      "nome": "Diretoria de Material Aeronáutico e Bélico",
+      "recebido": 60000000,
+      "empenhado": 52000000,
+      "liquidado": 38000000,
+      "pago": 33500000
+    },
+    {
+      "exercicio": 2026,
+      "codigo": "120013",
+      "sigla": "PAME-RJ",
+      "nome": "Parque de Material de Eletrônica do RJ",
+      "recebido": 26000000,
+      "empenhado": 18000000,
+      "liquidado": 12000000,
+      "pago": 10000000
+    },
+    {
+      "exercicio": 2025,
+      "codigo": "120017",
+      "sigla": "PAMA-SP",
+      "nome": "Parque de Material Aeronáutico de São Paulo",
+      "recebido": 130000000,
+      "empenhado": 125000000,
+      "liquidado": 121000000,
+      "pago": 119000000
+    },
+    {
+      "exercicio": 2025,
+      "codigo": "120089",
+      "sigla": "DIRMAB",
+      "nome": "Diretoria de Material Aeronáutico e Bélico",
+      "recebido": 90000000,
+      "empenhado": 86000000,
+      "liquidado": 84000000,
+      "pago": 82000000
+    },
+    {
+      "exercicio": 2025,
+      "codigo": "120013",
+      "sigla": "PAME-RJ",
+      "nome": "Parque de Material de Eletrônica do RJ",
+      "recebido": 32500000,
+      "empenhado": 31000000,
+      "liquidado": 30000000,
+      "pago": 29500000
     }
   ]
 }

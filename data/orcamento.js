@@ -55,4 +55,11 @@ export const dados = {
     { codigo: "120017", sigla: "PAMA-SP", nome: "Parque de Material Aeronáutico de São Paulo", ao: "20X8", aPagar: 6950000 },
     { codigo: "120013", sigla: "PAME-RJ", nome: "Parque de Material de Eletrônica do RJ", ao: "20X8", aPagar: 3000000 },
   ],
+
+  // Execucao por UGR (recebido/empenhado/liquidado/pago).
+  execucaoUGR: [
+    { codigo: "120017", sigla: "PAMA-SP", nome: "Parque de Material Aeronáutico de São Paulo", recebido: 90000000, empenhado: 78000000, liquidado: 56000000, pago: 50000000 },
+    { codigo: "120089", sigla: "DIRMAB", nome: "Diretoria de Material Aeronáutico e Bélico", recebido: 60000000, empenhado: 52000000, liquidado: 38000000, pago: 33500000 },
+    { codigo: "120013", sigla: "PAME-RJ", nome: "Parque de Material de Eletrônica do RJ", recebido: 26000000, empenhado: 18000000, liquidado: 12000000, pago: 10000000 },
+  ],
 };

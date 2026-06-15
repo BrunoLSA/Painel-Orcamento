@@ -100,13 +100,19 @@ const diref = lerCSV("credito_diref.csv");
 const ugr = lerCSV("credito_ugr.csv");
 const rap = lerCSV("restos_a_pagar.csv");
 const rapugr = lerCSV("rap_ugr.csv");
+const execugr = lerCSV("execucao_ugr.csv");
 
 let dataset;
 if (exec && diref && ugr && rap) {
   // Data de atualizacao = mtime mais recente entre as planilhas existentes.
-  const arquivos = ["execucao.csv", "credito_diref.csv", "credito_ugr.csv", "restos_a_pagar.csv", "rap_ugr.csv"].filter(
-    (f) => existsSync(path.join(raizFonte, f))
-  );
+  const arquivos = [
+    "execucao.csv",
+    "credito_diref.csv",
+    "credito_ugr.csv",
+    "restos_a_pagar.csv",
+    "rap_ugr.csv",
+    "execucao_ugr.csv",
+  ].filter((f) => existsSync(path.join(raizFonte, f)));
   const maisRecente = Math.max(...arquivos.map((f) => statSync(path.join(raizFonte, f)).mtimeMs));
 
   const execucao = exec.map((r) => ({
@@ -159,6 +165,17 @@ if (exec && diref && ugr && rap) {
     ao: r.acao,
     aPagar: num(r.a_pagar),
   }));
+  // Execucao por UGR (recebido/empenhado/liquidado/pago) — sub-secao "Por UGR".
+  const execucaoUGR = (execugr || []).map((r) => ({
+    exercicio: ano(r.ano) ?? config.exercicio,
+    codigo: r.ugr_codigo,
+    sigla: r.ugr_sigla,
+    nome: r.ugr_nome,
+    recebido: num(r.recebido),
+    empenhado: num(r.empenhado),
+    liquidado: num(r.liquidado),
+    pago: num(r.pago),
+  }));
 
   // Exercicios disponiveis (mais recente primeiro); padrao = mais recente.
   const exercicios = [...new Set(execucao.map((e) => e.exercicio))].sort((a, b) => b - a);
@@ -174,6 +191,7 @@ if (exec && diref && ugr && rap) {
     creditoUGR,
     restosAPagar,
     restosAPagarUGR,
+    execucaoUGR,
   };
   console.log(
     `Fonte: planilhas oficiais em data/fonte/ ` +
@@ -194,6 +212,7 @@ if (exec && diref && ugr && rap) {
     creditoUGR: comAno(dados.creditoUGR || []),
     restosAPagar: comAno(dados.restosAPagar || []),
     restosAPagarUGR: comAno(dados.restosAPagarUGR || []),
+    execucaoUGR: comAno(dados.execucaoUGR || []),
   };
   console.log(
     "Fonte: dados de DEMONSTRACAO (data/orcamento.js). " +
