@@ -786,16 +786,43 @@ function barrasHoriz(itens, { cor = "#1f8a64" } = {}) {
   );
 }
 
-// Execucao: barras de Dotacao por AO (com empenhado embutido).
+// Execucao: barras de Dotacao por AO. O comprimento da barra e a dotacao da AO
+// (proporcional a maior AO); dentro dela, verde claro = recebido e verde escuro
+// = empenhado. Tooltip (title) mostra dotacao, recebido e empenhado.
 function renderChartAO(acoes) {
   if (!acoes.length) {
     el("chartAO").innerHTML = vazioGraf();
     return;
   }
-  const itens = acoes.map((a) => ({ label: `${a.codigo} · ${a.nome}`, value: a.dotacao, sub: a.empenhado }));
+  const max = Math.max(...acoes.map((a) => a.dotacao), 1);
+  const larg = (v) => Math.max((v / max) * 100, 0);
+  const linhas = acoes
+    .map((a) => {
+      const tip =
+        `Dotação: ${fmtBRL.format(a.dotacao)}` +
+        ` | Recebido: ${fmtBRL.format(a.recebido)} (${fmtPct(pct(a.recebido, a.dotacao))})` +
+        ` | Empenhado: ${fmtBRL.format(a.empenhado)} (${fmtPct(pct(a.empenhado, a.dotacao))})`;
+      return `
+      <div class="hbar">
+        <div class="hbar__head">
+          <span class="hbar__lbl">${a.codigo} · ${a.nome}</span>
+          <span class="hbar__val">${fmtCompacto(a.dotacao)}</span>
+        </div>
+        <div class="hbar__track hbar__track--multi" title="${tip}">
+          <div class="hbar__camada hbar__camada--dot" style="width:${larg(a.dotacao)}%"></div>
+          <div class="hbar__camada hbar__camada--rec" style="width:${larg(a.recebido)}%"></div>
+          <div class="hbar__camada hbar__camada--emp" style="width:${larg(a.empenhado)}%"></div>
+        </div>
+      </div>`;
+    })
+    .join("");
   el("chartAO").innerHTML =
-    barrasHoriz(itens, { cor: "#cfe6dc" }) +
-    `<p class="grafico__nota"><span class="pontinho" style="background:#cfe6dc"></span> Dotação &nbsp; <span class="pontinho" style="background:#1f8a64"></span> Empenhado</p>`;
+    `<div class="hbars">${linhas}</div>` +
+    `<p class="grafico__nota">` +
+    `<span class="pontinho pontinho--dot"></span> Dotação &nbsp; ` +
+    `<span class="pontinho pontinho--rec"></span> Recebido &nbsp; ` +
+    `<span class="pontinho pontinho--emp"></span> Empenhado` +
+    `</p>`;
 }
 
 // Credito: barras do credito disponivel por UGR (agregando as linhas de cada UGR).
