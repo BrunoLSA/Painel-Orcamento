@@ -36,11 +36,12 @@ const TODAS = "TODAS"; // usado pelo filtro de AO (chip "Todas")
 let DATASET = null;
 let anoAtivo = null;
 
-// Filtro de Acao Orcamentaria (multisselecao), local da secao Credito.
-// Conjunto vazio = todas as AO.
-let aoCreditoSel = new Set();
+// Filtros de Acao Orcamentaria (multisselecao). Conjunto vazio = todas as AO.
+let aoCreditoSel = new Set(); // secao Credito
+let aoGeralSel = new Set(); // secao Visao Geral
 let creditoDirefCache = [];
 let creditoUGRCache = [];
+let geralCache = null;
 let aoNomesCache = new Map();
 
 // ----- Carregamento ------------------------------------------------------
@@ -139,8 +140,11 @@ function renderTudo(d) {
   // Nomes das AOs (para rotular o credito DIREF, que so traz o codigo).
   aoNomesCache = new Map(d.execucao.map((e) => [e.ao, e.aoNome]));
 
-  renderResumo(resumo);
-  renderChartExecucao(resumo); // Visao Geral: duas roscas de execucao
+  // Visao Geral: guarda o recorte do exercicio e aplica o filtro local de AO.
+  geralCache = d;
+  construirChipsAOgeral();
+  renderVisaoGeral();
+
   renderExecucao(resumo);
   renderChartAO(acoes); // Execucao: barras de dotacao por AO
   renderAcoes(acoes);
@@ -158,47 +162,74 @@ function renderTudo(d) {
   renderRapPorUGR(d.restosAPagarUGR, aoNomesCache); // RAP por UGR + rosca de AO
 }
 
-// Monta os chips de Acao Orcamentaria (multisselecao) da secao Credito, a
-// partir das AOs presentes no recorte atual de DIREF e UGE.
-function construirChipsAO() {
-  const aos = [...new Set([...creditoDirefCache, ...creditoUGRCache].map((x) => x.ao).filter(Boolean))].sort();
-  // Remove da selecao AOs que nao existem mais no recorte atual.
-  for (const a of [...aoCreditoSel]) if (!aos.includes(a)) aoCreditoSel.delete(a);
-
-  el("aoCreditoChips").innerHTML =
+// Helper generico: monta chips de AO (multisselecao) num container.
+function montarChipsAO(containerId, aos, sel, onChange) {
+  for (const a of [...sel]) if (!aos.includes(a)) sel.delete(a); // limpa AOs ausentes
+  el(containerId).innerHTML =
     `<button class="chip" data-ao="${TODAS}" title="Todas as Ações Orçamentárias">Todas</button>` +
     aos
       .map((a) => `<button class="chip" data-ao="${a}" title="${a} · ${aoNomesCache.get(a) || ""}">${a}</button>`)
       .join("");
-
-  el("aoCreditoChips")
+  el(containerId)
     .querySelectorAll(".chip")
     .forEach((btn) =>
       btn.addEventListener("click", () => {
         const ao = btn.dataset.ao;
-        if (ao === TODAS) aoCreditoSel.clear();
-        else if (aoCreditoSel.has(ao)) aoCreditoSel.delete(ao);
-        else aoCreditoSel.add(ao);
-        renderCreditoSecao();
+        if (ao === TODAS) sel.clear();
+        else if (sel.has(ao)) sel.delete(ao);
+        else sel.add(ao);
+        onChange();
       })
     );
 }
 
-// Atualiza o estado visual dos chips de AO.
-function atualizarChipsAO() {
-  el("aoCreditoChips")
+// Helper generico: pinta o estado ativo dos chips de AO de um container.
+function pintarChipsAO(containerId, sel) {
+  el(containerId)
     .querySelectorAll(".chip")
     .forEach((btn) => {
       const ao = btn.dataset.ao;
-      const ativo = ao === TODAS ? aoCreditoSel.size === 0 : aoCreditoSel.has(ao);
+      const ativo = ao === TODAS ? sel.size === 0 : sel.has(ao);
       btn.classList.toggle("chip--ativo", ativo);
       btn.setAttribute("aria-pressed", ativo ? "true" : "false");
     });
 }
 
+// ----- Visao Geral (com filtro proprio de AO) ----------------------------
+function construirChipsAOgeral() {
+  const d = geralCache;
+  const aos = [
+    ...new Set(
+      [...d.execucao, ...d.creditoDiref, ...d.creditoUGR, ...(d.restosAPagarUGR || [])].map((x) => x.ao).filter(Boolean)
+    ),
+  ].sort();
+  montarChipsAO("aoGeralChips", aos, aoGeralSel, renderVisaoGeral);
+}
+
+function renderVisaoGeral() {
+  pintarChipsAO("aoGeralChips", aoGeralSel);
+  const d = geralCache;
+  const filtra = (arr) => (aoGeralSel.size === 0 ? arr : (arr || []).filter((x) => aoGeralSel.has(x.ao)));
+  const resumo = calcularResumo({
+    execucao: filtra(d.execucao),
+    creditoDiref: filtra(d.creditoDiref),
+    creditoUGR: filtra(d.creditoUGR),
+    restosAPagar: d.restosAPagar,
+    restosAPagarUGR: filtra(d.restosAPagarUGR),
+  });
+  renderResumo(resumo);
+  renderChartExecucao(resumo); // duas roscas de execucao
+}
+
+// Monta os chips de Acao Orcamentaria (multisselecao) da secao Credito.
+function construirChipsAO() {
+  const aos = [...new Set([...creditoDirefCache, ...creditoUGRCache].map((x) => x.ao).filter(Boolean))].sort();
+  montarChipsAO("aoCreditoChips", aos, aoCreditoSel, renderCreditoSecao);
+}
+
 // Renderiza a secao Credito aplicando o filtro local de AO (uma ou varias).
 function renderCreditoSecao() {
-  atualizarChipsAO();
+  pintarChipsAO("aoCreditoChips", aoCreditoSel);
   const filtra = (arr) => (aoCreditoSel.size === 0 ? arr : arr.filter((x) => aoCreditoSel.has(x.ao)));
   const diref = filtra(creditoDirefCache);
   const ugr = filtra(creditoUGRCache);
@@ -236,16 +267,19 @@ function calcularResumo(d) {
   const empenhado = soma(d.execucao, "empenhado");
   const liquidado = soma(d.execucao, "liquidado");
   const pago = soma(d.execucao, "pago");
-  const rapAPagar = d.restosAPagar.reduce(
-    (a, r) => a + ((r.inscrito || 0) - (r.cancelado || 0) - (r.pago || 0)),
-    0
-  );
+  // Saldo a pagar (RAP): usa o detalhamento por UGR (com AO) quando disponivel,
+  // permitindo filtrar por AO; senao, soma o RAP por tipo.
+  const rapAPagar =
+    d.restosAPagarUGR && d.restosAPagarUGR.length
+      ? soma(d.restosAPagarUGR, "aPagar")
+      : (d.restosAPagar || []).reduce((a, r) => a + ((r.inscrito || 0) - (r.cancelado || 0) - (r.pago || 0)), 0);
   return {
     dotacao,
     recebido,
     empenhado,
     liquidado,
     pago,
+    destaques: soma(d.execucao, "destaque"),
     creditoDisponivelDiref: soma(d.creditoDiref, "disponivel"),
     creditoDisponivelUGR: soma(d.creditoUGR, "disponivel"),
     rapAPagar,
@@ -300,6 +334,7 @@ function renderResumo(r) {
     { lbl: "Liquidado", val: r.liquidado, cls: "card--amarelo", sub: fmtPct(pct(r.liquidado, r.empenhado)) + " do empenhado" },
     { lbl: "Pago", val: r.pago, cls: "card--roxo", sub: fmtPct(pct(r.pago, r.liquidado)) + " do liquidado" },
     { lbl: "Créd. Disp. DIREF", val: r.creditoDisponivelDiref, cls: "card--azul", sub: "Por AO / ND" },
+    { lbl: "Destaques", val: r.destaques, cls: "card--amarelo", sub: "Crédito recebido por destaque" },
     { lbl: "Créd. Disp. UGR", val: r.creditoDisponivelUGR, cls: "card--verde", sub: "Unidades Gestoras Resp." },
     { lbl: "Restos a Pagar", val: r.rapAPagar, cls: "card--vermelho", sub: "Saldo a pagar (RP)" },
   ];

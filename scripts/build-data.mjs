@@ -118,6 +118,7 @@ if (exec && diref && ugr && rap) {
     empenhado: num(r.empenhado),
     liquidado: num(r.liquidado),
     pago: num(r.pago),
+    destaque: num(r.destaque),
   }));
   const creditoDiref = diref.map((r) => ({
     exercicio: ano(r.ano) ?? config.exercicio,
