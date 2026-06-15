@@ -194,6 +194,7 @@ function renderTudo(d) {
 
   renderChartRAP(rap); // RAP: barras empilhadas
   renderRAP(rap);
+  renderRapPorAO(d.restosAPagarUGR, aoNomesCache); // RAP por AO (tabela)
   renderRapPorUGR(d.restosAPagarUGR, aoNomesCache); // RAP por UGR + rosca de AO
 }
 
@@ -561,19 +562,29 @@ function renderRAP(itens) {
     "</div>";
 }
 
+// ----- Restos a Pagar por AO (tabela de barras) --------------------------
+function renderRapPorAO(itens, aoNomes) {
+  itens = itens || [];
+  if (!itens.length) {
+    el("chartRapAO").innerHTML = vazioGraf("Sem Restos a Pagar para este filtro.");
+    return;
+  }
+  const grupos = agruparPor(itens, (x) => x.ao, (x) => x.aPagar);
+  const barras = grupos.map((g) => ({
+    label: `${g.chave} · ${(aoNomes && aoNomes.get(g.chave)) || ""}`.replace(/ · $/, ""),
+    value: g.total,
+  }));
+  el("chartRapAO").innerHTML = barrasHoriz(barras, { cor: "#b91c1c" });
+}
+
 // ----- Restos a Pagar por UGR (linhas por UGR, expandem por AO) -----------
 function renderRapPorUGR(itens, aoNomes) {
   itens = itens || [];
   if (!itens.length) {
-    el("chartRapUGR").innerHTML = "";
     el("rapUgrPanel").innerHTML = vazioGraf("Sem Restos a Pagar por UGR para este filtro.");
     return;
   }
   const grupos = agruparPor(itens, (x) => x.sigla, (x) => x.aPagar);
-  el("chartRapUGR").innerHTML = barrasHoriz(
-    grupos.map((g) => ({ label: g.chave, value: g.total })),
-    { cor: "#b91c1c" }
-  );
   el("rapUgrPanel").innerHTML = grupos
     .map((g) => {
       const u = g.linhas[0];

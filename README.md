@@ -13,7 +13,7 @@ O painel mostra:
 - **Crédito disponível DIREF por detalhes** — por Ação Orçamentária, Natureza de Despesa e Fonte.
 - **Crédito disponível UGR** — por Unidade Gestora Responsável, com gráfico de rosca por Ação Orçamentária.
 - **Execução da despesa** — barras de progresso de Recebido → Empenhado → Liquidado → Pago.
-- **Restos a Pagar** — Processados (RPP) e Não Processados (RPNP); e **RaP por UGR** com gráfico de rosca por Ação Orçamentária.
+- **Restos a Pagar** — Processados (RPP) e Não Processados (RPNP); saldo a pagar **por AO** e **por UGR** (este com gráfico de rosca por Ação Orçamentária).
 - **Cards de resumo** consolidados no topo.
 
 ## Filtro por diretoria
