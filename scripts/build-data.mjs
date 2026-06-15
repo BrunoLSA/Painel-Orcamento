@@ -111,7 +111,6 @@ if (exec && diref && ugr && rap) {
 
   const execucao = exec.map((r) => ({
     exercicio: ano(r.ano) ?? config.exercicio,
-    diretoria: r.diretoria,
     ao: r.acao,
     aoNome: r.acao_nome,
     dotacao: num(r.dotacao),
@@ -122,7 +121,6 @@ if (exec && diref && ugr && rap) {
   }));
   const creditoDiref = diref.map((r) => ({
     exercicio: ano(r.ano) ?? config.exercicio,
-    diretoria: r.diretoria,
     ao: r.acao,
     nd: r.nd,
     ndNome: r.nd_nome,
@@ -132,7 +130,6 @@ if (exec && diref && ugr && rap) {
   }));
   const creditoUGR = ugr.map((r) => ({
     exercicio: ano(r.ano) ?? config.exercicio,
-    diretoria: r.diretoria,
     codigo: r.ugr_codigo,
     sigla: r.ugr_sigla,
     nome: r.ugr_nome,
@@ -142,7 +139,6 @@ if (exec && diref && ugr && rap) {
   const restosAPagar = rap.map((r) => {
     const o = {
       exercicio: ano(r.ano) ?? config.exercicio,
-      diretoria: r.diretoria,
       tipo: r.tipo,
       sigla: r.sigla,
       inscrito: num(r.inscrito),
@@ -156,7 +152,6 @@ if (exec && diref && ugr && rap) {
   // Restos a Pagar por UGR x AO (saldo a pagar) — alimenta a sub-secao "Por UGR".
   const restosAPagarUGR = (rapugr || []).map((r) => ({
     exercicio: ano(r.ano) ?? config.exercicio,
-    diretoria: r.diretoria,
     codigo: r.ugr_codigo,
     sigla: r.ugr_sigla,
     nome: r.ugr_nome,
@@ -173,7 +168,6 @@ if (exec && diref && ugr && rap) {
     atualizadoEm: new Date(maisRecente).toISOString(),
     exercicios,
     exercicioPadrao: exercicios[0],
-    diretorias: config.diretorias,
     execucao,
     creditoDiref,
     creditoUGR,
@@ -194,12 +188,11 @@ if (exec && diref && ugr && rap) {
     atualizadoEm: dados.atualizadoEm,
     exercicios: [dados.exercicio],
     exercicioPadrao: dados.exercicio,
-    diretorias: dados.diretorias,
-    execucao: comAno(dados.execucao),
-    creditoDiref: comAno(dados.creditoDiref),
-    creditoUGR: comAno(dados.creditoUGE || []),
-    restosAPagar: comAno(dados.restosAPagar),
-    restosAPagarUGR: [],
+    execucao: comAno(dados.execucao || []),
+    creditoDiref: comAno(dados.creditoDiref || []),
+    creditoUGR: comAno(dados.creditoUGR || []),
+    restosAPagar: comAno(dados.restosAPagar || []),
+    restosAPagarUGR: comAno(dados.restosAPagarUGR || []),
   };
   console.log(
     "Fonte: dados de DEMONSTRACAO (data/orcamento.js). " +

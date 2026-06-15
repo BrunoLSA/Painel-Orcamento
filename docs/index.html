@@ -4,22 +4,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#0b3d2e" />
-  <meta name="description" content="Painel Orçamentário do COMGAP - dotação, crédito disponível, execução e restos a pagar" />
-  <title>Painel Orçamentário — COMGAP</title>
+  <meta name="description" content="Painel Orçamentário da DIRMAB - dotação, crédito disponível, execução e restos a pagar" />
+  <title>Painel Orçamentário — DIRMAB</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b3d2e'/%3E%3Ctext x='16' y='22' font-size='16' text-anchor='middle' fill='%23fff' font-family='sans-serif' font-weight='bold'%3ER$%3C/text%3E%3C/svg%3E" />
-  <link rel="stylesheet" href="css/styles.css?v=20260614j" />
+  <link rel="stylesheet" href="css/styles.css?v=20260615a" />
 </head>
 <body>
-  <!-- Barra superior fixa: cabecalho + filtro de diretoria -->
+  <!-- Barra superior fixa: cabecalho + filtro de exercicio -->
   <div class="topbar">
     <header class="app-header">
       <div class="app-header__inner">
         <button id="menuBtn" class="app-header__menu" aria-label="Abrir menu" aria-expanded="false">&#9776;</button>
         <div class="app-header__brand">
-          <span class="app-header__badge">COMGAP</span>
+          <span class="app-header__badge">DIRMAB</span>
           <div>
             <h1 class="app-header__title">Painel Orçamentário</h1>
-            <p class="app-header__subtitle" id="subtitle">Comando-Geral de Apoio</p>
+            <p class="app-header__subtitle" id="subtitle">Diretoria de Material Aeronáutico e Bélico</p>
           </div>
         </div>
         <div class="app-header__acoes">
@@ -36,14 +36,13 @@
       <p class="app-header__updated" id="updated">Carregando…</p>
     </header>
 
-    <!-- Filtros: exercicio (ano) + diretoria do COMGAP -->
+    <!-- Filtro de exercicio (ano) -->
     <nav class="filtros" id="filtros" aria-label="Filtros do painel" hidden>
       <div class="filtros__bar">
         <div class="filtro-ano">
           <label class="filtro-ano__lbl" for="anoSelect">Exercício</label>
           <select id="anoSelect" class="filtro-ano__sel" aria-label="Selecionar exercício (ano)"></select>
         </div>
-        <div class="filtros__inner" id="filtrosInner" aria-label="Filtrar por diretoria"></div>
       </div>
     </nav>
   </div>
@@ -178,6 +177,6 @@
   <!-- O parametro ?v= e o "cache-busting": ao alterar CSS/JS, incremente a
        versao para forcar os navegadores (inclusive no celular) a baixar os
        arquivos novos, evitando layout quebrado por cache antigo. -->
-  <script src="js/app.js?v=20260614j" defer></script>
+  <script src="js/app.js?v=20260615a" defer></script>
 </body>
 </html>
