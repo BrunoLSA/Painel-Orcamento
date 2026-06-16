@@ -49,13 +49,15 @@ Variável de ambiente opcional: `PORT` (padrão `3000`).
 ├── server.js              # Servidor Express (API + estáticos) — uso local
 ├── data/
 │   ├── orcamento.js       # Config (exercício, órgão) + dados de DEMONSTRAÇÃO (fallback)
-│   └── fonte/             # Planilhas OFICIAIS (Tesouro Gerencial) em CSV
+│   └── fonte/             # Planilhas OFICIAIS (geradas a partir do Tesouro Gerencial) em CSV
 │       ├── execucao.csv
 │       ├── credito_diref.csv
 │       ├── credito_ugr.csv
 │       ├── restos_a_pagar.csv
-│       └── rap_ugr.csv
+│       ├── rap_ugr.csv
+│       └── execucao_ugr.csv
 ├── scripts/
+│   ├── importar_tg.py     # Converte as 2 planilhas (xlsx) do Tesouro Gerencial → data/fonte/*.csv
 │   └── build-data.mjs     # Converte data/fonte/*.csv → docs/data.json (ou usa o fallback)
 ├── docs/                  # Site estático (publicado pelo GitHub Pages)
 │   ├── index.html         # Estrutura da página
@@ -86,15 +88,23 @@ colocadas em `data/fonte/`. No `npm run build`, o conversor lê esses CSVs e ger
 `docs/data.json`. **Se as quatro planilhas existirem, valem os dados oficiais;** caso
 contrário, usa-se o conjunto de demonstração de `data/orcamento.js`.
 
-> Os CSVs versionados hoje contêm **dados de exemplo** — substitua-os pelas suas
-> exportações reais (mantendo os cabeçalhos das colunas).
+> Os CSVs em `data/fonte/` são **gerados** a partir das planilhas do Tesouro Gerencial
+> pelo importador `scripts/importar_tg.py` (ver abaixo). Contêm os dados oficiais da DIRMAB.
 
-### Como atualizar os dados
+### Como atualizar os dados (a partir das planilhas do Tesouro Gerencial)
 
-1. No Tesouro Gerencial, gere/abra as quatro visões e **exporte cada uma como CSV**.
-2. Salve sobre os arquivos em `data/fonte/` (mantendo os nomes e os cabeçalhos, incluindo a coluna `ano`).
-3. Rode `npm run build` e faça commit do `docs/data.json` atualizado (e dos CSVs).
-4. Os exercícios do seletor vêm da coluna `ano`; edite `data/orcamento.js` (config) se mudar o exercício padrão ou o nome do órgão.
+Há um importador que converte as 2 planilhas oficiais nos CSVs de `data/fonte/`:
+
+1. Exporte do Tesouro Gerencial: a planilha de **Execução (Plano de Ação)** e a de **Restos a Pagar** (aba `BASE RESTOS A PAGAR`).
+2. Rode: `pip install openpyxl` e
+   `python3 scripts/importar_tg.py <execucao.xlsx> <rp.xlsx> 2026 "JUN/2026"`
+   (o último argumento é o mês mais recente/acumulado da execução).
+3. Rode `npm run build` e faça commit dos CSVs e do `docs/data.json`.
+
+Regras do importador: execução pelo mês mais recente (acumulado); `recebido = crédito
+disponível + empenhado`; `câmbio` = linhas com PI `00000CAMBIO`; RaP apenas RPNP
+(saldo a pagar = A Liquidar + Liquidados a Pagar). Alternativamente, edite os CSVs à mão
+(mesmos cabeçalhos).
 
 O conversor aceita separador `;` ou `,` e números em formato brasileiro
 (`1.234.567,89`), simples (`1234567.89`) ou inteiros, com ou sem `R$`.
@@ -135,5 +145,5 @@ O resumo consolidado (totais e percentuais), a agregação por AO e a filtragem 
 
 ---
 
-> **Aviso:** os números exibidos são fictícios, para fins de demonstração da interface.
-> Substitua-os pela fonte oficial antes de uso real.
+> Os dados exibidos são oficiais (Tesouro Gerencial / SIAFI — DIRMAB). O conjunto em
+> `data/orcamento.js` é apenas um *fallback* de demonstração, usado se as planilhas faltarem.
