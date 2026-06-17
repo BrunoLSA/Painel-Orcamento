@@ -346,7 +346,7 @@ function renderResumo(r) {
       (c) => `
       <div class="card ${c.cls}">
         <div class="card__label">${c.lbl}</div>
-        <div class="card__value" title="${fmtBRLcent.format(c.val)}">${fmtCompacto(c.val)}</div>
+        <div class="card__value" title="${fmtBRLcent.format(c.val)}">${fmtBRL.format(c.val)}</div>
         <div class="card__sub">${c.sub}</div>
       </div>`
     )
@@ -377,7 +377,7 @@ function renderExecucao(r) {
         <div class="exec__row">
           <div class="exec__head">
             <span class="exec__label">${l.lbl}<span class="exec__pct">${detalhe}</span></span>
-            <span class="exec__val">${fmtCompacto(l.val)}</span>
+            <span class="exec__val">${fmtBRL.format(l.val)}</span>
           </div>
           <div class="bar"><div class="bar__fill bar__fill--${l.cls}" style="width:${Math.min(p, 100)}%"></div></div>
         </div>`;
@@ -708,7 +708,7 @@ function legenda(segmentos, total) {
           `<li class="legenda__item">
             <span class="legenda__cor" style="background:${s.color}"></span>
             <span class="legenda__txt">${s.label}</span>
-            <span class="legenda__val">${fmtCompacto(s.value)}${total ? ` · ${fmtPct(pct(s.value, total))}` : ""}</span>
+            <span class="legenda__val">${fmtBRL.format(s.value)}${total ? ` · ${fmtPct(pct(s.value, total))}` : ""}</span>
           </li>`
       )
       .join("") +
@@ -842,7 +842,7 @@ function barrasHoriz(itens, { cor = "#1f8a64" } = {}) {
         <div class="hbar">
           <div class="hbar__head">
             <span class="hbar__lbl">${i.label}</span>
-            <span class="hbar__val">${fmtCompacto(i.value)}</span>
+            <span class="hbar__val">${fmtBRL.format(i.value)}</span>
           </div>
           <div class="hbar__track">
             <div class="hbar__fill" style="width:${(i.value / max) * 100}%;background:${cor}"></div>
@@ -874,7 +874,7 @@ function renderChartAO(acoes) {
       <div class="hbar">
         <div class="hbar__head">
           <span class="hbar__lbl">${a.codigo} · ${a.nome}</span>
-          <span class="hbar__val">${fmtCompacto(a.dotacao)}</span>
+          <span class="hbar__val">${fmtBRL.format(a.dotacao)}</span>
         </div>
         <div class="hbar__track hbar__track--multi" title="${tip}">
           <div class="hbar__camada hbar__camada--dot" style="width:100%"></div>
@@ -929,7 +929,7 @@ function renderChartRAP(itens) {
         <div class="stackrow">
           <div class="hbar__head">
             <span class="hbar__lbl">${r.sigla} · ${r.tipo}</span>
-            <span class="hbar__val">Inscrito ${fmtCompacto(r.inscrito)}</span>
+            <span class="hbar__val">Inscrito ${fmtBRL.format(r.inscrito)}</span>
           </div>
           <div class="stack">${segs}</div>
         </div>`;
