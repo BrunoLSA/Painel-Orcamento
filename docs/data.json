@@ -1,7 +1,7 @@
 {
   "orgao": "DIRMAB",
   "orgaoNome": "Diretoria de Material Aeronáutico e Bélico",
-  "atualizadoEm": "2026-06-16T11:11:57.801Z",
+  "atualizadoEm": "2026-06-17T14:34:51.162Z",
   "exercicios": [
     2026
   ],
@@ -12,43 +12,43 @@
       "ao": "2048",
       "aoNome": "MANUTENCAO E SUPRIMENTO DE MATERIAL AERONAUTICO",
       "dotacao": 972988304,
-      "recebido": 418543576.9,
-      "empenhado": 238486908.42,
-      "liquidado": 53638086.32,
-      "pago": 47122533.4,
-      "cambio": 837266.4
+      "recebido": 418492560.43,
+      "empenhado": 238660087.18,
+      "liquidado": 70576486.46,
+      "pago": 49917135.88,
+      "cambio": 0
     },
     {
       "exercicio": 2026,
       "ao": "20XV",
       "aoNome": "OPERACAO DO SISTEMA DE CONTROLE DO ESPACO AEREO BRASILEIRO -",
-      "dotacao": 332000000,
-      "recebido": 330738532.78,
-      "empenhado": 303181186.16,
-      "liquidado": 29066138.69,
-      "pago": 28631386.11,
-      "cambio": 815535.2
+      "dotacao": 332196100,
+      "recebido": 330795879.13,
+      "empenhado": 321238052.93,
+      "liquidado": 31938501.62,
+      "pago": 31503749.04,
+      "cambio": 811635.2
     },
     {
       "exercicio": 2026,
       "ao": "21A0",
       "aoNome": "APRESTAMENTO DAS FORCAS - MANUTENCAO DA PRONTIDAO E DA CAPAC",
       "dotacao": 97885531,
-      "recebido": 37650457.41,
-      "empenhado": 32774529.36,
-      "liquidado": 266555.09,
-      "pago": 266555.09,
-      "cambio": 0
+      "recebido": 37626356.41,
+      "empenhado": 32750835.3,
+      "liquidado": 266505.9,
+      "pago": 266505.9,
+      "cambio": 3753059.22
     },
     {
       "exercicio": 2026,
       "ao": "20IH",
       "aoNome": "MODERNIZACAO E REVITALIZACAO DE AERONAVES E SISTEMAS EMBARCA",
       "dotacao": 33099980,
-      "recebido": 12190116.69,
-      "empenhado": 7712845.38,
-      "liquidado": 243983.98,
-      "pago": 243983.98,
+      "recebido": 12186198.41,
+      "empenhado": 8396033.51,
+      "liquidado": 910429.69,
+      "pago": 910429.69,
       "cambio": 810000
     }
   ],
@@ -60,7 +60,7 @@
       "ndNome": "OUTROS SERVICOS DE TERCEIROS - PESSOA JURIDICA",
       "fonte": "050",
       "ptres": "",
-      "disponivel": 106238013.86
+      "disponivel": 106015613.3
     },
     {
       "exercicio": 2026,
@@ -69,7 +69,7 @@
       "ndNome": "MATERIAL DE CONSUMO",
       "fonte": "050",
       "ptres": "",
-      "disponivel": 72593573.3
+      "disponivel": 72592007.52
     },
     {
       "exercicio": 2026,
@@ -78,7 +78,7 @@
       "ndNome": "OUTROS SERVICOS DE TERCEIROS - PESSOA JURIDICA",
       "fonte": "052",
       "ptres": "",
-      "disponivel": 23313579.35
+      "disponivel": 4824334.34
     },
     {
       "exercicio": 2026,
@@ -87,7 +87,7 @@
       "ndNome": "MATERIAL DE CONSUMO",
       "fonte": "052",
       "ptres": "",
-      "disponivel": 4243767.28
+      "disponivel": 4733491.87
     },
     {
       "exercicio": 2026,
@@ -96,7 +96,7 @@
       "ndNome": "EQUIPAMENTOS E MATERIAL PERMANENTE",
       "fonte": "050",
       "ptres": "",
-      "disponivel": 3824290.76
+      "disponivel": 3824290.71
     },
     {
       "exercicio": 2026,
@@ -105,7 +105,7 @@
       "ndNome": "MATERIAL DE CONSUMO",
       "fonte": "000",
       "ptres": "",
-      "disponivel": 2909821.18
+      "disponivel": 2222714.77
     },
     {
       "exercicio": 2026,
@@ -114,7 +114,7 @@
       "ndNome": "MATERIAL DE CONSUMO",
       "fonte": "050",
       "ptres": "",
-      "disponivel": 881525.84
+      "disponivel": 854270.24
     },
     {
       "exercicio": 2026,
@@ -150,7 +150,7 @@
       "ndNome": "EQUIPAMENTOS E MATERIAL PERMANENTE",
       "fonte": "051",
       "ptres": "",
-      "disponivel": 296574.11
+      "disponivel": 296536.19
     },
     {
       "exercicio": 2026,
@@ -159,7 +159,7 @@
       "ndNome": "MATERIAL DE CONSUMO",
       "fonte": "000",
       "ptres": "",
-      "disponivel": 201237.79
+      "disponivel": 201051.75
     },
     {
       "exercicio": 2026,
@@ -168,7 +168,7 @@
       "ndNome": "OUTROS SERVICOS DE TERCEIROS - PESSOA JURIDICA",
       "fonte": "050",
       "ptres": "",
-      "disponivel": 140646.09
+      "disponivel": 167523.01
     },
     {
       "exercicio": 2026,
@@ -177,7 +177,7 @@
       "ndNome": "MATERIAL DE CONSUMO",
       "fonte": "000",
       "ptres": "",
-      "disponivel": 29463.9
+      "disponivel": 29436.66
     },
     {
       "exercicio": 2026,
@@ -186,16 +186,7 @@
       "ndNome": "OUTROS SERVICOS DE TERCEIROS - PESSOA JURIDICA",
       "fonte": "000",
       "ptres": "",
-      "disponivel": 5336.84
-    },
-    {
-      "exercicio": 2026,
-      "ao": "21A0",
-      "nd": "339000",
-      "ndNome": "APLICACOES DIRETAS",
-      "fonte": "050",
-      "ptres": "",
-      "disponivel": 0.95
+      "disponivel": 5331.9
     },
     {
       "exercicio": 2026,
@@ -218,8 +209,8 @@
     {
       "exercicio": 2026,
       "ao": "21A0",
-      "nd": "449000",
-      "ndNome": "APLICACOES DIRETAS",
+      "nd": "449052",
+      "ndNome": "EQUIPAMENTOS E MATERIAL PERMANENTE",
       "fonte": "051",
       "ptres": "",
       "disponivel": 0.22
@@ -232,23 +223,7 @@
       "sigla": "120038",
       "nome": "DIRETORIA DE MATERIAL AERONAUTICO E BELICO",
       "ao": "2048",
-      "disponivel": 168578813.09
-    },
-    {
-      "exercicio": 2026,
-      "codigo": "120026",
-      "sigla": "120026",
-      "nome": "PARQUE MATERIAL AERONAUTICO DE LAGOA SANTA",
-      "ao": "20XV",
-      "disponivel": 11264878.26
-    },
-    {
-      "exercicio": 2026,
-      "codigo": "120038",
-      "sigla": "120038",
-      "nome": "DIRETORIA DE MATERIAL AERONAUTICO E BELICO",
-      "ao": "20XV",
-      "disponivel": 8608892.99
+      "disponivel": 167512225.22
     },
     {
       "exercicio": 2026,
@@ -256,7 +231,7 @@
       "sigla": "120049",
       "nome": "PARQUE DE MATERIAL AERONAUTICO DO GALEAO",
       "ao": "20XV",
-      "disponivel": 7578912.31
+      "disponivel": 7575638.3
     },
     {
       "exercicio": 2026,
@@ -264,15 +239,15 @@
       "sigla": "120026",
       "nome": "PARQUE MATERIAL AERONAUTICO DE LAGOA SANTA",
       "ao": "2048",
-      "disponivel": 6798725.84
+      "disponivel": 6813799.96
     },
     {
       "exercicio": 2026,
-      "codigo": "120038",
-      "sigla": "120038",
-      "nome": "DIRETORIA DE MATERIAL AERONAUTICO E BELICO",
+      "codigo": "120047",
+      "sigla": "120047",
+      "nome": "PARQUE DE MATERIAL BELICO DA AERONAUTICA",
       "ao": "21A0",
-      "disponivel": 3991420.34
+      "disponivel": 4637158.54
     },
     {
       "exercicio": 2026,
@@ -284,11 +259,11 @@
     },
     {
       "exercicio": 2026,
-      "codigo": "120026",
-      "sigla": "120026",
-      "nome": "PARQUE MATERIAL AERONAUTICO DE LAGOA SANTA",
-      "ao": "20IH",
-      "disponivel": 1526577.22
+      "codigo": "120049",
+      "sigla": "120049",
+      "nome": "PARQUE DE MATERIAL AERONAUTICO DO GALEAO",
+      "ao": "2048",
+      "disponivel": 1874577.55
     },
     {
       "exercicio": 2026,
@@ -300,14 +275,6 @@
     },
     {
       "exercicio": 2026,
-      "codigo": "120049",
-      "sigla": "120049",
-      "nome": "PARQUE DE MATERIAL AERONAUTICO DO GALEAO",
-      "ao": "2048",
-      "disponivel": 1006423.76
-    },
-    {
-      "exercicio": 2026,
       "codigo": "120631",
       "sigla": "120631",
       "nome": "BASE AEREA DE NATAL",
@@ -316,11 +283,43 @@
     },
     {
       "exercicio": 2026,
-      "codigo": "120047",
-      "sigla": "120047",
-      "nome": "PARQUE DE MATERIAL BELICO DA AERONAUTICA",
-      "ao": "21A0",
-      "disponivel": 884506.26
+      "codigo": "120026",
+      "sigla": "120026",
+      "nome": "PARQUE MATERIAL AERONAUTICO DE LAGOA SANTA",
+      "ao": "20IH",
+      "disponivel": 839470.81
+    },
+    {
+      "exercicio": 2026,
+      "codigo": "120038",
+      "sigla": "120038",
+      "nome": "DIRETORIA DE MATERIAL AERONAUTICO E BELICO",
+      "ao": "20XV",
+      "disponivel": 608893.09
+    },
+    {
+      "exercicio": 2026,
+      "codigo": "120068",
+      "sigla": "120068",
+      "nome": "PARQUE DE MATERIAL AERONAUTICO DE SAO PAULO",
+      "ao": "20XV",
+      "disponivel": 594480.85
+    },
+    {
+      "exercicio": 2026,
+      "codigo": "120026",
+      "sigla": "120026",
+      "nome": "PARQUE MATERIAL AERONAUTICO DE LAGOA SANTA",
+      "ao": "20XV",
+      "disponivel": 582713.97
+    },
+    {
+      "exercicio": 2026,
+      "codigo": "120643",
+      "sigla": "120643",
+      "nome": "BASE AEREA DE SANTA MARIA",
+      "ao": "2048",
+      "disponivel": 532302.53
     },
     {
       "exercicio": 2026,
@@ -332,14 +331,6 @@
     },
     {
       "exercicio": 2026,
-      "codigo": "120643",
-      "sigla": "120643",
-      "nome": "BASE AEREA DE SANTA MARIA",
-      "ao": "2048",
-      "disponivel": 305930
-    },
-    {
-      "exercicio": 2026,
       "codigo": "120030",
       "sigla": "120030",
       "nome": "BASE AEREA DO GALEAO",
@@ -348,11 +339,19 @@
     },
     {
       "exercicio": 2026,
-      "codigo": "120087",
-      "sigla": "120087",
-      "nome": "BASE AEREA DE BELEM",
-      "ao": "2048",
-      "disponivel": 259074.33
+      "codigo": "120038",
+      "sigla": "120038",
+      "nome": "DIRETORIA DE MATERIAL AERONAUTICO E BELICO",
+      "ao": "21A0",
+      "disponivel": 238362.29
+    },
+    {
+      "exercicio": 2026,
+      "codigo": "120091",
+      "sigla": "120091",
+      "nome": "COMISSAO AERONAUTICA BRASILEIRA NA EUROPA",
+      "ao": "20XV",
+      "disponivel": 196100
     },
     {
       "exercicio": 2026,
@@ -368,15 +367,7 @@
       "sigla": "120071",
       "nome": "CENTRO LOGISTICO DA AERONAUTICA",
       "ao": "2048",
-      "disponivel": 116902.15
-    },
-    {
-      "exercicio": 2026,
-      "codigo": "120068",
-      "sigla": "120068",
-      "nome": "PARQUE DE MATERIAL AERONAUTICO DE SAO PAULO",
-      "ao": "20XV",
-      "disponivel": 104663.06
+      "disponivel": 116794.05
     },
     {
       "exercicio": 2026,
@@ -392,7 +383,15 @@
       "sigla": "120068",
       "nome": "PARQUE DE MATERIAL AERONAUTICO DE SAO PAULO",
       "ao": "2048",
-      "disponivel": 62942.08
+      "disponivel": 42172.25
+    },
+    {
+      "exercicio": 2026,
+      "codigo": "120087",
+      "sigla": "120087",
+      "nome": "BASE AEREA DE BELEM",
+      "ao": "2048",
+      "disponivel": 12744.44
     }
   ],
   "restosAPagar": [
@@ -401,9 +400,9 @@
       "tipo": "Não Processados",
       "sigla": "RPNP",
       "inscrito": 945660033.81,
-      "cancelado": 3656895.78,
-      "pago": 497997960.88,
-      "liquidado": 500069707.91
+      "cancelado": 3661276.78,
+      "pago": 531472756.12,
+      "liquidado": 534714791.3
     }
   ],
   "restosAPagarUGR": [
@@ -413,7 +412,7 @@
       "sigla": "120049",
       "nome": "PARQUE DE MATERIAL AERONAUTICO DO GALEAO",
       "ao": "2048",
-      "aPagar": 137712490.89
+      "aPagar": 137693679.89
     },
     {
       "exercicio": 2026,
@@ -421,7 +420,7 @@
       "sigla": "120068",
       "nome": "PARQUE DE MATERIAL AERONAUTICO DE SAO PAULO",
       "ao": "2048",
-      "aPagar": 88578063.3
+      "aPagar": 83771848.75
     },
     {
       "exercicio": 2026,
@@ -429,7 +428,7 @@
       "sigla": "120026",
       "nome": "PARQUE MATERIAL AERONAUTICO DE LAGOA SANTA",
       "ao": "2048",
-      "aPagar": 46254355.77
+      "aPagar": 36467856.18
     },
     {
       "exercicio": 2026,
@@ -437,7 +436,7 @@
       "sigla": "120047",
       "nome": "PARQUE DE MATERIAL BELICO DA AERONAUTICA",
       "ao": "2048",
-      "aPagar": 27323578.84
+      "aPagar": 27296401.98
     },
     {
       "exercicio": 2026,
@@ -446,14 +445,6 @@
       "nome": "PARQUE DE MATERIAL BELICO DA AERONAUTICA",
       "ao": "21A0",
       "aPagar": 25485189.62
-    },
-    {
-      "exercicio": 2026,
-      "codigo": "120049",
-      "sigla": "120049",
-      "nome": "PARQUE DE MATERIAL AERONAUTICO DO GALEAO",
-      "ao": "20XV",
-      "aPagar": 21476707.39
     },
     {
       "exercicio": 2026,
@@ -468,16 +459,24 @@
       "codigo": "120026",
       "sigla": "120026",
       "nome": "PARQUE MATERIAL AERONAUTICO DE LAGOA SANTA",
-      "ao": "20IH",
-      "aPagar": 18544940.34
+      "ao": "20XV",
+      "aPagar": 15919114.24
+    },
+    {
+      "exercicio": 2026,
+      "codigo": "120049",
+      "sigla": "120049",
+      "nome": "PARQUE DE MATERIAL AERONAUTICO DO GALEAO",
+      "ao": "20XV",
+      "aPagar": 15560271.1
     },
     {
       "exercicio": 2026,
       "codigo": "120026",
       "sigla": "120026",
       "nome": "PARQUE MATERIAL AERONAUTICO DE LAGOA SANTA",
-      "ao": "20XV",
-      "aPagar": 17799498.25
+      "ao": "20IH",
+      "aPagar": 8676791.23
     },
     {
       "exercicio": 2026,
@@ -485,7 +484,7 @@
       "sigla": "120068",
       "nome": "PARQUE DE MATERIAL AERONAUTICO DE SAO PAULO",
       "ao": "20XV",
-      "aPagar": 9040733.07
+      "aPagar": 8502753.07
     },
     {
       "exercicio": 2026,
@@ -509,23 +508,7 @@
       "sigla": "120038",
       "nome": "DIRETORIA DE MATERIAL AERONAUTICO E BELICO",
       "ao": "21EM",
-      "aPagar": 2261466.81
-    },
-    {
-      "exercicio": 2026,
-      "codigo": "120068",
-      "sigla": "120068",
-      "nome": "PARQUE DE MATERIAL AERONAUTICO DE SAO PAULO",
-      "ao": "21H2",
-      "aPagar": 2221632.65
-    },
-    {
-      "exercicio": 2026,
-      "codigo": "120038",
-      "sigla": "120038",
-      "nome": "DIRETORIA DE MATERIAL AERONAUTICO E BELICO",
-      "ao": "21A0",
-      "aPagar": 2180261.16
+      "aPagar": 2259261.2
     },
     {
       "exercicio": 2026,
@@ -537,11 +520,27 @@
     },
     {
       "exercicio": 2026,
+      "codigo": "120068",
+      "sigla": "120068",
+      "nome": "PARQUE DE MATERIAL AERONAUTICO DE SAO PAULO",
+      "ao": "21H2",
+      "aPagar": 1982872.46
+    },
+    {
+      "exercicio": 2026,
       "codigo": "120038",
       "sigla": "120038",
       "nome": "DIRETORIA DE MATERIAL AERONAUTICO E BELICO",
       "ao": "2048",
-      "aPagar": 2031850.12
+      "aPagar": 1977843.35
+    },
+    {
+      "exercicio": 2026,
+      "codigo": "120038",
+      "sigla": "120038",
+      "nome": "DIRETORIA DE MATERIAL AERONAUTICO E BELICO",
+      "ao": "21A0",
+      "aPagar": 1941037.17
     },
     {
       "exercicio": 2026,
@@ -581,7 +580,7 @@
       "sigla": "120071",
       "nome": "CENTRO LOGISTICO DA AERONAUTICA",
       "ao": "2048",
-      "aPagar": 415582.23
+      "aPagar": 414076.7
     },
     {
       "exercicio": 2026,
@@ -589,7 +588,7 @@
       "sigla": "120026",
       "nome": "PARQUE MATERIAL AERONAUTICO DE LAGOA SANTA",
       "ao": "20X7",
-      "aPagar": 385218.05
+      "aPagar": 351236.38
     },
     {
       "exercicio": 2026,
@@ -597,7 +596,7 @@
       "sigla": "120035",
       "nome": "CENTRO DE TRANSPORTE LOGISTICO DA AERONAUTICA",
       "ao": "2048",
-      "aPagar": 329300.11
+      "aPagar": 327457.05
     },
     {
       "exercicio": 2026,
@@ -606,14 +605,6 @@
       "nome": "DIRETORIA DE MATERIAL AERONAUTICO E BELICO",
       "ao": "20RM",
       "aPagar": 133690.55
-    },
-    {
-      "exercicio": 2026,
-      "codigo": "120068",
-      "sigla": "120068",
-      "nome": "PARQUE DE MATERIAL AERONAUTICO DE SAO PAULO",
-      "ao": "20X5",
-      "aPagar": 101706.44
     },
     {
       "exercicio": 2026,
@@ -660,6 +651,14 @@
       "codigo": "120068",
       "sigla": "120068",
       "nome": "PARQUE DE MATERIAL AERONAUTICO DE SAO PAULO",
+      "ao": "20X5",
+      "aPagar": 35708.44
+    },
+    {
+      "exercicio": 2026,
+      "codigo": "120068",
+      "sigla": "120068",
+      "nome": "PARQUE DE MATERIAL AERONAUTICO DE SAO PAULO",
       "ao": "20X7",
       "aPagar": 8397.91
     },
@@ -694,50 +693,50 @@
       "codigo": "120038",
       "sigla": "120038",
       "nome": "DIRETORIA DE MATERIAL AERONAUTICO E BELICO",
-      "recebido": 240037351.02,
-      "empenhado": 55907530.51,
-      "liquidado": 1512740.21,
-      "pago": 1512740.21
+      "recebido": 235218154.42,
+      "empenhado": 63907979.73,
+      "liquidado": 2695317.7,
+      "pago": 2695317.7
     },
     {
       "exercicio": 2026,
       "codigo": "120049",
       "sigla": "120049",
       "nome": "PARQUE DE MATERIAL AERONAUTICO DO GALEAO",
-      "recebido": 227612045.72,
-      "empenhado": 219026709.65,
-      "liquidado": 37235406.96,
-      "pago": 33602474.47
+      "recebido": 228355485.07,
+      "empenhado": 218905269.22,
+      "liquidado": 37390444.52,
+      "pago": 33747145.43
     },
     {
       "exercicio": 2026,
       "codigo": "120026",
       "sigla": "120026",
       "nome": "PARQUE MATERIAL AERONAUTICO DE LAGOA SANTA",
-      "recebido": 159494243.07,
-      "empenhado": 139904061.75,
-      "liquidado": 21785607.49,
-      "pago": 18962783.8
+      "recebido": 159463020.53,
+      "empenhado": 151227035.8,
+      "liquidado": 36759589.38,
+      "pago": 20315954.38
     },
     {
       "exercicio": 2026,
       "codigo": "120068",
       "sigla": "120068",
       "nome": "PARQUE DE MATERIAL AERONAUTICO DE SAO PAULO",
-      "recebido": 138817803.49,
-      "empenhado": 138650198.34,
-      "liquidado": 22241412.67,
-      "pago": 21763493.73
+      "recebido": 138752582.79,
+      "empenhado": 138115929.69,
+      "liquidado": 26393515.7,
+      "pago": 25402004.13
     },
     {
       "exercicio": 2026,
       "codigo": "120047",
       "sigla": "120047",
       "nome": "PARQUE DE MATERIAL BELICO DA AERONAUTICA",
-      "recebido": 27631586.12,
-      "empenhado": 26747079.86,
-      "liquidado": 283185.47,
-      "pago": 266555.09
+      "recebido": 31360544.34,
+      "empenhado": 26723385.8,
+      "liquidado": 283136.28,
+      "pago": 267478.78
     },
     {
       "exercicio": 2026,
@@ -764,8 +763,8 @@
       "codigo": "120091",
       "sigla": "120091",
       "nome": "COMISSAO AERONAUTICA BRASILEIRA NA EUROPA",
-      "recebido": 583209.23,
-      "empenhado": 583209.23,
+      "recebido": 778769.93,
+      "empenhado": 582669.93,
       "liquidado": 0,
       "pago": 0
     },
@@ -775,7 +774,17 @@
       "sigla": "120087",
       "nome": "BASE AEREA DE BELEM",
       "recebido": 568353.02,
-      "empenhado": 309278.69,
+      "empenhado": 555608.58,
+      "liquidado": 0,
+      "pago": 0
+    },
+    {
+      "exercicio": 2026,
+      "codigo": "120643",
+      "sigla": "120643",
+      "nome": "BASE AEREA DE SANTA MARIA",
+      "recebido": 532302.53,
+      "empenhado": 0,
       "liquidado": 0,
       "pago": 0
     },
@@ -784,10 +793,10 @@
       "codigo": "120071",
       "sigla": "120071",
       "nome": "CENTRO LOGISTICO DA AERONAUTICA",
-      "recebido": 410069.8,
-      "empenhado": 293167.65,
-      "liquidado": 146290.27,
-      "pago": 146290.27
+      "recebido": 409690.6,
+      "empenhado": 292896.55,
+      "liquidado": 159799.07,
+      "pago": 159799.07
     },
     {
       "exercicio": 2026,
@@ -816,16 +825,6 @@
       "nome": "BASE AEREA DE SANTA CRUZ",
       "recebido": 331958.14,
       "empenhado": 331958.14,
-      "liquidado": 0,
-      "pago": 0
-    },
-    {
-      "exercicio": 2026,
-      "codigo": "120643",
-      "sigla": "120643",
-      "nome": "BASE AEREA DE SANTA MARIA",
-      "recebido": 305930,
-      "empenhado": 0,
       "liquidado": 0,
       "pago": 0
     },
